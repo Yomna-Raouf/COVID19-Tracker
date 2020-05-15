@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
+    <script src="https://kit.fontawesome.com/de4c676988.js" crossorigin="anonymous"></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <title>COVID-19 Tracker</title>
+</head>
+<body>
+
+  <!--<nav style="background-color:red; width: 100vw;">
+    <div class="search-container">
+      <input type="text" class="Search-input" >
+    </div>
+  </nav>-->
+
+  <section class="map-info">
+    <div class="searchBox">
+      <input class="searchInput"type="text" name="" placeholder="Search">
+      <button class="searchButton" href="#">
+          <i class="fas fa-search"></i>
+      </button>
+    </div>
+    <div class="map-view-btns-container">
+      <div class="TotalCases">
+        <img src="assets/infected.png" alt="">
+      </div>
+      <div class="Recovered">
+        <img src="assets/recovered.png" alt="" width="32px" height="32px">
+      </div>
+      <div class="deaths">
+        <img src="assets/death.png" alt="">
+      </div>
+    </div>
+    <div id="map"></div>
+  </section>
+
+  <section class="data-info">
+    
+    <div class="country-name">
+      <p>WorldWide</p>
+    </div>
+    <div class="country-cases-container">
+      <div class="country-cases total">
+        <p>Total Cases</p>
+        <p class="cases-number">152454587</p>
+      </div>
+      <div class="country-cases recovered">
+        <p>Total Cases</p>
+        <p class="cases-number">152454587</p>
+      </div>
+      <div class="country-cases death">
+        <p>Total Cases</p>
+        <p class="cases-number">152454587</p>
+      </div>
+    </div>
+    
+    
+  </section>
+  
+
+  
+
+
+
+
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkdXJvbTEybm9jNiJ9.Ptr2DKynFUQVoaNYN-6uqA';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11'
+  });
+</script>
+
+</body>
+</html>

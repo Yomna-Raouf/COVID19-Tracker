@@ -1,0 +1,154 @@
+body {
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+}
+
+.map-info {
+    display: flex;
+}
+
+.searchBox {
+    z-index: 100;
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    background: #2f3640;
+    height: 40px;
+    border-radius: 40px;
+    padding: 10px;
+
+}
+
+.searchBox:hover > .searchInput {
+    width: 240px;
+    padding: 0 6px;
+}
+
+.searchBox:hover > .searchButton {
+  background: white;
+  color : #2f3640;
+}
+
+.searchButton {
+    color: white;
+    font-size: 25px;
+    float: right;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2f3640;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+
+.searchInput {
+    border:none;
+    background: none;
+    outline:none;
+    float:left;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0px;
+
+}
+
+.map-view-btns-container {
+    position: absolute;
+    z-index: 100;
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 200px;
+    left: 1%;
+
+}
+
+.TotalCases,
+.Recovered,
+.deaths {
+    background-color: white;
+    width: 60px;
+    height: 60px;    
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#map {
+    width: 100vw;
+    height: 500px;
+}
+
+.data-info {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    padding-top: 30px;
+}
+
+.country-name {
+    width: 300px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-weight: 500;
+    background-color: teal;
+    border-radius: 30px;
+    left: 50%;
+}
+
+.country-cases-container {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 40px;
+}
+
+.country-cases {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-size: 30px;
+    width: 300px;
+    background-color: teal;
+    border-radius: 30px;
+    height: 100px;
+    line-height: 5px;
+}
+
+.country-cases + p {
+    margin-bottom: 15px;
+}
+
+.cases-number {
+    font-size: 20px;
+    margin-top: 8px;
+}
+ 
+@media screen and (max-width: 620px) {
+.searchBox:hover > .searchInput {
+    width: 150px;
+    padding: 0 6px;
+}
+}
+
+
+

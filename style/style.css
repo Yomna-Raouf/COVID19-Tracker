@@ -142,6 +142,30 @@ body {
     font-size: 20px;
     margin-top: 8px;
 }
+
+.stay-safe-container {
+    /*padding-top: 35px;*/
+    width: 100vw;
+    background-color: cadetblue;
+    margin-top: 35px;
+    border-radius: 30px;
+}
+
+.stay-safe-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    font-size: 50px;
+    font-weight: 500;
+}
+
+.stay-safe-instructions {
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 30px;
+}
  
 @media screen and (max-width: 620px) {
 .searchBox:hover > .searchInput {

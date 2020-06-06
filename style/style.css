@@ -174,18 +174,26 @@ body {
 
 .table-container {
     overflow-y: scroll;
+    font-family: sans-serif;
 }
- 
+
+#table-data {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
 .country-location {
     text-align: left;
     min-width: 175px;
     padding-left: 0;
     padding: 0 8px 12px 8px;
     font-weight: 400;
-    background-color: #ffffff;
+    background-color: #BBDEFB;
     color: #70757a;
     font-size: 12px;
     position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .metric {
@@ -199,6 +207,17 @@ body {
     top: 0;
     z-index: 1;
 }
+
+.table-head  {
+    width: 100px;
+    text-align: center;
+    border-bottom: 1px solid #0D47A1;
+}
+
+.table-head th {
+    background-color: #BBDEFB;
+}
+
 
 td {
     padding: 0 8px 12px 8px;
@@ -216,6 +235,14 @@ td {
     font-weight: 700;
     background-color: #ffffff;
     font-size: 14px;
+}
+
+table tr {
+    height: 50px;
+}
+
+.country-info  {
+    border-bottom: 1px solid #0D47A1
 }
 
 .news-container {

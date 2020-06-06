@@ -1,0 +1,2 @@
+define(["require","exports"],(function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),(function(e){e.UPLOAD_ATTEMPT="upload_attempt",e.UPLOAD_FAILURE="upload_failure",e.UPLOAD_FILE="upload_file",e.UPLOAD_SUCCESS="upload_success"})(t.WebUploadActionEvent||(t.WebUploadActionEvent={}))}));
+//# sourceMappingURL=web_upload_action_events.min.js-vflFCn1kj.map

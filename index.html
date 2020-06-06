@@ -72,7 +72,7 @@
         <h3>Cases</h3>
       </div>
       <div class="table-container">
-        <table>
+        <table id="table-data">
           <thead class="table-head-container">
             <tr class="table-head">
             <th class="country-location">Location</th>
@@ -85,12 +85,12 @@
           </thead>
           <tbody class="country-info-container">
             <tr class="country-info">
-            <td class="location loc">WorldWide</td>
-            <td class="total">100000000</td>
-            <td class="CPM">10000</td>
-            <td class="recovered">114515400</td>
-            <td class="death">145100</td>
-            <td class="today-cases">45100</td>
+              <td class="country-location loc">WorldWide</td>
+              <td class="total">100000000</td>
+              <td class="CPM">10000</td>
+              <td class="recovered">114515400</td>
+              <td class="death">145100</td>
+              <td class="today-cases">45100</td>
             </tr>
           </tbody>
         </table>
@@ -134,13 +134,7 @@
 
 
 
-<script>
-  mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkdXJvbTEybm9jNiJ9.Ptr2DKynFUQVoaNYN-6uqA';
-  var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11'
-  });
-</script>
+<script src="js/index.js"></script>
 
 </body>
 </html>

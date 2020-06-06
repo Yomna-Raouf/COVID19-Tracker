@@ -1,0 +1,27 @@
+/**
+  This file should not imported into your CSS or SASS files - the CSS variables will be available on the page for you to use.
+  DO NOT USE THIS FILE OR THE CSS VARIABLE TOKENS WITHOUT FIRST TALKING TO mtole@ OR THE DESIGN SYSTEMS ON-CALL (SEE #design-systems ON SLACK)
+**/
+
+:root {
+    --color__highlight__background: #f7f9fa; /* color_chalk */
+    --color__standard__text: #1b2733; /* color_ink */
+    --color__theme__link: #0070e0; /* color_blue */
+    --type__title__large--fontfamily: var(--type__body__large--fontfamily);
+    --type__title__standard--fontfamily: var(--type__body__large--fontfamily);
+    --type__title__small--fontfamily: var(--type__body__large--fontfamily);
+    --color__faint__text: #637282;
+}
+
+.dig2--enabled {
+    --color__highlight__background: var(--color__theme__accent--light);
+    --color__standard__text: var(--color__black);
+    --color__theme__link: var(--color__dbx__blue--100);
+    --type__title__large--fontfamily: Sharp Grotesk, SharpGrotesk,
+        var(--type__body__standard--fontfamily);
+    --type__title__standard--fontfamily: Sharp Grotesk, SharpGrotesk,
+        var(--type__body__standard--fontfamily);
+    --type__title__small--fontfamily: Sharp Grotesk, SharpGrotesk,
+        var(--type__body__standard--fontfamily);
+    --color__faint__text: var(--color__black--60);
+}

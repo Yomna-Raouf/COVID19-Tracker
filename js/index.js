@@ -1,6 +1,7 @@
 
 window.onload = () => {
     getCountryData();
+    getHistoricalData();
     addLegend();
 }
 
@@ -15,13 +16,22 @@ mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkd
 
 const getCountryData = () => {
     fetch("https://corona.lmao.ninja/v2/countries")
-    .then((response)=>{
-        return response.json()
-    }).then((data)=>{
+    .then( response => response.json())
+    .then((data)=>{
         showDataOnMap(data);
         showDataInTable(data);
     })
 }
+
+const getHistoricalData = () => {
+    fetch('https://corona.lmao.ninja/v2/historical/all?lastdays=120')
+    .then( response => response.json())
+    .then (data => {
+        let chartData = buildChartData(data);
+        buildChart(chartData);
+    })
+}
+
 
 const setColors = country => {
   //  ,,,,,,,'#a50f15','#67000d'
@@ -76,8 +86,6 @@ const addMarkers = (countryCenter, country) => {
     .addTo(map);
 } 
 
-
-
 const showDataOnMap = (data) => {
 
   data.map((country) => {
@@ -88,18 +96,8 @@ const showDataOnMap = (data) => {
 
     addMarkers(countryCenter, country);     
   });
-    
-
-
-
-    
-
-
-   
+       
 }
-
-
- 
 
 const showDataInTable = (data) => {
     let html = '';
@@ -116,4 +114,62 @@ const showDataInTable = (data) => {
         `
     })
     document.querySelector('.country-info-container').innerHTML = html;
+}
+
+const buildChartData = data => {
+    let chartData = [];
+    for (let date in data.cases) {
+        let newDataPoint = {
+            x: date,
+            y: data.cases[date]
+        }
+
+        chartData.push(newDataPoint);
+    }
+    return chartData;
+}
+
+const buildChart = chartData => {
+    let timeFormat = 'MM/DD/YY';
+    let ctx = document.getElementById('myChart').getContext('2d');
+    let chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: 'Total Cases',
+                data: chartData,
+                lineTension: .7,
+               // backgroundColor: '#1d2c4d',
+                borderColor: '#1d2c4d',
+            }]
+        },
+        options: {
+            responsive: true,
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            },
+            scales: {
+                xAxes: [{
+                    type: "time",
+                    time: {
+                        format: timeFormat,
+                        tooltipFormat: 'll'
+                    },
+                    scaleLabel: {
+                        display:     true,
+                        labelString: 'Date'
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        // Include a dollar sign in the ticks
+                        callback: function(value, index, values) {
+                            return numeral(value).format('0,0');
+                        }
+                    }
+                }]
+            }
+        }
+    });
 }

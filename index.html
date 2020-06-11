@@ -7,6 +7,7 @@
     <script src="https://kit.fontawesome.com/de4c676988.js" crossorigin="anonymous"></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" type="text/css" href="style/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <title>COVID-19 Tracker</title>
 </head>
 <body>
@@ -16,7 +17,7 @@
       <input type="text" class="Search-input" >
     </div>
   </nav>-->
-
+  <main>
   <section class="map-info">
     <div class="searchBox">
       <input class="searchInput"type="text" name="" placeholder="Search">
@@ -25,15 +26,15 @@
       </button>
     </div>
     <div class="map-view-btns-container">
-      <div class="TotalCases">
+      <button class="TotalCases">
         <img src="assets/infected.png" alt="">
-      </div>
-      <div class="Recovered">
+      </button>
+      <button class="Recovered">
         <img src="assets/recovered.png" alt="" width="32px" height="32px">
-      </div>
-      <div class="deaths">
+      </button>
+      <button class="deaths">
         <img src="assets/death.png" alt="">
-      </div>
+      </button>
     </div>
     <div id="map"></div>
     <div class='legend'></div>
@@ -111,6 +112,10 @@
       </div>
     </div>
   </div>
+  <div class="chart-data">
+    <canvas id="myChart" class="chartjs-render-monitor"></canvas>
+  </div>
+  
   </section>
 
   <section class="stay-safe-container">
@@ -127,14 +132,24 @@
       </div>
     
   </section>
-  
+
+  <footer style="background-color: rgb(19, 18, 18); color: #fff;">
+    <h6 class="author"> Made by Eng.Yomna Raouf</h6>
+    <div class="about">
+      <div class="data-source">
+        <p>This data is from......</p>
+      </div>
+    </div>
+  </footer>
+</main>
 
   
 
 
-
-
-  <script src="https://unpkg.com/mapbox-choropleth"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="js/map-style.js"></script>
   <script src="js/index.js"></script>
 
 </body>

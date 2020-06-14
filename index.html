@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
-    <script src="https://kit.fontawesome.com/de4c676988.js" crossorigin="anonymous"></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
+    <link
+    rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+    type="text/css"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
     <link rel="stylesheet" type="text/css" href="style/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <title>COVID-19 Tracker</title>
@@ -18,13 +22,16 @@
     </div>
   </nav>-->
   <main>
-  <section class="map-info">
-    <div class="searchBox">
-      <input class="searchInput"type="text" name="" placeholder="Search">
-      <button class="searchButton" href="#">
-          <i class="fas fa-search"></i>
-      </button>
-    </div>
+  <section class="map-info"> 
+   <!-- <div id="geocoder" class="geocoder"></div> -->
+    <!--<div class="searchBox">
+      <div id="geocoder" class="geocoder">
+         <input  class="searchInput"type="text" name="" placeholder="Search"> 
+        <button class="searchButton" href="#">
+            <i class="fas fa-search"></i>
+        </button> 
+      </div>
+    </div> -->
     <div class="map-view-btns-container">
       <button class="TotalCases">
         <img src="assets/infected.png" alt="">
@@ -38,6 +45,12 @@
     </div>
     <div id="map"></div>
     <div class='legend'></div>
+  </section>
+
+  <section class="search-container">
+    <input id="autoComplete" tabindex="1">   
+    <!-- Default "id" value = "autoComplete"> -->
+    <div class="selection"></div> 
   </section>
 
   <section class="data-info">
@@ -86,7 +99,7 @@
           </tr>
           </thead>
           <tbody class="country-info-container">
-            <tr class="country-info">
+            <tr  class="country-info">
               <td class="loc">WorldWide</td>
               <td class="total">100000000</td>
               <td class="CPM">10000</td>
@@ -143,13 +156,15 @@
   </footer>
 </main>
 
-  
-
-
+  <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>  
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+  <script src="https://kit.fontawesome.com/de4c676988.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-  <script src="js/map-style.js"></script>
   <script src="js/index.js"></script>
 
 </body>

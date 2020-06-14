@@ -15,5 +15,7 @@
   "bugs": {
     "url": "https://github.com/Yomna-Raouf/COVID19-Tracker/issues"
   },
-  "homepage": "https://github.com/Yomna-Raouf/COVID19-Tracker#readme"
+  "homepage": "https://github.com/Yomna-Raouf/COVID19-Tracker#readme",
+  "dependencies": {},
+  "devDependencies": {}
 }

@@ -136,6 +136,71 @@ body , html{
     height: 500px;
 }
 
+.mapboxgl-popup-content {
+    width: fit-content;
+    padding: 10px 15px;
+}
+
+
+.mapboxgl-popup-close-button {
+    font-size: 25px;
+}
+
+.country-info-info {
+    border-bottom: 1px solid #d3d3d3;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin-bottom:  1em;
+    font-family: sans-serif;
+}
+
+.country-info-window {
+    width: 25em;
+    height: fit-content;
+}
+
+
+.selected-country-name {
+    font-size: 1.5em;
+    letter-spacing: 1px;
+}
+
+.flag {
+    margin-right: 2.8em;
+}
+
+.flag img {
+    width: 10em;
+    height: 6em;
+    border-radius: 10px;
+    border: 1px solid;
+}
+
+.country-info-stats-cases,
+.country-info-stats-recovered,
+.country-info-stats-deaths,
+.country-tests {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    background-color: blue;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1.5em;
+    color: #fff;
+    font-size: 20px;
+    margin-left: 5px;
+}
+
 .legend {
     position: absolute;
     top: 20.7em;
@@ -177,7 +242,8 @@ body , html{
 }
 
 .country-name {
-    width: 300px;
+    width: fit-content;
+    padding: 10px 15px;
     height: 100px;
     display: flex;
     justify-content: center;

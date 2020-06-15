@@ -126,12 +126,8 @@ const Search = (data) => {
         // Concole log autoComplete data feedback
         console.log(feedback); 
         FlyToCountry(selection, data);
-        showDataInCountryStatsContainer(selection, data);   
-
     },
     });
-
-   
 }
 
 const FlyToCountry = (selection ,data) => {
@@ -158,15 +154,13 @@ const FlyToCountry = (selection ,data) => {
         },
         essential: true
     });
+
+    addPopups(data, countryCoordinates, selection);
 }
 
 
 const showDataInCountryStatsContainer = (selection , data) => {
-    let selectedCountryRowInTable = document.querySelector('.country-info');
-                
-    let selectedCountryRowInTableFirstElement = selectedCountryRowInTable.getElementsByTagName('td')[0];
-
-    let selectedCountryRowInTableFirstElementText = selectedCountryRowInTableFirstElement.innerText ;
+   
     let html = '';
     if(selection){
         data.forEach( country => {
@@ -194,17 +188,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
                     <p> Today Deaths</p>
                     <p class="cases-number new-deaths">${country.todayDeaths}</p>
                 </div>
-                `
-               
-
-                if ( selectedCountryRowInTableFirstElementText === selection) {
-                    selectedCountryRowInTableFirstElement.style.cssText = 'background: #e17171';
-                } else {
-                    selectedCountryRowInTableFirstElement.style.cssText = 'background: #fff';
-                }
-
-               
-                
+                `    
             }
         });
     }
@@ -265,13 +249,61 @@ const addLegend = () => {
       }
 }
 
-const addMarkers = (countryCenter, country) => {
+const addMarkers = (data, countryCenter, country) => {
     new mapboxgl.Marker({
         color: setColors(country),
     })
     .setLngLat(countryCenter)
     .addTo(map);
 } 
+
+const addPopups = (data, countryCenter, selection) => {
+    let html = '';
+    
+    data.map(country => {
+        if (country.country === selection) {
+        html =  `
+        <div class="country-info-window">
+                <div class="country-info-info">
+                    <div class="flag">
+                        <img src=" ${country.countryInfo.flag}" alt="country Flag" >
+                    </div>
+                    <div class="country-name-tests">
+                        <div class="selected-country-name">
+                           <p> ${country.country} </p>
+                        </div>
+                        <div class="country-tests">
+                            <p>Tests: ${country.tests} </p>
+                        </div>
+                    </div>  
+                </div>    
+                <div class="country-info-stats-cases">
+                    <div class="circle">
+                        <i class='fas fa-chevron-right'></i>
+                    </div> 
+                        <p>Cases: ${country.cases}</p>
+                </div>
+                <div class="country-info-stats-recovered">
+                    <div class="circle">
+                        <i class='fas fa-chevron-right'></i>
+                    </div>
+                        <p>Recovered: ${country.recovered}</p>
+                </div>
+                <div class="country-info-stats-deaths">
+                <div class="circle">
+                    <i class='fas fa-chevron-right'></i>
+                </div>
+                    <p>Deaths: ${country.deaths}</p>
+            </div>
+        </div>
+    `}
+    });
+
+    new mapboxgl.Popup({ closeOnClick: false })
+    .setLngLat(countryCenter)
+    .setHTML(html)
+    .addTo(map);
+}
 
 const showDataOnMap = (data) => {
 
@@ -281,7 +313,7 @@ const showDataOnMap = (data) => {
         lat: country.countryInfo.lat,
     }
 
-    addMarkers(countryCenter, country);     
+    addMarkers(data, countryCenter, country);     
   });
        
 }

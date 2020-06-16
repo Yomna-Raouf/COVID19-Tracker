@@ -20,7 +20,8 @@ const getCountryData = () => {
     fetch("https://corona.lmao.ninja/v2/countries")
     .then( response => response.json())
     .then((data)=>{
-        showDataOnMap(data);
+        addMarkers(data)
+        //showDataOnMap(data);
         showDataInTable(data);
         Search(data);
     })
@@ -132,7 +133,7 @@ const Search = (data) => {
 
 const FlyToCountry = (selection ,data) => {
     let countryCoordinates = [];
-    if( selection){
+    if(selection){
         data.forEach( country => {
             if(country.country === selection ) {
                 countryCoordinates =  [
@@ -246,27 +247,49 @@ const addLegend = () => {
         item.appendChild(key);
         item.appendChild(value);
         document.querySelector('.legend').appendChild(item);
-      }
+    }
 }
 
-const addMarkers = (data, countryCenter, country) => {
-    new mapboxgl.Marker({
-        color: setColors(country),
-    })
-    .setLngLat(countryCenter)
-    .addTo(map);
+const addMarkers = (data) => {
+    data.map((country) => {
+        let countryCenter = {
+            lng: country.countryInfo.long,
+            lat: country.countryInfo.lat,
+        }   
+        
+       let marker =  new mapboxgl.Marker({
+            color: setColors(country),
+        })
+        .setLngLat(countryCenter)
+        .addTo(map);
+
+        marker.getElement().addEventListener('click', function (e) {
+            marker.setPopup(addPopups(data, countryCenter, country.country)).addTo(map);
+        });
+    }); 
 } 
+
+//const showDataOnMap = (data) => {
+  //  data.map((country) => {
+    //  let countryCenter = {
+      //    lng: country.countryInfo.long,
+    //  lat: country.countryInfo.lat,
+      //  }
+  
+      //addMarkers(data, countryCenter, country);     
+    //});    
+//}
 
 const addPopups = (data, countryCenter, selection) => {
     let html = '';
-    
+    let popUp = new mapboxgl.Popup({ closeOnClick: true });
     data.map(country => {
-        if (country.country === selection) {
+        if (country.country === selection ) {
         html =  `
         <div class="country-info-window">
                 <div class="country-info-info">
                     <div class="flag">
-                        <img src=" ${country.countryInfo.flag}" alt="country Flag" >
+                        <img src=" ${country.countryInfo.flag}" alt="country Flag">
                     </div>
                     <div class="country-name-tests">
                         <div class="selected-country-name">
@@ -296,27 +319,19 @@ const addPopups = (data, countryCenter, selection) => {
                     <p>Deaths: ${country.deaths}</p>
             </div>
         </div>
-    `}
+    `
+    }
     });
 
-    new mapboxgl.Popup({ closeOnClick: false })
-    .setLngLat(countryCenter)
+    
+    popUp.setLngLat(countryCenter)
     .setHTML(html)
     .addTo(map);
+
+    return popUp;
 }
 
-const showDataOnMap = (data) => {
 
-  data.map((country) => {
-    let countryCenter = {
-        lng: country.countryInfo.long,
-        lat: country.countryInfo.lat,
-    }
-
-    addMarkers(data, countryCenter, country);     
-  });
-       
-}
 
 const showDataInTable = (data) => {
     let html = '';

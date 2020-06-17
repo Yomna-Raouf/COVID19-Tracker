@@ -48,11 +48,11 @@ const getWorldWideData = () => {
 }
 
 const getNews = () => {
-    fetch("https://newsapi.org/v2/everything?q=COVID&from=2020-06-11&apiKey=c361ee82ad48460287bf148b5aee5809&sortBy=popularity")
-    .then(response =>  response.text())
-    .then( result => {
-        console.log(result);
-        //showNewsInNewsContainer(articles);
+    fetch("https://newsapi.org/v2/everything?q=COVID&from=2020-06-16&apiKey=c361ee82ad48460287bf148b5aee5809&sortBy=popularity")
+    .then(response =>  response.json())
+    .then( data => {
+        console.log(data["articles"]);
+        showNewsInNewsContainer(data);
     })
     .catch(error => console.log('error', error));
 }
@@ -124,7 +124,7 @@ const Search = (data) => {
 			.querySelector("#autoComplete")
             .setAttribute("placeholder", selection);
         
-        // Concole log autoComplete data feedback
+        // Console log autoComplete data feedback
         console.log(feedback); 
         FlyToCountry(selection, data);
     },
@@ -410,15 +410,16 @@ const buildChart = chartData => {
 
 const showNewsInNewsContainer = data => {
     let html = '';
-    data.forEach( (article) => {
+    let articles = data["articles"]
+    articles.forEach( (article) => {
         console.log(article)
         html += `
         <div class="news-card">
           <div class="news-info">
           <p class="news-source">${article.source.name}</p>
           <p class="news-card-title">${article.title}</p>
-          <p class="news-description">${article.description}</p>
-          <p class="news-link">${article.url}</p>
+          <p class="news-description">${article.description}</p> 
+          <div  class="news-link"> <a href="${article.url}"> Read more >> </a></div>
           <p class="posting-time">${article.publishedAt}</p>
           </div>
           <div class="news-cover"> <img src="${article.urlToImage}" alt=""> </div>

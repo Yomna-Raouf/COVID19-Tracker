@@ -417,8 +417,7 @@ const showNewsInNewsContainer = data => {
         <div class="news-card">
           <div class="news-info">
           <p class="news-source">${article.source.name}</p>
-          <p class="news-card-title">${article.title}</p>
-          <p class="news-description">${article.description}</p> 
+          <p class="news-card-title">${article.title}</p>         
           <div  class="news-link"> <a href="${article.url}"> Read more >> </a></div>
           <p class="posting-time">${article.publishedAt}</p>
           </div>
@@ -427,7 +426,7 @@ const showNewsInNewsContainer = data => {
         `
     })
 
-    document.querySelector('.news-cards-container').innerHTML = html;
+    document.querySelector('.news-cards').innerHTML = html;
 }
 
 

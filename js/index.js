@@ -376,14 +376,38 @@ const showDataInTable = (data) => {
 }
 
 const buildChartData = data => {
-    let chartData = [];
+    let ActiveCasesData = [];
+    let RecoveredCasesData = [];
+    let DeathCasesData = [];
+    let chartData = {
+        Active: ActiveCasesData,
+        Recovered: RecoveredCasesData,
+        Deaths: DeathCasesData
+    };
     for (let date in data.cases) {
-        let newDataPoint = {
+        let newActiveDataPoint = {
             x: date,
             y: data.cases[date]
         }
-        chartData.push(newDataPoint);
+        ActiveCasesData.push(newActiveDataPoint);
     }
+
+    for (let date in data.recovered) {
+        let newRecoveredDataPoint = {
+            x: date,
+            y: data.recovered[date]
+        }
+        RecoveredCasesData.push(newRecoveredDataPoint);
+    }
+   
+    for (let date in data.deaths) {
+        let newDeathDataPoint = {
+            x: date,
+            y: data.deaths[date]
+        }
+        DeathCasesData.push(newDeathDataPoint);
+    }
+
     return chartData;
 }
 
@@ -408,6 +432,10 @@ const buildPieChart = PieChartData => {
         options: {
             mainAspectRatio: false,
             responsive: true,
+            title: {
+                display: true,
+                text: 'ActiveCases, Recovered, and Deaths worldWide'
+            }
         } 
     });
 }
@@ -420,15 +448,33 @@ const buildChart = chartData => {
         data: {
             datasets: [{
                 label: 'Total Cases',
-                data: chartData,
+                data: chartData.Active,
                 lineTension: .7,
-               // backgroundColor: '#1d2c4d',
-                borderColor: '#1d2c4d',
+                borderColor: '#6baed6',
+                fill: false,
+            },
+            {
+                label: 'Recovered',
+                data: chartData.Recovered,
+                lineTension: .7,
+                borderColor: '#74c476',
+                fill: false,
+            },
+            {
+                label: 'Deaths',
+                data: chartData.Deaths,
+                lineTension: .7,
+                borderColor: '#fb6a4a',
+                fill: false,
             }]
         },
         options: {
             mainAspectRatio: false,
             responsive: true,
+            title: {
+                display: true,
+                text: 'ActiveCases, Recovered, and Deaths worldWide in the last 120 days'
+            },
             tooltips: {
                 mode: 'index',
                 intersect: false
@@ -456,7 +502,6 @@ const buildChart = chartData => {
             }
         }
     });
-
 }
 
 
@@ -490,9 +535,9 @@ const showNewsInNewsContainer = data => {
                 <div class="news-cover"> <img src="${article.urlToImage}" alt=""> </div>
                 <div class="news-info">
                 <p class="news-source">${article.source.name}</p>
-                <p class="news-card-title">${article.title}</p>         
-                <div  class="news-link"> <a href="${article.url}"> Read more >> </a></div>
-                <p class="posting-time">${article.publishedAt}</p>
+                <p class="news-card-title">${(article.title).substring(0, 45)} ...</p>         
+                <div  class="news-link"> <a href="${article.url}"> Read more <i class="fa fa-chevron-right"></i> </a></div>
+                <p class="posting-time">${(article.publishedAt).substring(0, 10)}</p>
                 </div>
             </div> 
         </il>

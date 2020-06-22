@@ -9,9 +9,16 @@
     href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
     type="text/css"
     />
+    <script src="https://kit.fontawesome.com/de4c676988.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
-    <link rel="stylesheet" type="text/css" href="style/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Required Core Stylesheet -->
+<link rel="stylesheet" href="style/glide.core.min.css">
+
+<!-- Optional Theme Stylesheet -->
+<link rel="stylesheet" href="style/glide.theme.min.css">
+<link rel="stylesheet" type="text/css" href="style/style.css">
     <title>COVID-19 Tracker</title>
 </head>
 <body>
@@ -33,13 +40,13 @@
       </div>
     </div> -->
     <div class="map-view-btns-container">
-      <button class="TotalCases">
+      <button type="button" class="TotalCases">
         <img src="assets/infected.png" alt="">
       </button>
-      <button class="Recovered">
+      <button type="button" class="Recovered">
         <img src="assets/recovered.png" alt="" width="32px" height="32px">
       </button>
-      <button class="deaths">
+      <button  type="button" class="deaths">
         <img src="assets/death.png" alt="">
       </button>
     </div>
@@ -111,7 +118,7 @@
         </table>
       </div>
     </div>
-    <div class="news-container">
+   <!-- <div class="news-container">
       <div class="news-container-heading">
         <h3>Top News</h3>
       </div>
@@ -129,10 +136,15 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
+
   <div class="chart-data">
-    <canvas id="myChart" class="chartjs-render-monitor"></canvas>
+    <canvas id="myChart-linearChart" class="chartjs-render-monitor"></canvas>
+  </div>
+
+  <div class="chart-data">
+    <canvas id="myChart-pieChart" class="chartjs-render-monitor"></canvas>
   </div>
   
   </section>
@@ -152,6 +164,30 @@
     
   </section>
 
+  <section class="news-container">
+    <div class="news glide">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+          <il class="glide__slide">
+            <div class="news-card">
+              <div class="news-cover"> <img src="assets/cleaning.png" alt=""> </div>
+              <div class="news-info">
+                <p class="news-source">The Newyork Times</p>
+                <p class="news-card-title">Novel COVID-19</p>
+                <div  class="news-link"> <a href="#"> Read more >> </a></div>
+                <p class="posting-time"> 9 hours ago</p>
+              </div>
+            </div>
+          </il>
+        </ul>
+      </div>
+      <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left" data-glide-dir="<" ><i class="fa fa-chevron-left"></i></button>
+        <button class="glide__arrow glide__arrow--right" data-glide-dir=">" ><i class="fa fa-chevron-right"></i></button>
+      </div>
+    </div>       
+  </section>
+
   <footer style="background-color: rgb(19, 18, 18); color: #fff;">
     <h6 class="author"> Made by Eng.Yomna Raouf</h6>
     <div class="about">
@@ -162,6 +198,11 @@
   </footer>
 </main>
 
+
+  <script src="js/glide.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>  
   <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>

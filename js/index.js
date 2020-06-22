@@ -7,23 +7,39 @@ window.onload = () => {
     getNews();
 }
 
-
+let reflectTotalCasesBtn = document.querySelector('.TotalCases');
+let reflectRecoveredBtn = document.querySelector('.Recovered');
+let reflectDeathsBtn = document.querySelector('.deaths');
+ 
 mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkdXJvbTEybm9jNiJ9.Ptr2DKynFUQVoaNYN-6uqA';
   var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v10',
+    style: 'mapbox://styles/mapbox/light-v10',
     center: [0, 20],
     zoom: 2,
 });
+
+
 
 const getCountryData = () => {
     fetch("https://corona.lmao.ninja/v2/countries")
     .then( response => response.json())
     .then((data)=>{
-        addMarkers(data)
-        //showDataOnMap(data);
         showDataInTable(data);
         Search(data);
+        reflectTotalCasesBtn.addEventListener('click', () => {
+            console.log('reflectTotalCasesBtn');
+            addMarkers(data, "Active");
+        });
+        reflectDeathsBtn.addEventListener('click', () => {
+            console.log('reflectDeathsBtn');
+            addMarkers(data, "Deaths");
+        });
+        reflectRecoveredBtn.addEventListener('click', () => {
+            console.log('reflectRecoveredBtn');
+            addMarkers(data, "Recovered");
+        });
+        addMarkers(data, "Active");
     })
 }
 
@@ -41,8 +57,10 @@ const getWorldWideData = () => {
     .then(response => response.json())
     .then( data =>{
         let worldData = {...data};
-        worldData.country = 'WorldWide'
-        let modifiedWorldData = [worldData]
+        worldData.country = 'WorldWide';
+        let modifiedWorldData = [worldData];
+        let PieChartData = [worldData.active, worldData.recovered, worldData.deaths];
+        buildPieChart(PieChartData);
         showDataInCountryStatsContainer(worldData.country , modifiedWorldData);
     });
 }
@@ -155,7 +173,7 @@ const FlyToCountry = (selection ,data) => {
         },
         essential: true
     });
-
+    showDataInCountryStatsContainer(selection, data);
     addPopups(data, countryCoordinates, selection);
 }
 
@@ -190,6 +208,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
                     <p class="cases-number new-deaths">${country.todayDeaths}</p>
                 </div>
                 `    
+                console.log(country);
             }
         });
     }
@@ -197,37 +216,43 @@ const showDataInCountryStatsContainer = (selection , data) => {
     document.querySelector('.country-stats-container').innerHTML = html;
 }
 
-
-
-const setColors = country => {
-    if (country.cases < 1000 ) {
-        return '#fff5f0';
+const setColors = (country, metric) => {
+    let colorsRecovered = ["#edf8e9","#bae4b3","#74c476","#31a354","#006d2c"];
+    let colorsActive =  ["#eff3ff","#bdd7e7","#6baed6","#3182bd","#08519c"];
+    let colorsDeaths = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+    let obj = {
+        "Active": {
+            color: colorsActive,
+            metricValue : country.active
+        },
+        "Recovered": {
+            color: colorsRecovered,
+            metricValue : country.recovered
+        },
+        "Deaths": {
+            color: colorsDeaths,
+            metricValue : country.deaths
+        }
     }
-    if (country.cases >= 1000 && country.cases < 10000) {
-        return '#fee0d2';
+    console.log(metric);
+    console.log(obj[metric].color);
+    console.log(obj[metric].metricValue);
+   if ( obj[metric].metricValue < 1000 ) {
+        return obj[metric].color[0] ;
     }
-    if (country.cases >= 10000 && country.cases < 25000) {
-        return '#fcbba1';
+    if ( obj[metric].metricValue >= 1000 && obj[metric].metricValue < 10000) {
+        return obj[metric].color[1] ;
     }
-    if (country.cases >= 25000 && country.cases < 50000) {
-        return '#fc9272';
+    if ( obj[metric].metricValue >= 10000 && obj[metric].metricValue < 50000) {
+        return obj[metric].color[2] ;
     }
-    if (country.cases >= 50000 && country.cases < 100000) {
-        return '#fb6a4a';
+    if (obj[metric].metricValue >= 50000 && obj[metric].metricValue < 100000) {
+        return obj[metric].color[3] ;
     }
-    if (country.cases >= 100000 && country.cases < 200000) {
-        return '#ef3b2c';
+    if (obj[metric].metricValue >= 100000 ) {
+        return obj[metric].color[4] ;
     }
-    if (country.cases >= 200000 && country.cases < 500000) {
-        return '#cb181d';
-    }
-    if (country.cases >= 500000 && country.cases < 1000000) {
-        return '#a50f15';
-    }
-    if (country.cases >= 1000000) {
-        return '#67000d';
-    }
-    
+     
 }
 
 const addLegend = () => {
@@ -250,15 +275,15 @@ const addLegend = () => {
     }
 }
 
-const addMarkers = (data) => {
+
+const addMarkers = (data, metric) => {
     data.map((country) => {
         let countryCenter = {
             lng: country.countryInfo.long,
             lat: country.countryInfo.lat,
         }   
-        
        let marker =  new mapboxgl.Marker({
-            color: setColors(country),
+            color: setColors(country, metric),
         })
         .setLngLat(countryCenter)
         .addTo(map);
@@ -357,16 +382,40 @@ const buildChartData = data => {
             x: date,
             y: data.cases[date]
         }
-
         chartData.push(newDataPoint);
     }
     return chartData;
 }
 
+
+const buildPieChart = PieChartData => {
+    let ctx_PChart = document.getElementById('myChart-pieChart').getContext('2d');
+    let myPieChart = new Chart(ctx_PChart, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: PieChartData,
+                backgroundColor: ["#6baed6", "#74c476", "#fb6a4a"],
+            }],
+
+            labels: [
+                'Active',
+                'Recovered',
+                'Deaths'
+            ],
+
+        },
+        options: {
+            mainAspectRatio: false,
+            responsive: true,
+        } 
+    });
+}
+
 const buildChart = chartData => {
     let timeFormat = 'MM/DD/YY';
-    let ctx = document.getElementById('myChart').getContext('2d');
-    let chart = new Chart(ctx, {
+    let ctx_LChart = document.getElementById('myChart-linearChart').getContext('2d');
+    let chart = new Chart(ctx_LChart, {
         type: 'line',
         data: {
             datasets: [{
@@ -378,6 +427,7 @@ const buildChart = chartData => {
             }]
         },
         options: {
+            mainAspectRatio: false,
             responsive: true,
             tooltips: {
                 mode: 'index',
@@ -390,10 +440,10 @@ const buildChart = chartData => {
                         format: timeFormat,
                         tooltipFormat: 'll'
                     },
-                    scaleLabel: {
-                        display:     true,
-                        labelString: 'Date'
-                    }
+                    //scaleLabel: {
+                     //   display:     true,
+                   //     labelString: 'Date'
+                 //   }
                 }],
                 yAxes: [{
                     ticks: {
@@ -406,27 +456,52 @@ const buildChart = chartData => {
             }
         }
     });
+
 }
 
+
+  
+
+
 const showNewsInNewsContainer = data => {
+
+    let glide = new Glide('.news', {
+        type: 'carousel',
+        perView: 5,
+        focusAt: 'center',
+        gap: 40,
+        breakpoints: {
+            1200: {
+                perView: 3
+            },
+            800: {
+                perView: 2
+            }
+        }
+    });
+
     let html = '';
     let articles = data["articles"]
     articles.forEach( (article) => {
         console.log(article)
         html += `
-        <div class="news-card">
-          <div class="news-info">
-          <p class="news-source">${article.source.name}</p>
-          <p class="news-card-title">${article.title}</p>         
-          <div  class="news-link"> <a href="${article.url}"> Read more >> </a></div>
-          <p class="posting-time">${article.publishedAt}</p>
-          </div>
-          <div class="news-cover"> <img src="${article.urlToImage}" alt=""> </div>
-        </div> 
+        <il class="glide__slide">
+            <div class="news-card">
+                <div class="news-cover"> <img src="${article.urlToImage}" alt=""> </div>
+                <div class="news-info">
+                <p class="news-source">${article.source.name}</p>
+                <p class="news-card-title">${article.title}</p>         
+                <div  class="news-link"> <a href="${article.url}"> Read more >> </a></div>
+                <p class="posting-time">${article.publishedAt}</p>
+                </div>
+            </div> 
+        </il>
         `
     })
 
-    document.querySelector('.news-cards').innerHTML = html;
+    document.querySelector('.glide__slides').innerHTML = html;
+    glide.mount()
+
 }
 
 

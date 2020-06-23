@@ -177,6 +177,40 @@ const FlyToCountry = (selection ,data) => {
     addPopups(data, countryCoordinates, selection);
 }
 
+const lang = 'en-US'
+  const voiceIndex = 1
+  
+  const speak = async (text) => {
+    if (!speechSynthesis) { return }
+    const message = new SpeechSynthesisUtterance(text)
+    message.voice = await chooseVoice()
+    speechSynthesis.speak(message)
+  }
+  
+  const getVoices = () => {
+    return new Promise((resolve) => {
+      let voices = speechSynthesis.getVoices()
+      if (voices.length) {
+        resolve(voices)
+        return
+      }
+      speechSynthesis.onvoiceschanged = () => {
+        voices = speechSynthesis.getVoices();
+        resolve(voices)
+      }
+    })
+  }
+
+  const chooseVoice = async () => {
+    const voices = (await getVoices()).filter((voice) => voice.lang == lang)
+
+    return new Promise((resolve) => {
+      resolve(voices[voiceIndex])
+    })
+  }
+
+   
+
 
 const showDataInCountryStatsContainer = (selection , data) => {
    
@@ -184,6 +218,27 @@ const showDataInCountryStatsContainer = (selection , data) => {
     if(selection){
         data.forEach( country => {
             if(country.country === selection) {
+                
+
+                if (country.country === 'WorldWide') {
+                    speak(
+                        `This app is here to help you learn about COVID19,
+                        Total cases in  ${country.country} are ${country.cases},
+                        Today cases in  ${country.country} are ${(country.todayCases !== null) || (country.todayCases !== undefined)  ? (country.todayCases) : 'not specified' },
+                        Recovered cases in  ${country.country} are ${country.recovered},
+                        Deaths in  ${country.country} are ${country.deaths}, may their souls rest in peace
+                        `);
+                } else {
+                    speak(
+                        `Total cases in  ${country.country} are ${country.cases},
+                        Today cases in  ${country.country} are ${(country.todayCases !== null) || (country.todayCases !== undefined)  ? (country.todayCases) : 'not specified' },
+                        Recovered cases in  ${country.country} are ${country.recovered},
+                        Deaths in  ${country.country} are ${country.deaths}, may their souls rest in peace
+                    `);
+                }
+        
+                   
+
                 html = `
                 <div class="country-stats">
                     <p>Tests</p>
@@ -451,6 +506,7 @@ const buildChart = chartData => {
                 data: chartData.Active,
                 lineTension: .7,
                 borderColor: '#6baed6',
+                backgroundColor: '#6baed6',
                 fill: false,
             },
             {
@@ -458,6 +514,7 @@ const buildChart = chartData => {
                 data: chartData.Recovered,
                 lineTension: .7,
                 borderColor: '#74c476',
+                backgroundColor: '#74c476',
                 fill: false,
             },
             {
@@ -465,6 +522,7 @@ const buildChart = chartData => {
                 data: chartData.Deaths,
                 lineTension: .7,
                 borderColor: '#fb6a4a',
+                backgroundColor: '#fb6a4a',
                 fill: false,
             }]
         },
@@ -512,7 +570,9 @@ const showNewsInNewsContainer = data => {
 
     let glide = new Glide('.news', {
         type: 'carousel',
+        autoplay: 2000,
         perView: 5,
+        draggable: true,
         focusAt: 'center',
         gap: 40,
         breakpoints: {
@@ -545,7 +605,7 @@ const showNewsInNewsContainer = data => {
     })
 
     document.querySelector('.glide__slides').innerHTML = html;
-    glide.mount()
+    glide.mount();
 
 }
 

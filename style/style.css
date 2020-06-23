@@ -133,7 +133,7 @@ body , html{
 #map,
 .mapboxgl-canvas-container {
     width: 100vw;
-    height: 500px;
+    height: 600px;
 }
 
 .mapboxgl-popup-content {
@@ -413,23 +413,31 @@ table tr {
     width: 250px;
     border: 2px solid lightgray;
     border-radius: .5em;
-}
-
-/*.glide__slides {
-    overflow: visible;
-}
-
-.glide__slide {
+    overflow: hidden;
     filter: blur(6px);
     opacity: .7;
     transition: .3s linear;
+}
+
+.glide__slides {
+    overflow: visible;
 }
 
 .glide__slide--active {
     opacity: 1;
     filter: none;
     transform: scale(1.1);
-} */
+} 
+
+.glide__track {
+    height: 420px;
+    padding: 30px; 
+}
+
+.glide__arrow {
+    color: #343a40;
+    border: 2px solid rgba(52, 58, 64, .5);
+}
 
 .news-container-heading {
     font-family: sans-serif;

@@ -5,30 +5,18 @@ body , html{
     width: 100vw;
 }
 
-.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
-    display: none;
+main {
+    width: 100vw;
+    height: 100vh;
 }
 
 .map-info {
     display: flex;
 }
 
-.no_result {
-    margin: 0.15rem auto;
-    padding: 0.6rem;
-    max-width: 280px;
-    border: 0.05rem solid #e3e3e3;
-    list-style: none;
-    text-align: left;
-    font-size: 1.1rem;
-    color: rgb(123, 123, 123);
-    transition: all 0.1s ease-in-out;
-    background-color: #fff;
-    border-radius: 0 0 1rem 1rem;
-    outline: none;
-  }
 
-.no_result:hover {
+
+/*.no_result:hover {
     cursor: default;
     background-color: #fff;
     border: 0.05rem solid #e3e3e3;
@@ -38,7 +26,7 @@ body , html{
     cursor: default;
     background-color: #fff;
     border: 0.05rem solid #e3e3e3;
-}
+}*/
 
 .selection {
     margin-top: 25vh;
@@ -52,23 +40,6 @@ body , html{
     color: #64ceaa;
 }
 
- 
-
-
-.chart-data {
-    width: 90vw;
-    margin: auto;
-    position: relative;
-    padding-top: 45px;
-}
-
-.chartjs-render-monitor {
-    border: 1px solid blue;
-    border-radius: 10px;
-    width: 1382px;
-    height: 691px;
-    padding: 20px;
-}
 
 .geocoder {
     position: absolute;
@@ -108,7 +79,7 @@ body , html{
 .map-view-btns-container {
     position: absolute;
     z-index: 100;
-    align-self: flex-end;
+    bottom: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -116,6 +87,8 @@ body , html{
     left: 1%;
 
 }
+
+
 
 .TotalCases,
 .Recovered,
@@ -128,12 +101,41 @@ body , html{
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    outline: 0;
+    transition: .5s linear;
 }
+
+.TotalCases:hover,
+.Recovered:hover,
+.deaths:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 6px 0px #969798;
+}
+
+.TotalCases:active,
+.Recovered:active,
+.deaths:active {
+    outline: none;
+}
+
+.TotalCases:focus,
+.Recovered:focus,
+.deaths:focus {
+    outline: 0;
+}
+
 
 #map,
 .mapboxgl-canvas-container {
-    width: 100vw;
+    width: 99vw ;
     height: 600px;
+    border-bottom-right-radius: 1.5em;
+    border-bottom-left-radius: 1.5em;
+    border-bottom: 4px solid #3F51B5;
+}
+
+.mapboxgl-canvas {
+    width: inherit;
 }
 
 .mapboxgl-popup-content {
@@ -146,6 +148,70 @@ body , html{
     font-size: 25px;
 }
 
+
+.search-container {
+    z-index: 100;
+    position: absolute;
+    left: 1%;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+
+#autoComplete,
+#autoComplete:focus,
+#autoComplete:hover {
+    width: 15rem;
+    border: .05rem solid #6baed6;
+    caret-color: #6baed6; 
+    color: #6baed6;
+    background-image: url(./magnifier.svg);
+}
+
+
+#autoComplete.focus-visible {
+    color: #3182bd;
+}
+
+#autoComplete:focus::placeholder,
+#autoComplete:hover::placeholder{
+    color: #bdd7e7;
+}
+
+.autoComplete_selected,
+.autoComplete_selected:hover,
+.autoComplete_result:hover {
+    border-left: 2px solid #3182bd;
+    border-right: 2px solid #3182bd;
+}
+
+.autoComplete_highlighted,
+.autoComplete_result,
+.autoComplete_highlighted:hover  {
+    opacity: 1;
+    color: #3182bd;
+}
+
+#autoComplete_list {
+    left: 1%;
+    right: unset;
+}
+
+.no_result {
+    margin: 0.15rem auto;
+    padding: 0.6rem;
+    max-width: 280px;
+    border: 0.05rem solid #e3e3e3;
+    list-style: none;
+    text-align: left;
+    font-size: 1.1rem;
+    color: rgb(123, 123, 123);
+    transition: all 0.1s ease-in-out;
+    background-color: #fff;
+    border-radius: 0 0 1rem 1rem;
+    outline: none;
+}
+ 
 .country-info-info {
     border-bottom: 1px solid #d3d3d3;
     display: flex;
@@ -229,31 +295,58 @@ body , html{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100vw;
+    width: inherit;
     padding-top: 6em;
 }
 
-.search-container {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-top: 2em;
-    margin-bottom: 1em;
+
+.card {
+    width: 20em;
+    height: 12em;
+    border-radius: .8em;
+    border-color: #3182bd;
+    transition: .5s linear;
+}
+
+.card:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 6px 0px #bdd7e7;
+}
+
+.card-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    line-height: 2em;
+}
+
+.card-body p {
+    font-size: 1.2em;
+}
+
+.location-card {
+    width: fit-content;
+    height: 8em;
+}
+
+.location-card  .card-title {
+    font-size: 2em;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 0;
 }
 
 .country-name {
-    width: fit-content;
-    padding: 10px 15px;
     height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
     font-family: sans-serif;
     letter-spacing: 1px;
     font-weight: 500;
-    background-color: teal;
-    border-radius: 20px;
     left: 50%;
 }
 
@@ -262,14 +355,13 @@ body , html{
     display: flex;
     justify-content: space-around;
     padding: 40px;
-    background: teal;
     margin-top: 25px;
     border-radius: 20px;
     align-items: center;
 }
 
 
-.country-stats {
+/*.country-stats {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -281,16 +373,28 @@ body , html{
     height: 200px;
     line-height: 5px;
     width: -webkit-fill-available;
+}*/
+
+.total, .today-cases, .active {
+    color: #3182bd ;
+}
+
+.recovered {
+    color: #31a354 ;
+}
+
+.death, .new-deaths {
+    color:  #de2d26;
 }
 
 .country-stats + p {
     margin-bottom: 15px;
 }
 
-.cases-number {
+/*.cases-number {
     font-size: 20px;
     margin-top: 8px;
-}
+}*/
 
 .stay-safe-instructions {
     display: flex;
@@ -395,6 +499,25 @@ table tr {
 .country-info,
 .WorldWide {
     border-bottom: 1.5px solid #0D47A1
+}
+
+.charts-container {
+    display: flex;
+    justify-content: center;
+    height: 65vh;
+    align-items: center;
+    margin: 5em;
+}
+
+.chart-card {
+    height: 25em;
+    width: 38em;
+    margin: 2em;
+}
+
+#myChart-pieChart,
+#myChart-linearChart {
+    height: 100%;
 }
 
 .news-container {
@@ -534,18 +657,12 @@ table tr {
     font-weight: 500;
 }
 
-#legend {
+/*#legend {
     position: absolute;
     top: 1em;
     left: 1em;
-}
+} */
  
-@media screen and (max-width: 620px) {
-    .searchBox:hover > .searchInput {
-        width: 150px;
-        padding: 0 6px;
-    }
-}
 
 
 

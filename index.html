@@ -28,7 +28,7 @@
       <input type="text" class="Search-input" >
     </div>
   </nav>-->
-  <main>
+  <main  >
   <section class="map-info"> 
    <!-- <div id="geocoder" class="geocoder"></div> -->
     <!--<div class="searchBox">
@@ -39,54 +39,70 @@
         </button> 
       </div>
     </div> -->
-    <div class="map-view-btns-container">
-      <button type="button" class="TotalCases">
-        <img src="assets/infected.png" alt="">
-      </button>
-      <button type="button" class="Recovered">
-        <img src="assets/recovered.png" alt="" width="32px" height="32px">
-      </button>
-      <button  type="button" class="deaths">
-        <img src="assets/death.png" alt="">
-      </button>
+   
+    <div id="map">
+      <div class="search-container">
+        <input id="autoComplete" tabindex="1">   
+        <!-- Default "id" value = "autoComplete"> -->
+        <div class="selection"></div> 
+      </div>
+      <div class="map-view-btns-container">
+        <button type="button" class="TotalCases">
+          <img src="assets/infected.png" alt="">
+        </button>
+        <button type="button" class="Recovered">
+          <img src="assets/recovered.png" alt="" width="32px" height="32px">
+        </button>
+        <button  type="button" class="deaths">
+          <img src="assets/death.png" alt="">
+        </button>
+      </div>
     </div>
-    <div id="map"></div>
-    <div class='legend'></div>
+    <!--<div class='legend'></div> -->
   </section>
 
-  <section class="search-container">
-    <input id="autoComplete" tabindex="1">   
-    <!-- Default "id" value = "autoComplete"> -->
-    <div class="selection"></div> 
-  </section>
+ 
 
   <section class="data-info">
-    <div class="country-name">
-      <p class="location">WorldWide</p>
+    <div class="card location-card">
+      <div class="card-body country-name">
+        <h5 class="card-title location">WorldWide</h5>
+      </div>
     </div>
+
     <div class="country-stats-container">
-      <div class="country-stats">
-        <p>Tests</p>
-        <p class="tests">154641541</p>
+      <div class="card ">
+        <div class="card-body country-stats">
+          <h5 class="card-title">Tests</h5>
+          <p class="tests">154641541</p>
+        </div>
       </div>
-      <div class="country-stats">
-        <p>Total Cases</p>
-        <p class="cases-number total">152454587</p>
-        <p>Today Cases</p>
-        <p class="cases-number today-cases">152487</p>
+
+      <div class="card ">
+        <div class="card-body country-stats">
+          <h5 class="card-title">Total Cases</h5>
+          <p class="cases-number total">154641541</p>
+          <h5 class="card-title">Active</h5>
+          <p class="cases-number active">152487</p>
+        </div>
       </div>
-      <div class="country-stats">
-        <p>Recovered</p>
-        <p class="cases-number recovered">152454587</p>
-        <p>Active</p>
-        <p class="cases-number active">1587</p>
+
+      <div class="card ">
+        <div class="card-body country-stats">
+          <h5 class="card-title">Recovered</h5>
+          <p class="cases-number recovered">154641541</p>
+        </div>
       </div>
-      <div class="country-stats">
-        <p>Deaths</p>
-        <p class="cases-number death">152454587</p>
-        <p> Today Deaths</p>
-        <p class="cases-number new-deaths">157</p>
+
+      <div class="card ">
+        <div class="card-body country-stats">
+          <h5 class="card-title">Deaths</h5>
+          <p class="cases-number death">154641541</p>
+          <h5 class="card-title">Today Deaths</h5>
+          <p class="cases-number new-deaths">152487</p>
+        </div>
       </div>
+      
     </div>
     <div class="stats-news-container">
     <div class="stats-container">
@@ -102,7 +118,7 @@
             <th class="metric">Cases per 1M people</th>
             <th class="metric">Recovered</th>
             <th class="metric">Deaths</th>
-            <th class="metric">new Cases</th>
+            <th class="metric">today Cases</th>
           </tr>
           </thead>
           <tbody class="country-info-container">
@@ -118,35 +134,23 @@
         </table>
       </div>
     </div>
-   <!-- <div class="news-container">
-      <div class="news-container-heading">
-        <h3>Top News</h3>
-      </div>
-      <div class="news-cards-container">
-        <div class="news-cards">
-          <div class="news-card">
-            <div class="news-info">
-              <p class="news-source">The Newyork Times</p>
-              <p class="news-card-title">Novel COVID-19</p>
-              <p class="news-description">article description</p> 
-              <div  class="news-link"> <a href="#"> Read more >> </a></div>
-              <p class="posting-time"> 9 hours ago</p>
-            </div>
-            <div class="news-cover"> <img src="assets/cleaning.png" alt=""> </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
+  </section>
 
-  <div class="chart-data">
-    <canvas id="myChart-linearChart" class="chartjs-render-monitor"></canvas>
-  </div>
+  <section class="charts-container">
 
-  <div class="chart-data">
-    <canvas id="myChart-pieChart" class="chartjs-render-monitor"></canvas>
-  </div>
-  
+    <div class="card col-6 chart-card ">
+      <div class="card-body ">
+        <canvas id="myChart-linearChart" class="chartjs-render-monitor"></canvas>
+      </div>
+    </div>
+
+    <div class="card col-6 chart-card ">
+      <div class="card-body ">
+        <canvas id="myChart-pieChart" class="chartjs-render-monitor"></canvas>
+      </div>
+    </div>
+   
   </section>
 
   <section class="stay-safe-container">

@@ -3,7 +3,7 @@ window.onload = () => {
     getWorldWideData();
     getCountryData();
     getHistoricalData();
-    addLegend();
+  //  addLegend();
     getNews();
 }
 
@@ -220,7 +220,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
             if(country.country === selection) {
                 
 
-                if (country.country === 'WorldWide') {
+               /* if (country.country === 'WorldWide') {
                     speak(
                         `This app is here to help you learn about COVID19,
                         Total cases in  ${country.country} are ${country.cases},
@@ -235,33 +235,42 @@ const showDataInCountryStatsContainer = (selection , data) => {
                         Recovered cases in  ${country.country} are ${country.recovered},
                         Deaths in  ${country.country} are ${country.deaths}, may their souls rest in peace
                     `);
-                }
+                } */
         
                    
 
                 html = `
-                <div class="country-stats">
-                    <p>Tests</p>
-                    <p class="tests">${country.tests}</p>
+                <div class="card ">
+                    <div class="card-body country-stats">
+                        <h5 class="card-title">Tests</h5>
+                        <p class="tests">${country.tests}</p>
+                    </div>
                 </div>
-                <div class="country-stats">
-                    <p>Total Cases</p>
-                    <p class="cases-number total">${country.cases}</p>
-                    <p>Today Cases</p>
-                    <p class="cases-number today-cases">${country.todayCases}</p>
+                <div class="card ">
+                    <div class="card-body country-stats">
+                        <h5 class="card-title">Total Cases</h5>
+                        <p class="cases-number total">${country.cases}</p>
+                        <h5 class="card-title">Active</h5>
+                        <p class="cases-number active">${country.active}</p>
+                    </div>
                 </div>
-                <div class="country-stats">
-                    <p>Recovered</p>
-                    <p class="cases-number recovered">${country.recovered}</p>
-                    <p>Active</p>
-                    <p class="cases-number active">${country.active}</p>
+
+                <div class="card ">
+                    <div class="card-body country-stats">
+                        <h5 class="card-title">Recovered</h5>
+                        <p class="cases-number recovered">${country.recovered}</p>
+                    </div>
                 </div>
-                <div class="country-stats">
-                    <p>Deaths</p>
-                    <p class="cases-number death">${country.deaths}</p>
-                    <p> Today Deaths</p>
-                    <p class="cases-number new-deaths">${country.todayDeaths}</p>
+
+                <div class="card ">
+                    <div class="card-body country-stats">
+                        <h5 class="card-title">Deaths</h5>
+                        <p class="cases-number death">${country.deaths}</p>
+                        <h5 class="card-title">Today Deaths</h5>
+                        <p class="cases-number new-deaths">${country.todayDeaths}</p>
+                    </div>
                 </div>
+                
                 `    
                 console.log(country);
             }

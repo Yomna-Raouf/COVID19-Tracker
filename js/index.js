@@ -428,11 +428,10 @@ const showDataInTable = (data) => {
         html += `
         <tr class="country-info">
             <td class="loc">${country.country}</td>
-            <td>${country.cases}</td>
-            <td>${country.casesPerOneMillion}</td>
-            <td>${country.recovered}</td>
-            <td>${country.deaths}</td>
-            <td>${country.todayCases}</td>
+            <td class="total" >${country.cases}</td>
+            <td class="recovered">${country.recovered}</td>
+            <td class="death">${country.deaths}</td>
+            <td class="today-cases">${country.todayCases}</td>
         </tr>
         `
     })
@@ -494,7 +493,7 @@ const buildPieChart = PieChartData => {
 
         },
         options: {
-            mainAspectRatio: false,
+            maintainAspectRatio: false,
             responsive: true,
             title: {
                 display: true,
@@ -536,7 +535,7 @@ const buildChart = chartData => {
             }]
         },
         options: {
-            mainAspectRatio: false,
+            maintainAspectRatio: false,
             responsive: true,
             title: {
                 display: true,
@@ -569,6 +568,9 @@ const buildChart = chartData => {
             }
         }
     });
+
+    chart.canvas.parentNode.style.height = '15em';
+    chart.canvas.parentNode.style.width = '45em';
 }
 
 

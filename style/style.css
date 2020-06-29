@@ -1,20 +1,32 @@
 body , html{
     margin: 0 auto;
     padding: 0;
-    height: 100%;
     width: 100vw;
+    background: #f1faee;
 }
 
-main {
-    width: 100vw;
-    height: 100vh;
+@font-face {
+    font-family: 'SEGA LOGO FONT';
+    font-style: normal;
+    font-weight: normal;
+    src: local('SEGA LOGO FONT'), url('SEGA.woff') format('woff');
 }
 
 .map-info {
     display: flex;
 }
 
+.covid {
+    text-align: center;
+    height: 5em;
+    padding: 1em;
+    font-family: 'SEGA LOGO FONT', sans-serif, Arial, Helvetica;
+}
 
+h1 {
+    color: rgba(230, 57, 70, 0.85);
+    letter-spacing: 1px;
+}
 
 /*.no_result:hover {
     cursor: default;
@@ -41,7 +53,7 @@ main {
 }
 
 
-.geocoder {
+/*.geocoder {
     position: absolute;
     z-index: 1;
     width: 40%;
@@ -72,7 +84,7 @@ main {
     width: 34px;
     height: 40px;
     left: 10px;
-}
+}*/
 
  
 
@@ -105,6 +117,22 @@ main {
     transition: .5s linear;
 }
 
+ 
+
+.TotalCases {
+    border: 2px solid #1d3557;
+}
+ 
+
+.Recovered {
+    border: 2px solid #31a354;
+}
+
+.deaths {
+    border: 2px solid #de2d26;
+}
+
+
 .TotalCases:hover,
 .Recovered:hover,
 .deaths:hover {
@@ -124,14 +152,20 @@ main {
     outline: 0;
 }
 
+#map {
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    border: 3px solid #1d3557;
+    border-radius: 1.5em;
+    box-shadow: 0px 0px 6px 0px #969798;
+}
 
 #map,
 .mapboxgl-canvas-container {
-    width: 99vw ;
-    height: 600px;
-    border-bottom-right-radius: 1.5em;
-    border-bottom-left-radius: 1.5em;
-    border-bottom: 4px solid #3F51B5;
+    width: 97vw ;
+    height: 650px;
+   
 }
 
 .mapboxgl-canvas {
@@ -162,10 +196,11 @@ main {
 #autoComplete:focus,
 #autoComplete:hover {
     width: 15rem;
-    border: .05rem solid #6baed6;
-    caret-color: #6baed6; 
-    color: #6baed6;
+    border: .05rem solid #457b9d;
+    caret-color: #457b9d; 
+    color: #457b9d;
     background-image: url(./magnifier.svg);
+    box-shadow: 0px 0px 6px 0px #969798;
 }
 
 
@@ -256,7 +291,6 @@ main {
 .circle {
     width: 30px;
     height: 30px;
-    background-color: blue;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -295,7 +329,6 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: inherit;
     padding-top: 6em;
 }
 
@@ -304,8 +337,13 @@ main {
     width: 20em;
     height: 12em;
     border-radius: .8em;
-    border-color: #3182bd;
+    border: 2px solid #3182bd;
     transition: .5s linear;
+    background: url(../assets/coronavirus_PNG20.png) no-repeat center center  ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .card:hover {
@@ -319,6 +357,7 @@ main {
     align-items: center;
     flex-direction: column;
     line-height: 2em;
+    color: #1d3557;
 }
 
 .card-body p {
@@ -375,17 +414,6 @@ main {
     width: -webkit-fill-available;
 }*/
 
-.total, .today-cases, .active {
-    color: #3182bd ;
-}
-
-.recovered {
-    color: #31a354 ;
-}
-
-.death, .new-deaths {
-    color:  #de2d26;
-}
 
 .country-stats + p {
     margin-bottom: 15px;
@@ -403,20 +431,25 @@ main {
 }
 
 .stats-news-container {
+    margin-top: 4em;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-end;
     padding-top: 35px;
     width: 100vw;
+    background: url(../assets/gfx-a.png) no-repeat ;
 }
 
 .stats-container {
-    width: 700px;
-    height: 700px;
+    width: 800px;
+    height: 710px;
     padding: 20px 20px;
-    border: 1px solid lightgrey;
+    border: 1px solid rgba(230, 57, 70, .8);
+    background: #f7f7f7;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
+    box-shadow: 0px 0px 6px 0px #969798;
+    margin-right: 250px;
 }
 
 .table-title h3 {
@@ -424,11 +457,25 @@ main {
     letter-spacing: 1px;
     font-size: 22px;
     padding: 0 5px;
+    color: #24487b;
+    margin-bottom: .5em;
 }
 
 .table-container {
     overflow-y: scroll;
     font-family: sans-serif;
+    width: 100%;
+    border-radius: 1em;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.table-container::-webkit-scrollbar {
+    display: none;
+  }
+
+table {
+    width: 100%;
 }
 
 #table-data {
@@ -442,20 +489,15 @@ main {
     padding-left: 0;
     padding: 0 8px 12px 8px;
     font-weight: 400;
-    background-color: #BBDEFB;
-    color: #70757a;
-    font-size: 12px;
+    font-size: 16px;
     position: sticky;
     top: 0;
-    z-index: 1;
+    /*z-index: 1;*/
 }
 
 .metric {
-    padding: 0 8px 12px 8px;
     text-align: right;
     font-weight: 400;
-    background-color: #ffffff;
-    color: #70757a;
     font-size: 12px;
     position: sticky;
     top: 0;
@@ -465,11 +507,14 @@ main {
 .table-head  {
     width: 100px;
     text-align: center;
-    border-bottom: 1.5px solid #0D47A1;
+    border-bottom: 1.5px solid #a8dadc;
 }
 
 .table-head th {
-    background-color: #BBDEFB;
+    background-color: #a8dadc;
+    font-size: 16px;
+    padding: 10px 8px 12px 8px;
+    color: #254065;
 }
 
 
@@ -477,7 +522,7 @@ td {
     padding: 0 8px 12px 8px;
     text-align: center;
     font-weight: 700;
-    background-color: #ffffff;
+    background-color: rgba(168, 218, 220, 0.5);
     font-size: 14px;
     vertical-align: bottom;
 }
@@ -488,17 +533,29 @@ td {
     padding-left: 0;
     padding: 0 8px 12px 8px;
     font-weight: 700;
-    background-color: #ffffff;
     font-size: 14px;
+    color: #457b9d ;
 }
 
 table tr {
     height: 45px;
 }
 
+.total, .today-cases, .active {
+    color: #3182bd ;
+}
+
+.recovered {
+    color: #31a354 ;
+}
+
+.death, .new-deaths {
+    color:  #de2d26;
+}
+
 .country-info,
 .WorldWide {
-    border-bottom: 1.5px solid #0D47A1
+    border-bottom: 1.5px solid #a8dadc;
 }
 
 .charts-container {
@@ -511,13 +568,15 @@ table tr {
 
 .chart-card {
     height: 25em;
-    width: 38em;
+    width: 40em;
     margin: 2em;
 }
 
-#myChart-pieChart,
-#myChart-linearChart {
-    height: 100%;
+.chartjs-render-monitor,
+#myChart-linearChart,
+canvas {
+    animation: chartjs-render-animation 1ms;
+    width: 585px;
 }
 
 .news-container {
@@ -562,7 +621,7 @@ table tr {
     border: 2px solid rgba(52, 58, 64, .5);
 }
 
-.news-container-heading {
+/*.news-container-heading {
     font-family: sans-serif;
     font-size: 22px;
     letter-spacing: 1px;
@@ -571,7 +630,7 @@ table tr {
     margin-bottom: 1em;
     position: sticky;
     z-index: 100;
-}
+}*/
 
 .news-cards-container {
     display: flex;

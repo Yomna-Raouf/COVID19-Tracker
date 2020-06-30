@@ -5,6 +5,7 @@ window.onload = () => {
     getHistoricalData();
   //  addLegend();
     getNews();
+    AOS.init();
 }
 
 let reflectTotalCasesBtn = document.querySelector('.TotalCases');
@@ -30,14 +31,17 @@ const getCountryData = () => {
         reflectTotalCasesBtn.addEventListener('click', () => {
             console.log('reflectTotalCasesBtn');
             addMarkers(data, "Active");
+            document.querySelector('#map').style.borderColor = '#1d3557';
         });
         reflectDeathsBtn.addEventListener('click', () => {
             console.log('reflectDeathsBtn');
             addMarkers(data, "Deaths");
+            document.querySelector('#map').style.borderColor = '#de2d26';
         });
         reflectRecoveredBtn.addEventListener('click', () => {
             console.log('reflectRecoveredBtn');
             addMarkers(data, "Recovered");
+            document.querySelector('#map').style.borderColor = '#31a354';
         });
         addMarkers(data, "Active");
     })
@@ -240,13 +244,22 @@ const showDataInCountryStatsContainer = (selection , data) => {
                    
 
                 html = `
-                <div class="card ">
+                <div 
+                    class="card col-2"
+                    data-aos="zoom-in-down"
+                    data-aos-duration="2000"
+                    >
                     <div class="card-body country-stats">
                         <h5 class="card-title">Tests</h5>
                         <p class="tests">${country.tests}</p>
                     </div>
                 </div>
-                <div class="card ">
+
+                <div 
+                    class="card col-2"
+                    data-aos="zoom-in-down"
+                    data-aos-duration="2000"
+                    >
                     <div class="card-body country-stats">
                         <h5 class="card-title">Total Cases</h5>
                         <p class="cases-number total">${country.cases}</p>
@@ -255,14 +268,22 @@ const showDataInCountryStatsContainer = (selection , data) => {
                     </div>
                 </div>
 
-                <div class="card ">
+                <div 
+                    class="card col-2"
+                    data-aos="zoom-in-down"
+                    data-aos-duration="2000"
+                    >
                     <div class="card-body country-stats">
                         <h5 class="card-title">Recovered</h5>
                         <p class="cases-number recovered">${country.recovered}</p>
                     </div>
                 </div>
 
-                <div class="card ">
+                <div 
+                    class="card col-2"
+                    data-aos="zoom-in-down"
+                    data-aos-duration="2000"
+                    >
                     <div class="card-body country-stats">
                         <h5 class="card-title">Deaths</h5>
                         <p class="cases-number death">${country.deaths}</p>
@@ -376,36 +397,30 @@ const addPopups = (data, countryCenter, selection) => {
         if (country.country === selection ) {
         html =  `
         <div class="country-info-window">
-                <div class="country-info-info">
-                    <div class="flag">
-                        <img src=" ${country.countryInfo.flag}" alt="country Flag">
+            <div class="country-info-info">
+                <div class="flag">
+                    <img src=" ${country.countryInfo.flag}" alt="country Flag">
+                </div>
+                <div class="country-name-tests">
+                    <div class="selected-country-name">
+                        <p> ${country.country} </p>
                     </div>
-                    <div class="country-name-tests">
-                        <div class="selected-country-name">
-                           <p> ${country.country} </p>
-                        </div>
-                        <div class="country-tests">
-                            <p>Tests: ${country.tests} </p>
-                        </div>
-                    </div>  
-                </div>    
-                <div class="country-info-stats-cases">
-                    <div class="circle">
-                        <i class='fas fa-chevron-right'></i>
-                    </div> 
-                        <p>Cases: ${country.cases}</p>
-                </div>
-                <div class="country-info-stats-recovered">
-                    <div class="circle">
-                        <i class='fas fa-chevron-right'></i>
+                    <div class="country-tests">
+                        <p>Tests: ${country.tests} </p>
                     </div>
-                        <p>Recovered: ${country.recovered}</p>
-                </div>
-                <div class="country-info-stats-deaths">
-                <div class="circle">
-                    <i class='fas fa-chevron-right'></i>
-                </div>
-                    <p>Deaths: ${country.deaths}</p>
+                </div>  
+            </div>    
+            <div class="country-info-stats-cases">
+                <i class='fas fa-chevron-right'></i>
+                <p>Cases: ${country.cases}</p>
+            </div>
+            <div class="country-info-stats-recovered">
+                <i class='fas fa-chevron-right'></i>
+                <p>Recovered: ${country.recovered}</p>
+            </div>
+            <div class="country-info-stats-deaths">
+                <i class='fas fa-chevron-right'></i>
+                <p>Deaths: ${country.deaths}</p>
             </div>
         </div>
     `

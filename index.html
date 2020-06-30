@@ -18,6 +18,7 @@
 
 <!-- Optional Theme Stylesheet -->
 <link rel="stylesheet" href="style/glide.theme.min.css">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="style/style.css">
     <title>COVID-19 Tracker</title>
 </head>
@@ -31,7 +32,12 @@
   <main  >
 
   <div class="covid">
-    <h1>CORONA VIRUS</h1>
+    <h1
+      data-aos="fade-left"
+      data-aos-duration="1200"
+      >
+      CORONA VIRUS
+    </h1>
   </div>
   <section class="map-info"> 
    <!-- <div id="geocoder" class="geocoder"></div> -->
@@ -68,21 +74,34 @@
  
 
   <section class="data-info">
-    <div class="card location-card">
+    <div 
+      class="card location-card"
+      data-aos="flip-up"
+      data-aos-duration="2000"
+      >
       <div class="card-body country-name">
         <h5 class="card-title location">WorldWide</h5>
       </div>
     </div>
 
     <div class="country-stats-container">
-      <div class="card ">
+
+      <div 
+        class="card col-2"
+        data-aos="zoom-in-down"
+        data-aos-duration="2000"
+        >
         <div class="card-body country-stats">
           <h5 class="card-title">Tests</h5>
           <p class="tests">154641541</p>
         </div>
       </div>
 
-      <div class="card ">
+      <div 
+        class="card col-2"
+        data-aos="zoom-in-down"
+        data-aos-duration="2000"
+        >
         <div class="card-body country-stats">
           <h5 class="card-title">Total Cases</h5>
           <p class="cases-number total">154641541</p>
@@ -91,14 +110,22 @@
         </div>
       </div>
 
-      <div class="card ">
+      <div 
+        class="card col-2"
+        data-aos="zoom-in-down"
+        data-aos-duration="2000"
+        >
         <div class="card-body country-stats">
           <h5 class="card-title">Recovered</h5>
           <p class="cases-number recovered">154641541</p>
         </div>
       </div>
 
-      <div class="card ">
+      <div 
+        class="card col-2"
+        data-aos="zoom-in-down"
+        data-aos-duration="2000"
+        >
         <div class="card-body country-stats">
           <h5 class="card-title">Deaths</h5>
           <p class="cases-number death">154641541</p>
@@ -204,7 +231,7 @@
   </footer>
 </main>
 
-
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="js/glide.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

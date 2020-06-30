@@ -174,12 +174,13 @@ h1 {
 
 .mapboxgl-popup-content {
     width: fit-content;
-    padding: 10px 15px;
+    border-radius: 1em;
+    background-color: #f1faee;
 }
 
 
 .mapboxgl-popup-close-button {
-    font-size: 25px;
+    font-size: 30px;
 }
 
 
@@ -191,6 +192,13 @@ h1 {
     margin-bottom: 1em;
 }
 
+.mapboxgl-popup {
+    max-width: fit-content;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+    border-bottom-color: #f1faee;
+}
 
 #autoComplete,
 #autoComplete:focus,
@@ -252,8 +260,10 @@ h1 {
     display: flex;
     align-items: center;
     padding: 5px;
-    margin-bottom:  1em;
+    margin-bottom: 1em;
+    flex-direction: column;
     font-family: sans-serif;
+    justify-content: center;
 }
 
 .country-info-window {
@@ -268,7 +278,14 @@ h1 {
 }
 
 .flag {
-    margin-right: 2.8em;
+    margin-bottom: 1em;
+}
+
+.country-name-tests {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .flag img {
@@ -283,22 +300,17 @@ h1 {
 .country-info-stats-deaths,
 .country-tests {
     display: flex;
-    align-items: center;
-    font-size: 14px;
+    align-items: baseline;
+    font-size: 16px;
     letter-spacing: 1px;
+    justify-content: left;
+    padding: .1em;
 }
 
-.circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 1.5em;
-    color: #fff;
+.fa-chevron-right {
+    color: #457b9d;
     font-size: 20px;
-    margin-left: 5px;
+    margin: 5px;
 }
 
 .legend {
@@ -337,6 +349,7 @@ h1 {
     width: 20em;
     height: 12em;
     border-radius: .8em;
+    margin: 2em;
     border: 2px solid #3182bd;
     transition: .5s linear;
     background: url(../assets/coronavirus_PNG20.png) no-repeat center center  ;
@@ -390,13 +403,14 @@ h1 {
 }
 
 .country-stats-container {
-    width: 90vw;
+    width: 100vw;
     display: flex;
     justify-content: space-around;
     padding: 40px;
     margin-top: 25px;
     border-radius: 20px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 

@@ -76,7 +76,7 @@
   <section class="data-info">
     <div 
       class="card location-card"
-      data-aos="flip-up"
+      data-aos="zoom-in-down"
       data-aos-duration="2000"
       >
       <div class="card-body country-name">
@@ -87,7 +87,7 @@
     <div class="country-stats-container">
 
       <div 
-        class="card col-2"
+        class="card"
         data-aos="zoom-in-down"
         data-aos-duration="2000"
         >
@@ -98,7 +98,7 @@
       </div>
 
       <div 
-        class="card col-2"
+        class="card"
         data-aos="zoom-in-down"
         data-aos-duration="2000"
         >
@@ -111,7 +111,7 @@
       </div>
 
       <div 
-        class="card col-2"
+        class="card"
         data-aos="zoom-in-down"
         data-aos-duration="2000"
         >
@@ -122,7 +122,7 @@
       </div>
 
       <div 
-        class="card col-2"
+        class="card"
         data-aos="zoom-in-down"
         data-aos-duration="2000"
         >
@@ -185,14 +185,54 @@
   <section class="stay-safe-container">
     
       <div class="stay-safe-title">
-        <p>Stay Safe</p>
+        <h2>Stay Safe</h2>
       </div>
       <div class="stay-safe-instructions">
-        <img src="assets/hands.png" alt="wash your hands">
-        <img src="assets/cough.png" alt="cough elbow">
-        <img src="assets/face.png" alt="don't touch face">
-        <img src="assets/people.png" alt="social distancing">
-        <img src="assets/work.png" alt="stay home">
+        <figure >
+          <img 
+            src="assets/washHands.svg"
+            alt="wash your hands" 
+            data-aos="fade-up" 
+            data-aos-duration="2000"
+          >
+          <figcaption data-aos="fade-down" data-aos-duration="3000"> Always Wash your hands </figcaption>
+        </figure>
+
+        <figure >
+          <img 
+            src="assets/coughElbow.svg" 
+            alt="cough elbow" 
+            data-aos="fade-down" 
+            data-aos-duration="2000"
+          >
+          <figcaption data-aos="fade-up" data-aos-duration="3000"> Elbow cough into it </figcaption>
+        </figure>
+
+        
+        <figure >
+          <img 
+            src="assets/wearMask.svg" 
+            alt="don't touch face" 
+            data-aos="fade-up" 
+            data-aos-duration="2000"
+          >
+          <figcaption data-aos="fade-down" data-aos-duration="3000"> Always wear a mask & Don't touch your face </figcaption>
+        </figure>
+
+        <figure >
+          <img 
+            src="assets/socialDistance.svg" 
+            alt="social distancing" 
+            data-aos="fade-down" 
+            data-aos-duration="2000"
+          >
+          <figcaption data-aos="fade-up" data-aos-duration="3000"> Keep social distance  </figcaption>
+        </figure>
+
+        <figure > 
+          <img src="assets/stayHome.svg" alt="stay home" data-aos="fade-up" data-aos-duration="2000">
+          <figcaption data-aos="fade-down" data-aos-duration="3000"> Stay Home, Stay Safe! go out when necessary </figcaption>
+        </figure>
       </div>
     
   </section>
@@ -221,11 +261,15 @@
     </div>       
   </section>
 
-  <footer style="background-color: rgb(19, 18, 18); color: #fff;">
+  <footer style="background-color: #161616; color: #fff;">
     <h6 class="author"> Made by Eng.Yomna Raouf</h6>
     <div class="about">
       <div class="data-source">
-        <p>This data is from......</p>
+        <p>This data is from 
+          <a href="https://corona.lmao.ninja/" >disease.sh - Open Disease Data</a>
+        </p> 
+        <p> It changes rapidly</p>
+        <p> It only includes people tested</p>
       </div>
     </div>
   </footer>

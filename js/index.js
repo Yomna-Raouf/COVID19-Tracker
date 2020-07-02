@@ -11,6 +11,7 @@ window.onload = () => {
 let reflectTotalCasesBtn = document.querySelector('.TotalCases');
 let reflectRecoveredBtn = document.querySelector('.Recovered');
 let reflectDeathsBtn = document.querySelector('.deaths');
+let currentMarkers = [];
  
 mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkdXJvbTEybm9jNiJ9.Ptr2DKynFUQVoaNYN-6uqA';
   var map = new mapboxgl.Map({
@@ -29,16 +30,19 @@ const getCountryData = () => {
         showDataInTable(data);
         Search(data);
         reflectTotalCasesBtn.addEventListener('click', () => {
+            removeCurrentMarkers();
             console.log('reflectTotalCasesBtn');
             addMarkers(data, "Active");
             document.querySelector('#map').style.borderColor = '#1d3557';
         });
         reflectDeathsBtn.addEventListener('click', () => {
+            removeCurrentMarkers();
             console.log('reflectDeathsBtn');
             addMarkers(data, "Deaths");
             document.querySelector('#map').style.borderColor = '#de2d26';
         });
         reflectRecoveredBtn.addEventListener('click', () => {
+            removeCurrentMarkers();
             console.log('reflectRecoveredBtn');
             addMarkers(data, "Recovered");
             document.querySelector('#map').style.borderColor = '#31a354';
@@ -70,7 +74,7 @@ const getWorldWideData = () => {
 }
 
 const getNews = () => {
-    fetch("https://newsapi.org/v2/everything?q=COVID&from=2020-06-16&apiKey=c361ee82ad48460287bf148b5aee5809&sortBy=popularity")
+    fetch("https://newsapi.org/v2/everything?q=COVID&from=2020-06-29&apiKey=c361ee82ad48460287bf148b5aee5809&sortBy=popularity")
     .then(response =>  response.json())
     .then( data => {
         console.log(data["articles"]);
@@ -245,7 +249,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
 
                 html = `
                 <div 
-                    class="card col-2"
+                    class="card"
                     data-aos="zoom-in-down"
                     data-aos-duration="2000"
                     >
@@ -256,7 +260,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
                 </div>
 
                 <div 
-                    class="card col-2"
+                    class="card"
                     data-aos="zoom-in-down"
                     data-aos-duration="2000"
                     >
@@ -269,7 +273,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
                 </div>
 
                 <div 
-                    class="card col-2"
+                    class="card"
                     data-aos="zoom-in-down"
                     data-aos-duration="2000"
                     >
@@ -280,7 +284,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
                 </div>
 
                 <div 
-                    class="card col-2"
+                    class="card"
                     data-aos="zoom-in-down"
                     data-aos-duration="2000"
                     >
@@ -373,11 +377,24 @@ const addMarkers = (data, metric) => {
         .setLngLat(countryCenter)
         .addTo(map);
 
+        currentMarkers.push(marker);
+
         marker.getElement().addEventListener('click', function (e) {
             marker.setPopup(addPopups(data, countryCenter, country.country)).addTo(map);
         });
     }); 
 } 
+
+const removeCurrentMarkers = () => {
+    if (currentMarkers!==null) {
+        for (let i = currentMarkers.length - 1; i >= 0; i--) {
+          currentMarkers[i].remove();
+        }
+    }
+    currentMarkers = [];
+    console.log(currentMarkers.length);
+}
+
 
 //const showDataOnMap = (data) => {
   //  data.map((country) => {

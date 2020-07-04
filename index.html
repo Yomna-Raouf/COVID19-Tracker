@@ -33,7 +33,7 @@
 
   <div class="covid">
     <h1
-      data-aos="fade-left"
+      data-aos="zoom-in"
       data-aos-duration="1200"
       >
       CORONA VIRUS
@@ -53,17 +53,16 @@
     <div id="map">
       <div class="search-container">
         <input id="autoComplete" tabindex="1">   
-        <!-- Default "id" value = "autoComplete"> -->
         <div class="selection"></div> 
       </div>
       <div class="map-view-btns-container">
-        <button type="button" class="TotalCases">
+      <button onclick="changeMapData('Active');"  type="button" class="TotalCases">
           <img src="assets/infected.png" alt="">
         </button>
-        <button type="button" class="Recovered">
+        <button onclick="changeMapData('Recovered');" type="button" class="Recovered">
           <img src="assets/recovered.png" alt="" width="32px" height="32px">
         </button>
-        <button  type="button" class="deaths">
+        <button onclick="changeMapData('Deaths');"  type="button" class="deaths">
           <img src="assets/death.png" alt="">
         </button>
       </div>

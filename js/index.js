@@ -7,10 +7,11 @@ window.onload = () => {
     AOS.init();
 }
 
-let reflectTotalCasesBtn = document.querySelector('.TotalCases');
+/*let reflectTotalCasesBtn = document.querySelector('.TotalCases');
 let reflectRecoveredBtn = document.querySelector('.Recovered');
-let reflectDeathsBtn = document.querySelector('.deaths');
+let reflectDeathsBtn = document.querySelector('.deaths');*/
 let currentMarkers = [];
+let CountriesCoordinates = {};
  
 mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkdXJvbTEybm9jNiJ9.Ptr2DKynFUQVoaNYN-6uqA';
   var map = new mapboxgl.Map({
@@ -33,7 +34,9 @@ function ipLookUp (countryData) {
 
     });
 }
-  
+
+let countriesData ;
+
 const getCountryData = () => {
     fetch("https://corona.lmao.ninja/v2/countries")
     .then( response => response.json())
@@ -41,25 +44,26 @@ const getCountryData = () => {
         showDataInTable(data);
         Search(data);
         ipLookUp(data);
-        reflectTotalCasesBtn.addEventListener('click', () => {
+        countriesData = data;
+       /* reflectTotalCasesBtn.addEventListener('click', () => {
             removeCurrentMarkers();
             console.log('reflectTotalCasesBtn');
             addMarkers(data, "Active");
             document.querySelector('#map').style.borderColor = '#1d3557';
-        });
-        reflectDeathsBtn.addEventListener('click', () => {
+        });*/
+        /*reflectDeathsBtn.addEventListener('click', () => {
             removeCurrentMarkers();
             console.log('reflectDeathsBtn');
             addMarkers(data, "Deaths");
             document.querySelector('#map').style.borderColor = '#de2d26';
-        });
-        reflectRecoveredBtn.addEventListener('click', () => {
+        });*/
+       /* reflectRecoveredBtn.addEventListener('click', () => {
             removeCurrentMarkers();
             console.log('reflectRecoveredBtn');
             addMarkers(data, "Recovered");
             document.querySelector('#map').style.borderColor = '#31a354';
-        });
-        addMarkers(data, "Active");
+        });*/
+        addMarkers(data);
     })
 }
 
@@ -95,11 +99,23 @@ const getNews = () => {
     .catch(error => console.log('error', error));
 }
 
+const changeMapData = (metric) => {
+    let MapDataColors = {
+        'Active': '#1d3557',
+        'Deaths': '#de2d26',
+        "Recovered": '#31a354'
+    }
+    console.log(metric);
+    removeCurrentMarkers();
+    addMarkers(countriesData,metric);
+    document.querySelector('#map').style.borderColor = MapDataColors[metric];
+}
+
 const Search = (data) => {
 
-    document.querySelector("#autoComplete").addEventListener("autoComplete", event => {
+    /*document.querySelector("#autoComplete").addEventListener("autoComplete", event => {
         console.log(event);
-    });
+    });*/
 
     new autoComplete({
        data: {
@@ -107,8 +123,8 @@ const Search = (data) => {
             document
 				.querySelector("#autoComplete")
                 .setAttribute("placeholder", "Loading...");
-                const source = await fetch('https://corona.lmao.ninja/v2/countries');
-                const data = await source.json();
+                //const source = await fetch('https://corona.lmao.ninja/v2/countries');
+                const data = await countriesData;
                 document
 				.querySelector("#autoComplete")
                 .setAttribute("placeholder", "country");
@@ -154,7 +170,7 @@ const Search = (data) => {
     onSelection: (feedback) => {             // Action script onSelection event | (Optional)
         const selection = feedback.selection.value.country;
 		// Render selected choice to selection div
-		document.querySelector(".location").innerHTML = selection;
+		//document.querySelector(".location").innerHTML = selection;
 		// Clear Input
 		document.querySelector("#autoComplete").value = "";
 		// Change placeholder with the selected value
@@ -163,39 +179,37 @@ const Search = (data) => {
             .setAttribute("placeholder", selection);
         
         // Console log autoComplete data feedback
-        console.log(feedback); 
+        //console.log(feedback); 
         FlyToCountry(selection, data);
     },
     });
 }
 
 const FlyToCountry = (selection ,data) => {
-    let countryCoordinates = [];
+    //let countryCoordinates = [];
     if(selection){
-        data.forEach( country => {
+        /*data.forEach( country => {
             if(country.country === selection ) {
                 countryCoordinates =  [
                     country.countryInfo.long,
                     country.countryInfo.lat
                 ]
             }
+        });*/
+        map.flyTo({
+            center: CountriesCoordinates[selection],
+            zoom: 5,
+            bearing: 0,
+            speed: 1,  
+            curve: 1,  
+            easing: function(t) {
+            return t;
+            },
+            essential: true
         });
-    }
-
-    map.flyTo({
-        center: countryCoordinates,
-        zoom: 5,
-        bearing: 0,
-        speed: 1,  
-        curve: 1,  
-        easing: function(t) {
-        return t;
-        },
-        essential: true
-    });
-    document.querySelector(".location").innerHTML = selection;
-    showDataInCountryStatsContainer(selection, data);
-    addPopups(data, countryCoordinates, selection);
+        showDataInCountryStatsContainer(selection, data);
+        addPopups(data, CountriesCoordinates[selection], selection);
+    }   
 }
 
 const lang = 'en-US'
@@ -315,6 +329,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
         });
     }
 
+    document.querySelector(".location").innerHTML = selection;
     document.querySelector('.country-stats-container').innerHTML = html;
 }
 
@@ -378,7 +393,9 @@ const setColors = (country, metric) => {
 }
 */
 
-const addMarkers = (data, metric) => {
+
+
+const addMarkers = (data, metric='Active') => {
     data.map((country) => {
         let countryCenter = {
             lng: country.countryInfo.long,
@@ -395,7 +412,13 @@ const addMarkers = (data, metric) => {
         marker.getElement().addEventListener('click', function (e) {
             marker.setPopup(addPopups(data, countryCenter, country.country)).addTo(map);
         });
+
+        if (!Object.entries(CountriesCoordinates).includes(countryCenter)){
+            CountriesCoordinates[country.country] = countryCenter;
+        }
     }); 
+
+    console.log(CountriesCoordinates);
 } 
 
 const removeCurrentMarkers = () => {

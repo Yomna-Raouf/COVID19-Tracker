@@ -12,14 +12,14 @@
     <script src="https://kit.fontawesome.com/de4c676988.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <!-- Required Core Stylesheet -->
-<link rel="stylesheet" href="style/glide.core.min.css">
+    <link rel="stylesheet" href="style/glide.core.min.css">
 
-<!-- Optional Theme Stylesheet -->
-<link rel="stylesheet" href="style/glide.theme.min.css">
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="style/style.css">
+    <!-- Optional Theme Stylesheet -->
+    <link rel="stylesheet" href="style/glide.theme.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style/style.css">
     <title>COVID-19 Tracker</title>
 </head>
 <body>
@@ -168,13 +168,13 @@
 
   <section class="charts-container">
 
-    <div class="card col-6 chart-card ">
+    <div class="card  chart-card ">
       <div class="card-body ">
         <canvas id="myChart-linearChart" class="chartjs-render-monitor"></canvas>
       </div>
     </div>
 
-    <div class="card col-6 chart-card ">
+    <div class="card  chart-card ">
       <div class="card-body ">
         <canvas id="myChart-pieChart" class="chartjs-render-monitor"></canvas>
       </div>
@@ -188,7 +188,7 @@
         <h2>Stay Safe</h2>
       </div>
       <div class="stay-safe-instructions">
-        <figure >
+        <figure>
           <img 
             src="assets/washHands.svg"
             alt="wash your hands" 
@@ -198,7 +198,7 @@
           <figcaption data-aos="fade-down" data-aos-duration="3000"> Always Wash your hands </figcaption>
         </figure>
 
-        <figure >
+        <figure>
           <img 
             src="assets/coughElbow.svg" 
             alt="cough elbow" 
@@ -247,7 +247,7 @@
               <div class="news-info">
                 <p class="news-source">The Newyork Times</p>
                 <p class="news-card-title">Novel COVID-19</p>
-                <div  class="news-link"> <a href="#"> Read more <i class="fa fa-chevron-right"></i> </a></div>
+                <div  class="news-link"> <a href="#"> Read more <i class="fa fa-chevron-right"></i> </a>  </div>
                 <p class="posting-time"> 9 hours ago</p>
               </div>
             </div>
@@ -261,27 +261,41 @@
     </div>       
   </section>
 
-  <footer style="background-color: #161616; color: #fff;">
-    <h6 class="author"> Made by Eng.Yomna Raouf</h6>
-    <div class="about">
+  <footer>
+    <div class="about-author">
+      <h5 class="author"> &#169; Made by Eng.Yomna Raouf</h5>
+      <div class="author-contact">
+        <i style="color: #0e76a8;" class="fab fa-linkedin"></i>
+        <i style="color: #fff;" class="fab fa-github-square"></i>
+        <i style="color: #3b5998;" class="fab fa-facebook-square"></i>
+        <i  style=" 
+          background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); border-radius: .1em; width: fit-content;" 
+          class="fab fa-instagram-square"
+        >
+        </i>
+      </div>
+    </div>
+    
+    <div class="about-data">
       <div class="data-source">
-        <p>This data is from 
-          <a href="https://corona.lmao.ninja/" >disease.sh - Open Disease Data</a>
+        <h6>About this data</h6>
+        <p> Data source: 
+          <a class="data-source-link" href="https://corona.lmao.ninja/" >disease.sh - Open Disease Data</a>
         </p> 
-        <p> It changes rapidly</p>
-        <p> It only includes people tested</p>
+        <p> • It changes rapidly</p>
+        <p> • It only includes people tested</p>
       </div>
     </div>
   </footer>
 </main>
 
+
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="js/glide.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>  
+  <!--<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>  -->
   <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>

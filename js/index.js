@@ -3,7 +3,6 @@ window.onload = () => {
     getWorldWideData();
     getCountryData();
     getHistoricalData();
-  //  addLegend();
     getNews();
     AOS.init();
 }
@@ -21,14 +20,27 @@ mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkd
     zoom: 2,
 });
 
+ 
+ 
+function ipLookUp (countryData) {
+    fetch('https://www.iplocate.io/api/lookup/')
+    .then( response => response.json() )
+    .then(data => {
+        let country = data.country;
+        FlyToCountry(country, countryData);
+        console.log('User\'s Location Data is ', data);
+        console.log('User\'s Country', data.country);
 
-
+    });
+}
+  
 const getCountryData = () => {
     fetch("https://corona.lmao.ninja/v2/countries")
     .then( response => response.json())
     .then((data)=>{
         showDataInTable(data);
         Search(data);
+        ipLookUp(data);
         reflectTotalCasesBtn.addEventListener('click', () => {
             removeCurrentMarkers();
             console.log('reflectTotalCasesBtn');
@@ -69,7 +81,7 @@ const getWorldWideData = () => {
         let modifiedWorldData = [worldData];
         let PieChartData = [worldData.active, worldData.recovered, worldData.deaths];
         buildPieChart(PieChartData);
-        showDataInCountryStatsContainer(worldData.country , modifiedWorldData);
+       // showDataInCountryStatsContainer(worldData.country , modifiedWorldData);
     });
 }
 
@@ -181,41 +193,42 @@ const FlyToCountry = (selection ,data) => {
         },
         essential: true
     });
+    document.querySelector(".location").innerHTML = selection;
     showDataInCountryStatsContainer(selection, data);
     addPopups(data, countryCoordinates, selection);
 }
 
 const lang = 'en-US'
-  const voiceIndex = 1
+const voiceIndex = 1
   
-  const speak = async (text) => {
-    if (!speechSynthesis) { return }
-    const message = new SpeechSynthesisUtterance(text)
-    message.voice = await chooseVoice()
-    speechSynthesis.speak(message)
-  }
+const speak = async (text) => {
+if (!speechSynthesis) { return }
+const message = new SpeechSynthesisUtterance(text)
+message.voice = await chooseVoice()
+speechSynthesis.speak(message)
+}
   
-  const getVoices = () => {
-    return new Promise((resolve) => {
-      let voices = speechSynthesis.getVoices()
-      if (voices.length) {
-        resolve(voices)
-        return
-      }
-      speechSynthesis.onvoiceschanged = () => {
-        voices = speechSynthesis.getVoices();
-        resolve(voices)
-      }
-    })
-  }
+const getVoices = () => {
+return new Promise((resolve) => {
+    let voices = speechSynthesis.getVoices()
+    if (voices.length) {
+    resolve(voices)
+    return
+    }
+    speechSynthesis.onvoiceschanged = () => {
+    voices = speechSynthesis.getVoices();
+    resolve(voices)
+    }
+})
+}
 
-  const chooseVoice = async () => {
-    const voices = (await getVoices()).filter((voice) => voice.lang == lang)
+const chooseVoice = async () => {
+const voices = (await getVoices()).filter((voice) => voice.lang == lang)
 
-    return new Promise((resolve) => {
-      resolve(voices[voiceIndex])
-    })
-  }
+return new Promise((resolve) => {
+    resolve(voices[voiceIndex])
+})
+}
 
    
 
@@ -228,9 +241,9 @@ const showDataInCountryStatsContainer = (selection , data) => {
             if(country.country === selection) {
                 
 
-               /* if (country.country === 'WorldWide') {
+                if (country.country === 'WorldWide') {
                     speak(
-                        `This app is here to help you learn about COVID19,
+                        `This app is here to help you learn about Corona virus,
                         Total cases in  ${country.country} are ${country.cases},
                         Today cases in  ${country.country} are ${(country.todayCases !== null) || (country.todayCases !== undefined)  ? (country.todayCases) : 'not specified' },
                         Recovered cases in  ${country.country} are ${country.recovered},
@@ -243,7 +256,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
                         Recovered cases in  ${country.country} are ${country.recovered},
                         Deaths in  ${country.country} are ${country.deaths}, may their souls rest in peace
                     `);
-                } */
+                } 
         
                    
 
@@ -309,7 +322,7 @@ const setColors = (country, metric) => {
     let colorsRecovered = ["#edf8e9","#bae4b3","#74c476","#31a354","#006d2c"];
     let colorsActive =  ["#eff3ff","#bdd7e7","#6baed6","#3182bd","#08519c"];
     let colorsDeaths = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
-    let obj = {
+    let casesType = {
         "Active": {
             color: colorsActive,
             metricValue : country.active
@@ -324,27 +337,27 @@ const setColors = (country, metric) => {
         }
     }
     console.log(metric);
-    console.log(obj[metric].color);
-    console.log(obj[metric].metricValue);
-   if ( obj[metric].metricValue < 1000 ) {
-        return obj[metric].color[0] ;
+    console.log(casesType[metric].color);
+    console.log(casesType[metric].metricValue);
+   if ( casesType[metric].metricValue < 1000 ) {
+        return casesType[metric].color[0] ;
     }
-    if ( obj[metric].metricValue >= 1000 && obj[metric].metricValue < 10000) {
-        return obj[metric].color[1] ;
+    if ( casesType[metric].metricValue >= 1000 && casesType[metric].metricValue < 10000) {
+        return casesType[metric].color[1] ;
     }
-    if ( obj[metric].metricValue >= 10000 && obj[metric].metricValue < 50000) {
-        return obj[metric].color[2] ;
+    if ( casesType[metric].metricValue >= 10000 && casesType[metric].metricValue < 50000) {
+        return casesType[metric].color[2] ;
     }
-    if (obj[metric].metricValue >= 50000 && obj[metric].metricValue < 100000) {
-        return obj[metric].color[3] ;
+    if (casesType[metric].metricValue >= 50000 && casesType[metric].metricValue < 100000) {
+        return casesType[metric].color[3] ;
     }
-    if (obj[metric].metricValue >= 100000 ) {
-        return obj[metric].color[4] ;
+    if (casesType[metric].metricValue >= 100000 ) {
+        return casesType[metric].color[4] ;
     }
      
 }
 
-const addLegend = () => {
+/*const addLegend = () => {
     const layers = ['0-1000', '1000-10000', '10000-50000', '50000-200000', '200000-500000', '5000000-1000000', '1000000+'];
     const colors = ['#fff5f0','#fee0d2','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d'];
 
@@ -363,7 +376,7 @@ const addLegend = () => {
         document.querySelector('.legend').appendChild(item);
     }
 }
-
+*/
 
 const addMarkers = (data, metric) => {
     data.map((country) => {
@@ -601,8 +614,8 @@ const buildChart = chartData => {
         }
     });
 
-    chart.canvas.parentNode.style.height = '15em';
-    chart.canvas.parentNode.style.width = '45em';
+   /* chart.canvas.parentNode.style.height = '15em';
+    chart.canvas.parentNode.style.width = '45em';*/
 }
 
 
@@ -639,7 +652,7 @@ const showNewsInNewsContainer = data => {
                 <div class="news-info">
                 <p class="news-source">${article.source.name}</p>
                 <p class="news-card-title">${(article.title).substring(0, 45)} ...</p>         
-                <div  class="news-link"> <a href="${article.url}"> Read more <i class="fa fa-chevron-right"></i> </a></div>
+                <div  class="news-link">  <a href="${article.url}"> Read more <i class="fa fa-chevron-right"></i> </a>  </div>
                 <p class="posting-time">${(article.publishedAt).substring(0, 10)}</p>
                 </div>
             </div> 

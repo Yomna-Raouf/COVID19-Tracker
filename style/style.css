@@ -164,7 +164,7 @@ h1 {
 
 #map,
 .mapboxgl-canvas-container {
-    width: 97vw ;
+    width: 96vw ;
     height: 650px;
    
 }
@@ -360,10 +360,10 @@ h1 {
     -o-background-size: cover;
     background-size: cover;
     transition: .5s linear;
+    box-shadow: 0px 0px 6px 0px #bdd7e7;
 }
 
 .card:hover { 
-    box-shadow: 0px 0px 6px 0px #bdd7e7;
     transform: scale(1.1);
 }
 
@@ -441,14 +441,8 @@ h1 {
     margin-top: 8px;
 }*/
 
-.stay-safe-instructions {
-    display: flex;
-    justify-content: space-evenly;
-    padding-bottom: 30px;
-}
-
 .stats-news-container {
-    margin: 4em;
+    margin: 2em;
     display: flex;
     justify-content: flex-end;
     padding: 6em;
@@ -583,23 +577,25 @@ table tr {
 .charts-container {
     display: flex;
     justify-content: center;
-    height: 65vh;
+    height: fit-content;
     align-items: center;
-    margin: 5em;
+    margin: 1em;
+    padding: 3em;
+    flex-wrap: wrap;
 }
 
 .chart-card {
     height: 25em;
     width: 40em;
     margin: 2em;
-    background: none;
 }
 
 .chartjs-render-monitor,
 #myChart-linearChart,
 canvas {
-    animation: chartjs-render-animation 1ms;
-    width: 585px;
+    height: 100%;
+    width: 100%;
+    margin: auto;
 }
 
 .news-container {
@@ -700,7 +696,7 @@ canvas {
 }
 
 .news-link a:hover {
-    color: pink;
+    color: #ffc0cb;
 }
 
 .news-link a>i {
@@ -726,8 +722,7 @@ canvas {
 
 .stay-safe-container {
     width: 100vw;
-    padding: 2em;
-    height: 85vh;
+    margin-top: 2em;
 }
 
 .stay-safe-title {
@@ -741,6 +736,19 @@ canvas {
     letter-spacing: 1px;
     color: #193864;
     margin-bottom: 1em;
+}
+
+.stay-safe-instructions {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+figure {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 figure img {
@@ -758,6 +766,64 @@ figcaption {
     font-family: cursive, sans-serif, Arial, Helvetica ;
 }
 
+
+footer {
+    background-color: #161616; 
+    color: #fff;
+    padding: 2em;
+    font-size: 1em;
+}
+
+.about-author {
+    margin-bottom: 1em;
+}
+
+h5 {
+    text-align: center;
+    font-size: 1.5em;
+    letter-spacing: 1px;
+    font-family: inherit;
+}
+
+.author-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.author-contact i {
+    font-size: 2.2em;
+    margin: .5em;
+}
+
+.about-data{
+    width: fit-content;
+    padding: 1em;
+    font-family: inherit;
+    letter-spacing: 1px;
+    font-size: 1em;
+    margin: auto;
+    text-align: center;
+}
+
+h6 {
+    text-align: center;
+    color: #589dff;
+    font-weight: 500;
+    margin-bottom: 1em;
+}
+
+.data-source-link {
+    color: #53a7f9;
+    transition: .5s linear;
+}
+
+.data-source-link:hover {
+    color: #ffc0cb;
+    text-decoration: none;
+}
+
+ 
 
 
 /*#legend {

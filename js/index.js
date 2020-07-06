@@ -76,6 +76,8 @@ const getHistoricalData = () => {
     })
 }
 
+let worldwideData = [];
+
 const getWorldWideData = () => {
     fetch('https://corona.lmao.ninja/v2/all')
     .then(response => response.json())
@@ -83,6 +85,7 @@ const getWorldWideData = () => {
         let worldData = {...data};
         worldData.country = 'WorldWide';
         let modifiedWorldData = [worldData];
+        worldwideData = modifiedWorldData;
         let PieChartData = [worldData.active, worldData.recovered, worldData.deaths];
         buildPieChart(PieChartData);
        // showDataInCountryStatsContainer(worldData.country , modifiedWorldData);
@@ -393,8 +396,6 @@ const setColors = (country, metric) => {
 }
 */
 
-
-
 const addMarkers = (data, metric='Active') => {
     data.map((country) => {
         let countryCenter = {
@@ -488,11 +489,20 @@ const addPopups = (data, countryCenter, selection) => {
     return popUp;
 }
 
-
+let tableData = [];
+let sortDirection = false;
 
 const showDataInTable = (data) => {
     let html = '';
-    data.forEach((country)=>{
+    let worldCountriesData = [];
+    if (data[0]['country'] !== "WorldWide" && data[data.length - 1]['country'] !== "WorldWide") {
+        worldCountriesData = worldwideData.concat(data);
+    } else {
+        worldCountriesData = data;
+    }
+    tableData = worldCountriesData;
+    console.log(tableData);
+    worldCountriesData.forEach((country)=>{
         html += `
         <tr class="country-info">
             <td class="loc">${country.country}</td>
@@ -504,6 +514,25 @@ const showDataInTable = (data) => {
         `
     })
     document.querySelector('.country-info-container').innerHTML = html;
+}
+
+
+const sortColumn = (columnCasesType) => {
+    const dataType = typeof tableData[0][columnCasesType];
+    sortDirection = !sortDirection;
+
+    switch(dataType) {
+        case 'number':
+            sortColumnData(sortDirection, columnCasesType);
+            break;
+    }
+
+    showDataInTable(tableData);
+} 
+
+
+const sortColumnData = (sort, columnCasesType) => {
+    tableData = tableData.sort((a, b) => sort ? a[columnCasesType] - b[columnCasesType] : b[columnCasesType] - a[columnCasesType]);
 }
 
 const buildChartData = data => {
@@ -649,8 +678,8 @@ const showNewsInNewsContainer = data => {
 
     let glide = new Glide('.news', {
         type: 'carousel',
-        autoplay: 2000,
-        perView: 5,
+        //autoplay: 2000,
+        perView: 4.5,
         draggable: true,
         focusAt: 'center',
         gap: 40,
@@ -659,27 +688,27 @@ const showNewsInNewsContainer = data => {
                 perView: 3
             },
             800: {
-                perView: 2
+                perView: 1.5
             }
         }
     });
 
     let html = '';
     let articles = data["articles"]
-    articles.forEach( (article) => {
+    articles.map( (article) => {
         console.log(article)
         html += `
-        <il class="glide__slide">
+        <li class="glide__slide">
             <div class="news-card">
                 <div class="news-cover"> <img src="${article.urlToImage}" alt=""> </div>
                 <div class="news-info">
                 <p class="news-source">${article.source.name}</p>
-                <p class="news-card-title">${(article.title).substring(0, 45)} ...</p>         
+                <p class="news-card-title">${(article.title)}</p>         
                 <div  class="news-link">  <a href="${article.url}"> Read more <i class="fa fa-chevron-right"></i> </a>  </div>
                 <p class="posting-time">${(article.publishedAt).substring(0, 10)}</p>
                 </div>
             </div> 
-        </il>
+        </li>
         `
     })
 

@@ -56,14 +56,14 @@
         <div class="selection"></div> 
       </div>
       <div class="map-view-btns-container">
-      <button onclick="changeMapData('Active');"  type="button" class="TotalCases">
-          <img src="assets/infected.png" alt="">
+        <button onclick="changeMapData('Active');"  type="button" class="TotalCases">
+          <img class="map-data-icon" src="assets/infection-textured.svg" alt="infected cases">
         </button>
         <button onclick="changeMapData('Recovered');" type="button" class="Recovered">
-          <img src="assets/recovered.png" alt="" width="32px" height="32px">
+          <img class="map-data-icon" src="assets/revovered-cases.svg" alt="recovered" width="32px" height="32px">
         </button>
         <button onclick="changeMapData('Deaths');"  type="button" class="deaths">
-          <img src="assets/death.png" alt="">
+          <img class="map-data-icon" src="assets/deaths.svg" alt="deaths">
         </button>
       </div>
     </div>
@@ -144,10 +144,10 @@
           <thead class="table-head-container">
             <tr class="table-head">
             <th class="country-location">Location</th>
-            <th class="metric">Confirmed</th>
-            <th class="metric">Recovered</th>
-            <th class="metric">Deaths</th>
-            <th class="metric">today Cases</th>
+            <th class="metric">Confirmed <i class="fas fa-sort" onclick="sortColumn('cases')"></i></th>
+            <th class="metric">Recovered <i class="fas fa-sort" onclick="sortColumn('recovered')"></i></th>
+            <th class="metric">Deaths <i class="fas fa-sort" onclick="sortColumn('deaths')"></i></th>
+            <th class="metric">today Cases <i class="fas fa-sort" onclick="sortColumn('todayCases')"></i></th>
           </tr>
           </thead>
           <tbody class="country-info-container">
@@ -240,8 +240,8 @@
     <div class="news glide">
       <div class="glide__track" data-glide-el="track">
         <ul class="glide__slides">
-          <il class="glide__slide">
-            <div class="news-card">
+          <li class="glide__slide">
+           <!-- <div class="news-card">
               <div class="news-cover"> <img src="assets/cleaning.png" alt=""> </div>
               <div class="news-info">
                 <p class="news-source">The Newyork Times</p>
@@ -249,14 +249,15 @@
                 <div  class="news-link"> <a href="#"> Read more <i class="fa fa-chevron-right"></i> </a>  </div>
                 <p class="posting-time"> 9 hours ago</p>
               </div>
-            </div>
-          </il>
+            </div> -->
+          </li>
         </ul>
       </div>
       <div class="glide__arrows" data-glide-el="controls">
         <button class="glide__arrow glide__arrow--left" data-glide-dir="<" ><i class="fa fa-chevron-left"></i></button>
         <button class="glide__arrow glide__arrow--right" data-glide-dir=">" ><i class="fa fa-chevron-right"></i></button>
       </div>
+      <div class="glide__bullets"></div>
     </div>       
   </section>
 

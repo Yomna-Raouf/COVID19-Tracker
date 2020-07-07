@@ -678,7 +678,7 @@ const showNewsInNewsContainer = data => {
 
     let glide = new Glide('.news', {
         type: 'carousel',
-        //autoplay: 2000,
+        autoplay: 2000,
         perView: 4.5,
         draggable: true,
         focusAt: 'center',

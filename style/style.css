@@ -631,6 +631,7 @@ canvas {
     filter: blur(6px);
     opacity: .7;
     transition: .3s linear;
+    background-color: #f7f7f7;
 }
 
 .glide__slides {
@@ -677,7 +678,7 @@ canvas {
     font-family: sans-serif;
     letter-spacing: 1px;
     font-size: 14px;
-    height: 350px;
+    height: inherit;
     width: inherit;
     flex-direction: column;
     justify-content: center;
@@ -686,18 +687,20 @@ canvas {
 
 .news-cover {
     width: inherit;
-    height: 180px;
+    height: fit-content;
 }
 
 .news-cover img {
     width: inherit;
     height: 166px;
-    border-radius: .5em;
 }
 
 .news-info {
     padding: 1em 1em;
-    height: 170px;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .news-link a {
@@ -749,6 +752,7 @@ canvas {
     letter-spacing: 1px;
     color: #193864;
     margin-bottom: 1em;
+    text-shadow: -1px 4px 6px #183458;
 }
 
 .stay-safe-instructions {
@@ -779,9 +783,80 @@ figcaption {
     font-family: cursive, sans-serif, Arial, Helvetica ;
 }
 
+.about-covid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.modal-title {
+    width: 100%;
+    color: #23406a;
+}
+
+.about-covid-definition {
+    width: 70%;
+    margin-bottom: 30px;
+}
+
+.about-covid-definition figure img {
+    width: 450px;
+    height: 450px;
+}
+
+.mx-auto {
+    margin-right: 0 ;
+}
+
+.about-covid-definition h2 {
+    text-align: center;
+    color: #193864;
+    letter-spacing: 1px;
+    margin-bottom: 1em;
+}
+
+.about-covid-definition h2 img {
+    width: fit-content;
+}
+
+
+.about-covid-definition p{
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+.safty {
+    display: flex;
+    padding: 15px;
+    background: #c2dff1;
+    border-radius: 2em;
+    flex-wrap: wrap;
+}
+
+.safty-container {
+    width: 95%;
+}
+.safty img {
+    width: 400px;
+}
+
+.safty ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 60%;
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+    background-color: #f7f7f7;
+    font-family: sans-serif, Arial, Helvetica ;
+}
 
 footer {
-    background-color: #161616; 
+    background-color: #1a3254; 
     color: #fff;
     padding: 2em;
     font-size: 1em;
@@ -952,7 +1027,20 @@ h6 {
     .country-location, .loc {
         min-width: 158px;
         padding: 0 8px 9px 8px;
-    }    
+    }   
+    
+    .safty img {
+        width: 300px;
+    }
+
+    .about-covid-definition figure img {
+        width: 350px;
+        height: 350px;
+    }
+
+    .safty ul {
+        width: 100%;
+    }
 
 }
 

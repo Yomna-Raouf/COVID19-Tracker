@@ -700,7 +700,7 @@ const showNewsInNewsContainer = data => {
         html += `
         <li class="glide__slide">
             <div class="news-card">
-                <div class="news-cover"> <img src="${article.urlToImage}" alt=""> </div>
+                <div class="news-cover"> <img src="${article.urlToImage}" alt="news-cover-image"> </div>
                 <div class="news-info">
                 <p class="news-source">${article.source.name}</p>
                 <p class="news-card-title">${(article.title)}</p>         

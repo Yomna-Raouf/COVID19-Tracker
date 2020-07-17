@@ -24,354 +24,371 @@
 </head>
 <body>
   <main>
-  <div class="covid">
-    <h1
-      data-aos="zoom-in"
-      data-aos-duration="1200"
-      >
-      CORONAVIRUS
-    </h1>
-  </div>
-  <section class="map-info"> 
-    <div id="map">
-      <div class="search-container">
-        <input id="autoComplete" tabindex="1">   
-        <div class="selection"></div> 
-      </div>
-      <div class="map-view-btns-container">
-        <button onclick="changeMapData('Active');"  type="button" class="TotalCases">
-          <img class="map-data-icon" src="assets/infection-textured.svg" alt="infected cases">
-        </button>
-        <button onclick="changeMapData('Recovered');" type="button" class="Recovered">
-          <img class="map-data-icon" src="assets/revovered-cases.svg" alt="recovered" width="32px" height="32px">
-        </button>
-        <button onclick="changeMapData('Deaths');"  type="button" class="deaths">
-          <img class="map-data-icon" src="assets/deaths.svg" alt="deaths">
-        </button>
-      </div>
-    </div>
-    <!--<div class='legend'></div> -->
-  </section>
-
- 
-
-  <section class="data-info">
-    <div 
-      class="card location-card"
-      data-aos="zoom-in-down"
-      data-aos-duration="2000"
-      >
-      <div class="card-body country-name">
-        <h5 class="card-title location">WorldWide</h5>
-      </div>
-    </div>
-    <div class="country-stats-container"></div>
-    <div class="stats-news-container">
-    <div class="stats-container">
-      <div class="table-title">
-        <h3>Cases</h3>
-      </div>
-      <div class="table-container">
-        <table id="table-data">
-          <thead class="table-head-container">
-            <tr class="table-head">
-            <th class="country-location">Location</th>
-            <th class="metric">Confirmed <i class="fas fa-sort" onclick="sortColumn('cases')"></i></th>
-            <th class="metric">Recovered <i class="fas fa-sort" onclick="sortColumn('recovered')"></i></th>
-            <th class="metric">Deaths <i class="fas fa-sort" onclick="sortColumn('deaths')"></i></th>
-            <th class="metric">today Cases <i class="fas fa-sort" onclick="sortColumn('todayCases')"></i></th>
-          </tr>
-          </thead>
-          <tbody class="country-info-container"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  </section>
-
-  <section class="charts-container">
-
-    <div class="card  chart-card ">
-      <div class="card-body ">
-        <canvas id="myChart-linearChart" class="chartjs-render-monitor"></canvas>
-      </div>
-    </div>
-
-    <div class="card  chart-card ">
-      <div class="card-body ">
-        <canvas id="myChart-pieChart" class="chartjs-render-monitor"></canvas>
-      </div>
-    </div>
-   
-  </section>
-
-  <section class="stay-safe-container">
-    
-      <div class="stay-safe-title">
-        <h2
+    <div class="covid">
+      <h1
         data-aos="zoom-in"
         data-aos-duration="1200"
-        > Stay Safe</h2>
-      </div>
-      <div class="stay-safe-instructions">
-        <figure>
-          <img 
-            src="assets/washHands.svg"
-            alt="wash your hands" 
-            data-aos="fade-up" 
-            data-aos-duration="2000"
+        >
+        <img src="assets/covidvirus.svg" alt="coronavirus logo">
+        CORONAVIRUS
+      </h1>
+    </div>
+
+    <section class="row container-fluid">
+      <section class="info col-9">
+        <div 
+          class="card location-card"
+          data-aos="zoom-in-down"
+          data-aos-duration="2000"
           >
-          <figcaption data-aos="fade-down" data-aos-duration="3000"> Always Wash your hands </figcaption>
-        </figure>
-
-        <figure>
-          <img 
-            src="assets/coughElbow.svg" 
-            alt="cough elbow" 
-            data-aos="fade-down" 
-            data-aos-duration="2000"
-          >
-          <figcaption data-aos="fade-up" data-aos-duration="3000"> Elbow cough into it </figcaption>
-        </figure>
-
-        
-        <figure >
-          <img 
-            src="assets/wearMask.svg" 
-            alt="don't touch face" 
-            data-aos="fade-up" 
-            data-aos-duration="2000"
-          >
-          <figcaption data-aos="fade-down" data-aos-duration="3000"> Always wear a mask & Don't touch your face </figcaption>
-        </figure>
-
-        <figure >
-          <img 
-            src="assets/socialDistance.svg" 
-            alt="social distancing" 
-            data-aos="fade-down" 
-            data-aos-duration="2000"
-          >
-          <figcaption data-aos="fade-up" data-aos-duration="3000"> Keep social distance  </figcaption>
-        </figure>
-
-        <figure > 
-          <img src="assets/stayHome.svg" alt="stay home" data-aos="fade-up" data-aos-duration="2000">
-          <figcaption data-aos="fade-down" data-aos-duration="3000"> Stay Home, Stay Safe! go out when necessary </figcaption>
-        </figure>
-      </div>
-    
-  </section>
-
-  <section class="about-covid">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-      what you should know about COVID-19
-    </button>
-
-    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable modal-xl">
-        <div class="modal-content">
-          <div class="modal-header " >
-            <h5 class="modal-title mx-auto" id="staticBackdropLabel">What you need to know about COVID-19</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="about-covid-definition mx-auto">
-              <h2>
-                <img src="assets/covid19-magnifying-glass.svg" alt="covid19 magnifier">
-                What is novel coronavirus?</h2>
-              <p>
-                &#8220;On February 11, 2020, the World Health Organization announced an official name for the disease that is causing the 2019 novel coronavirus outbreak,
-                first identified in Wuhan China. The new name of this disease is coronavirus disease 2019, abbreviated as COVID-19. 
-                In COVID-19, ‘CO’ stands for ‘corona,’ ‘VI’ for ‘virus,’ and ‘D’ for the disease. Formerly, this disease was referred to as “2019 novel coronavirus” or “2019-nCoV”.
-                A novel coronavirus is a new coronavirus that has not been previously identified. The virus causing coronavirus disease 2019 (COVID-19),
-                is not the same as the coronaviruses that commonly circulate among humans and cause mild illness, like the common cold. &#8221;
-              </p>
-
-            </div>
-            <div class="about-covid-definition mx-auto">
-              <h2>Now what about the source of coronavirus?</h2>
-              <p>
-                &#8220;Coronaviruses are a large family of viruses. Some cause illness in people, and others, such as canine and feline coronaviruses, only infect animals. 
-                Rarely, animal coronaviruses that infect animals have emerged to infect people and can spread between people. This is suspected to have occurred for the virus that causes COVID-19. 
-                Middle East Respiratory Syndrome (MERS) and Severe Acute Respiratory Syndrome (SARS) are two other examples of coronaviruses that originated from animals and then spread to people. 
-                More information about the source and spread of COVID-19 is available on the Situation Summary: Source and Spread of the Virus.
-                &#8221;
-              </p>
-            </div>
-            <div class="about-covid-definition mx-auto">
-              <h2>How does it spread?</h2>
-              <p>
-                &#8220;This virus was first detected in Wuhan City, Hubei Province, China. 
-                The first infections were linked to a live animal market, but the virus is now spreading from person-to-person. 
-                It’s important to note that person-to-person spread can happen on a continuum. 
-                Some viruses are highly contagious (like measles), while other viruses are less so. 
-                The virus that causes COVID-19 seems to be spreading easily and sustainably in the community (“community spread”) in some affected geographic areas. 
-                Community spread means people have been infected with the virus in an area, including some who are not sure how or where they became infected. 
-                Learn what is known about the spread of newly emerged coronaviruses.
-                &#8221;
-              </p>
-            </div>
-            <div class="about-covid-definition mx-auto">
-              <h2>Can someone who has had COVID-19 spread the illness to others?</h2>
-              <p>
-                &#8220;The virus that causes COVID-19 is spreading from person-to-person. 
-                Someone who is actively sick with COVID-19 can spread the illness to others. 
-                That is why the CDC recommends that these patients be isolated either in the hospital or at home (depending on how sick they are) until they are better and no longer pose a risk of infecting others. 
-                How long someone is actively sick can vary so the decision on when to release someone from isolation is made on a case-by-case basis in consultation with doctors, 
-                infection prevention and control experts, and public health officials and involves considering specifics of each situation including disease severity, illness signs and symptoms, 
-                and results of laboratory testing for that patient. 
-                Current CDC guidance for when it is OK to release someone from isolation is made on a case by case basis and includes meeting all of the following requirements: The patient is free from fever without the use of fever-reducing medications. 
-                The patient is no longer showing symptoms, including cough. 
-                The patient has tested negative on at least two consecutive respiratory specimens collected at least 24 hours apart. 
-                Someone who has been released from isolation is not considered to pose a risk of infection to others.
-                &#8221;
-              </p>
-            </div>
-            <div class="about-covid-definition mx-auto">
-              <h2>What should people at higher risk of serious illness with COVID-19 do?
-              </h2>
-              <p>
-                &#8220;
-                If you are at higher risk of getting very sick from COVID-19, you should: 
-                stock up on supplies; take everyday precautions to keep space between yourself and others; when you go out in public, 
-                keep away from others who are sick; limit close contact and wash your hands often; and avoid crowds, cruise travel, 
-                and non-essential travel. If there is an outbreak in your community, 
-                stay home as much as possible. Watch for symptoms and emergency signs. 
-                If you get sick, stay home and call your doctor. 
-                More information on how to prepare, what to do if you get sick, and how communities and caregivers can support those at higher risk is available on People at Risk for Serious Illness from COVID-19.
-                &#8221;
-              </p>
-            </div>
-            <div class="about-covid-definition mx-auto">
-              <h2>What are the symptoms of COVID-19?</h2>
-              <p>
-                &#8220;
-                The most common symptoms of COVID-19 are fever, tiredness, and dry cough. 
-                Some patients may have aches and pains, nasal congestion, runny nose, sore throat or diarrhea. 
-                These symptoms are usually mild and begin gradually. 
-                Some people become infected but don’t develop any symptoms and don't feel unwell. 
-                Most people (about 80%) recover from the disease without needing special treatment. 
-                Around 1 out of every 6 people who get COVID-19 becomes seriously ill and develop difficulty breathing. 
-                Older people, and those with underlying medical problems like high blood pressure, heart problems or diabetes, are more likely to develop serious illness. 
-                People with fever, cough, and difficulty breathing should seek medical attention.
-                &#8221;
-              </p>
-            </div>
-            <div class="about-covid-definition mx-auto">
-              <h2>Myth_buting</h2>
-              <p>
-                &#8220;
-                Taking a hot bath doesn’t prevent the new coronavirus disease:
-                Taking a hot bath will not prevent you from catching COVID-19. 
-                Your normal body temperature remains around 36.5°C to 37°C, regardless of the temperature of your bath or shower. 
-                Actually, taking a hot bath with extremely hot water can be harmful, as it can burn you. 
-                The best way to protect yourself against COVID-19 is by frequently cleaning your hands. 
-                By doing this you eliminate viruses that may be on your hands and avoid infection that could occur by then touching your eyes, mouth, and nose.
-                Effectiveness of thermal scanners in detecting infected people:
-                Thermal scanners are effective in detecting people who have developed a fever (i.e. have a higher than normal body temperature) because of infection with the new coronavirus.
-                However, they cannot detect people who are infected but are not yet sick with a fever. This is because it takes between 2 and 10 days before people who are infected become sick and develop a fever.
-                &#8221;
-              </p>
-            </div>
-            <div class="about-covid-definition mx-auto">
-              <h2>COVID-19 virus can be transmitted in areas with hot and humid climates?</h2>
-              <p>
-                &#8220;
-                From the evidence so far, the COVID-19 virus can be transmitted in ALL AREAS, including areas with hot and humid weather. 
-                Regardless of climate, adopt protective measures if you live in, or travel to an area reporting COVID-19. 
-                The best way to protect yourself against COVID-19 is by frequently cleaning your hands. 
-                By doing this you eliminate viruses that may be on your hands and avoid infection that could occur by then touching your eyes, mouth, and nose.
-                &#8221;
-              </p>
-            </div>
-            <div class="about-covid-definition safty-container  mx-auto">
-              <h2>Take steps to protect yourself and others</h2>
-              <div class="safty">
-                <p>
-                  <ul>
-                    <li>
-                      Stay home if you’re sick —  stay home if you are sick, except to get medical care.
-                    </li>
-                    <li>
-                      Cover your mouth and nose —  with a tissue when you cough or sneeze (throw used tissues in the trash) or use the inside of your elbow.
-                    </li>
-                    <li>
-                      Wear a facemask if you are sick — You should wear a facemask when you are around other people (e.g., sharing a room or vehicle) and before you enter a healthcare provider.
-                    </li>
-                    <li>
-                      Clean AND disinfect frequently touched surfaces daily —  This includes phones, tablets, light switches, doorknobs, countertops, handles, desks, toilets, faucets, and sinks.
-                    </li>
-                    <li>
-                      Clean the dirty surfaces —  Use detergent or soap and water prior to disinfection.
-                    </li>
-                    <li>
-                      Stay informed about the local COVID-19 situation —  Get up-to-date information about local COVID-19 activity from public health officials.
-                    </li>
-                    <li>
-                      Dedicated, a lined trash can —  If possible, dedicate a lined trash can for the ill person. Use gloves when removing garbage bags, and handling & disposing of trash.
-                    </li>
-                  </ul>
-                </p>
-                <img src="assets/safty-instructions.png" alt="doctor image">
-              </div>
-            </div>
-            <div class="about-covid-definition  mx-auto">
-              <figure>
-                <img src="assets/thanks-dr.png" alt="thanks doctors and nurses">
-                <figcaption>For more information check <a href="https://www.healthline.com/coronavirus">Coronavirus 2020-HEALTHLINE</a></figcaption>
-              </figure>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <div class="card-body country-name">
+            <h5 class="card-title location">WorldWide</h5>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="news-container">
-    <div class="news glide">
-      <div class="glide__track" data-glide-el="track">
-        <ul class="glide__slides"></ul>
-      </div>
-      <div class="glide__arrows" data-glide-el="controls">
-        <button class="glide__arrow glide__arrow--left" data-glide-dir="<" ><i class="fa fa-chevron-left"></i></button>
-        <button class="glide__arrow glide__arrow--right" data-glide-dir=">" ><i class="fa fa-chevron-right"></i></button>
-      </div>
-      <div class="glide__bullets"></div>
-    </div>       
-  </section>
-
-  <footer>
-    <div class="about-author">
-      <h5 class="author"> &#169; Made by Eng.Yomna Raouf</h5>
-      <div class="author-contact">
-        <i style="color: #0e76a8;" class="fab fa-linkedin"></i>
-        <i style="color: #fff;" class="fab fa-github-square"></i>
-        <i style="color: #3b5998;" class="fab fa-facebook-square"></i>
-        <i  style=" 
-          background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); border-radius: .1em; width: fit-content;" 
-          class="fab fa-instagram-square"
-        >
-        </i>
-      </div>
-    </div>
+        <div class="row country-stats-container justify-content-center "></div>
     
-    <div class="about-data">
-      <div class="data-source">
-        <h6>About this data</h6>
-        <p> Data source: 
-          <a class="data-source-link" href="https://corona.lmao.ninja/" >disease.sh - Open Disease Data</a>
-        </p> 
-        <p> • It changes rapidly</p>
-        <p> • It only includes people tested</p>
+        <section class="map-info"> 
+          <div class="map-container">
+            <div class="map-data-control">
+              <div class="map-control">
+                <div class="map-title">
+                  <h3>Cases by country</h3>
+                </div>
+                <div class="search-container">
+                  <input id="autoComplete" tabindex="1">   
+                  <div class="selection"></div> 
+                </div>
+              </div>
+              <div class="map-view-btns-container">
+                <button onclick="changeMapData('Active');"  type="button" class="TotalCases">
+                  Total Cases
+                  <img class="map-data-icon" src="assets/infection-textured.svg" alt="infected cases">
+                </button>
+                <button onclick="changeMapData('Recovered');" type="button" class="Recovered">
+                  Recovered
+                  <img class="map-data-icon" src="assets/revovered-cases.svg" alt="recovered" width="32px" height="32px">
+                </button>
+                <button onclick="changeMapData('Deaths');"  type="button" class="deaths">
+                  Deaths
+                  <img class="map-data-icon" src="assets/deaths.svg" alt="deaths">
+                </button>
+              </div>
+            </div>
+            <div id="map"></div>
+          </div>
+
+        
+          <!--<div class='legend'></div> -->
+        
+          <div class="stats-container">
+            <div class="table-title">
+              <h3>Overview</h3>
+            </div>
+            <div class="table-container">
+              <table id="table-data">
+                <thead class="table-head-container">
+                  <tr class="table-head">
+                  <th class="country-location">Location</th>
+                  <th class="metric">today Cases <i class="fas fa-sort" onclick="sortColumn('todayCases')"></i></th>
+                  <th class="metric">Recovered <i class="fas fa-sort" onclick="sortColumn('recovered')"></i></th>
+                  <th class="metric">Deaths <i class="fas fa-sort" onclick="sortColumn('deaths')"></i></th>
+                </tr>
+                </thead>
+                <tbody class="country-info-container"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section class="charts-container">
+  
+          <div class="card  chart-card ">
+            <div class="card-body ">
+              <canvas id="myChart-linearChart" class="chartjs-render-monitor"></canvas>
+            </div>
+          </div>
+      
+          <div class="card  chart-card ">
+            <div class="card-body ">
+              <canvas id="myChart-pieChart" class="chartjs-render-monitor"></canvas>
+            </div>
+          </div>
+         
+        </section>
+        <div class="row country-stats-container justify-content-center" style="margin-top: 4em;">
+          <div class="card" data-aos="zoom-in-down">
+            <div class="card-body country-name">
+              <h5 class="card-title location">WorldWide</h5>
+            </div>
+          </div>
+          <div class="card" data-aos="zoom-in-down">
+            <div class="card-body country-name">
+              <h5 class="card-title location">WorldWide</h5>
+            </div>
+          </div>
+          <div class="card" data-aos="zoom-in-down">
+            <div class="card-body country-name">
+              <h5 class="card-title location">WorldWide</h5>
+            </div>
+          </div>
+          <div class="card" data-aos="zoom-in-down">
+            <div class="card-body country-name">
+              <h5 class="card-title location">WorldWide</h5>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="stay-safe-container col-3">
+          
+          <div class="stay-safe-title">
+              <h2
+              data-aos="zoom-in"
+              data-aos-duration="1200"
+              > Stay Safe</h2>
+          </div>
+          <div class="stay-safe-instructions">
+              <figure>
+                <img src="assets/washHands.svg" alt="wash your hands" >
+                <figcaption data-aos="fade-left" data-aos-duration="3000"> Always Wash your hands </figcaption>
+              </figure> 
+      
+              <figure>
+                <img  src="assets/coughElbow.svg" alt="cough elbow" >
+                <figcaption data-aos="fade-right" data-aos-duration="3000"> Elbow cough into it </figcaption>
+              </figure>
+      
+              
+              <figure >
+                <img   src="assets/wearMask.svg" alt="don't touch face" >
+                <figcaption data-aos="fade-left" data-aos-duration="3000"> Always wear a mask & Don't touch your face </figcaption>
+              </figure>
+      
+              <figure >
+                <img  src="assets/socialDistance.svg"  alt="social distancing" >
+                <figcaption data-aos="fade-right" data-aos-duration="3000"> Keep social distance  </figcaption>
+              </figure>
+      
+              <figure > 
+                <img src="assets/stayHome.svg" alt="stay home">
+                <figcaption data-aos="fade-left" data-aos-duration="3000"> Stay Home, Stay Safe! go out when necessary </figcaption>
+              </figure>
+          </div>
+          <section class="about-covid">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+              what you should know about COVID-19
+            </button>
+        
+            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                <div class="modal-content">
+                  <div class="modal-header " >
+                    <h5 class="modal-title mx-auto" id="staticBackdropLabel">What you need to know about COVID-19</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="about-covid-definition mx-auto">
+                      <h2>
+                        <img src="assets/covid19-magnifying-glass.svg" alt="covid19 magnifier">
+                        What is novel coronavirus?</h2>
+                      <p>
+                        &#8220;On February 11, 2020, the World Health Organization announced an official name for the disease that is causing the 2019 novel coronavirus outbreak,
+                        first identified in Wuhan China. The new name of this disease is coronavirus disease 2019, abbreviated as COVID-19. 
+                        In COVID-19, ‘CO’ stands for ‘corona,’ ‘VI’ for ‘virus,’ and ‘D’ for the disease. Formerly, this disease was referred to as “2019 novel coronavirus” or “2019-nCoV”.
+                        A novel coronavirus is a new coronavirus that has not been previously identified. The virus causing coronavirus disease 2019 (COVID-19),
+                        is not the same as the coronaviruses that commonly circulate among humans and cause mild illness, like the common cold. &#8221;
+                      </p>
+        
+                    </div>
+                    <div class="about-covid-definition mx-auto">
+                      <h2>Now what about the source of coronavirus?</h2>
+                      <p>
+                        &#8220;Coronaviruses are a large family of viruses. Some cause illness in people, and others, such as canine and feline coronaviruses, only infect animals. 
+                        Rarely, animal coronaviruses that infect animals have emerged to infect people and can spread between people. This is suspected to have occurred for the virus that causes COVID-19. 
+                        Middle East Respiratory Syndrome (MERS) and Severe Acute Respiratory Syndrome (SARS) are two other examples of coronaviruses that originated from animals and then spread to people. 
+                        More information about the source and spread of COVID-19 is available on the Situation Summary: Source and Spread of the Virus.
+                        &#8221;
+                      </p>
+                    </div>
+                    <div class="about-covid-definition mx-auto">
+                      <h2>How does it spread?</h2>
+                      <p>
+                        &#8220;This virus was first detected in Wuhan City, Hubei Province, China. 
+                        The first infections were linked to a live animal market, but the virus is now spreading from person-to-person. 
+                        It’s important to note that person-to-person spread can happen on a continuum. 
+                        Some viruses are highly contagious (like measles), while other viruses are less so. 
+                        The virus that causes COVID-19 seems to be spreading easily and sustainably in the community (“community spread”) in some affected geographic areas. 
+                        Community spread means people have been infected with the virus in an area, including some who are not sure how or where they became infected. 
+                        Learn what is known about the spread of newly emerged coronaviruses.
+                        &#8221;
+                      </p>
+                    </div>
+                    <div class="about-covid-definition mx-auto">
+                      <h2>Can someone who has had COVID-19 spread the illness to others?</h2>
+                      <p>
+                        &#8220;The virus that causes COVID-19 is spreading from person-to-person. 
+                        Someone who is actively sick with COVID-19 can spread the illness to others. 
+                        That is why the CDC recommends that these patients be isolated either in the hospital or at home (depending on how sick they are) until they are better and no longer pose a risk of infecting others. 
+                        How long someone is actively sick can vary so the decision on when to release someone from isolation is made on a case-by-case basis in consultation with doctors, 
+                        infection prevention and control experts, and public health officials and involves considering specifics of each situation including disease severity, illness signs and symptoms, 
+                        and results of laboratory testing for that patient. 
+                        Current CDC guidance for when it is OK to release someone from isolation is made on a case by case basis and includes meeting all of the following requirements: The patient is free from fever without the use of fever-reducing medications. 
+                        The patient is no longer showing symptoms, including cough. 
+                        The patient has tested negative on at least two consecutive respiratory specimens collected at least 24 hours apart. 
+                        Someone who has been released from isolation is not considered to pose a risk of infection to others.
+                        &#8221;
+                      </p>
+                    </div>
+                    <div class="about-covid-definition mx-auto">
+                      <h2>What should people at higher risk of serious illness with COVID-19 do?
+                      </h2>
+                      <p>
+                        &#8220;
+                        If you are at higher risk of getting very sick from COVID-19, you should: 
+                        stock up on supplies; take everyday precautions to keep space between yourself and others; when you go out in public, 
+                        keep away from others who are sick; limit close contact and wash your hands often; and avoid crowds, cruise travel, 
+                        and non-essential travel. If there is an outbreak in your community, 
+                        stay home as much as possible. Watch for symptoms and emergency signs. 
+                        If you get sick, stay home and call your doctor. 
+                        More information on how to prepare, what to do if you get sick, and how communities and caregivers can support those at higher risk is available on People at Risk for Serious Illness from COVID-19.
+                        &#8221;
+                      </p>
+                    </div>
+                    <div class="about-covid-definition mx-auto">
+                      <h2>What are the symptoms of COVID-19?</h2>
+                      <p>
+                        &#8220;
+                        The most common symptoms of COVID-19 are fever, tiredness, and dry cough. 
+                        Some patients may have aches and pains, nasal congestion, runny nose, sore throat or diarrhea. 
+                        These symptoms are usually mild and begin gradually. 
+                        Some people become infected but don’t develop any symptoms and don't feel unwell. 
+                        Most people (about 80%) recover from the disease without needing special treatment. 
+                        Around 1 out of every 6 people who get COVID-19 becomes seriously ill and develop difficulty breathing. 
+                        Older people, and those with underlying medical problems like high blood pressure, heart problems or diabetes, are more likely to develop serious illness. 
+                        People with fever, cough, and difficulty breathing should seek medical attention.
+                        &#8221;
+                      </p>
+                    </div>
+                    <div class="about-covid-definition mx-auto">
+                      <h2>Myth_busting</h2>
+                      <p>
+                        &#8220;
+                        Taking a hot bath doesn’t prevent the new coronavirus disease:
+                        Taking a hot bath will not prevent you from catching COVID-19. 
+                        Your normal body temperature remains around 36.5°C to 37°C, regardless of the temperature of your bath or shower. 
+                        Actually, taking a hot bath with extremely hot water can be harmful, as it can burn you. 
+                        The best way to protect yourself against COVID-19 is by frequently cleaning your hands. 
+                        By doing this you eliminate viruses that may be on your hands and avoid infection that could occur by then touching your eyes, mouth, and nose.
+                        Effectiveness of thermal scanners in detecting infected people:
+                        Thermal scanners are effective in detecting people who have developed a fever (i.e. have a higher than normal body temperature) because of infection with the new coronavirus.
+                        However, they cannot detect people who are infected but are not yet sick with a fever. This is because it takes between 2 and 10 days before people who are infected become sick and develop a fever.
+                        &#8221;
+                      </p>
+                    </div>
+                    <div class="about-covid-definition mx-auto">
+                      <h2>COVID-19 virus can be transmitted in areas with hot and humid climates?</h2>
+                      <p>
+                        &#8220;
+                        From the evidence so far, the COVID-19 virus can be transmitted in ALL AREAS, including areas with hot and humid weather. 
+                        Regardless of climate, adopt protective measures if you live in, or travel to an area reporting COVID-19. 
+                        The best way to protect yourself against COVID-19 is by frequently cleaning your hands. 
+                        By doing this you eliminate viruses that may be on your hands and avoid infection that could occur by then touching your eyes, mouth, and nose.
+                        &#8221;
+                      </p>
+                    </div>
+                    <div class="about-covid-definition safty-container  mx-auto">
+                      <h2>Take steps to protect yourself and others</h2>
+                      <div class="safty">
+                        <p>
+                          <ul>
+                            <li>
+                              Stay home if you’re sick —  stay home if you are sick, except to get medical care.
+                            </li>
+                            <li>
+                              Cover your mouth and nose —  with a tissue when you cough or sneeze (throw used tissues in the trash) or use the inside of your elbow.
+                            </li>
+                            <li>
+                              Wear a facemask if you are sick — You should wear a facemask when you are around other people (e.g., sharing a room or vehicle) and before you enter a healthcare provider.
+                            </li>
+                            <li>
+                              Clean AND disinfect frequently touched surfaces daily —  This includes phones, tablets, light switches, doorknobs, countertops, handles, desks, toilets, faucets, and sinks.
+                            </li>
+                            <li>
+                              Clean the dirty surfaces —  Use detergent or soap and water prior to disinfection.
+                            </li>
+                            <li>
+                              Stay informed about the local COVID-19 situation —  Get up-to-date information about local COVID-19 activity from public health officials.
+                            </li>
+                            <li>
+                              Dedicated, a lined trash can —  If possible, dedicate a lined trash can for the ill person. Use gloves when removing garbage bags, and handling & disposing of trash.
+                            </li>
+                          </ul>
+                        </p>
+                        <img src="assets/safty-instructions.png" alt="doctor image">
+                      </div>
+                    </div>
+                    <div class="about-covid-definition  mx-auto">
+                      <figure>
+                        <img src="assets/thanks-dr.png" alt="thanks doctors and nurses">
+                        <figcaption>For more information check <a href="https://www.healthline.com/coronavirus">Coronavirus 2020-HEALTHLINE</a></figcaption>
+                      </figure>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+      </section>
+    </section>
+
+    <section class="news-container">
+      <div class="news-container-title">
+        <h2
+          data-aos="zoom-in"
+          data-aos-duration="1200"
+        > Top News</h2>
       </div>
-    </div>
-  </footer>
+      <div class="news glide">
+        <div class="glide__track" data-glide-el="track">
+          <ul class="glide__slides"></ul>
+        </div>
+        <div class="glide__arrows" data-glide-el="controls">
+          <button class="glide__arrow glide__arrow--left" data-glide-dir="<" ><i class="fa fa-chevron-left"></i></button>
+          <button class="glide__arrow glide__arrow--right" data-glide-dir=">" ><i class="fa fa-chevron-right"></i></button>
+        </div>
+        <div class="glide__bullets"></div>
+      </div>       
+    </section>
+
+    <footer>
+      <div class="about-author">
+        <h5 class="author"> &#169; Made by Eng.Yomna Raouf</h5>
+        <div class="author-contact">
+          <i style="color: #0e76a8;" class="fab fa-linkedin"></i>
+          <i style="color: #fff;" class="fab fa-github-square"></i>
+          <i style="color: #3b5998;" class="fab fa-facebook-square"></i>
+          <i  style=" 
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); border-radius: .1em; width: fit-content;" 
+            class="fab fa-instagram-square"
+          >
+          </i>
+        </div>
+      </div>
+      
+      <div class="about-data">
+        <div class="data-source">
+          <h6>About this data</h6>
+          <p> Data source: 
+            <a class="data-source-link" href="https://corona.lmao.ninja/" >disease.sh - Open Disease Data</a>
+          </p> 
+          <p> • It changes rapidly</p>
+          <p> • It only includes people tested</p>
+        </div>
+      </div>
+    </footer>
 </main>
 
 

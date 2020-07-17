@@ -7,11 +7,12 @@ window.onload = () => {
     AOS.init();
 }
 
-/*let reflectTotalCasesBtn = document.querySelector('.TotalCases');
-let reflectRecoveredBtn = document.querySelector('.Recovered');
-let reflectDeathsBtn = document.querySelector('.deaths');*/
+ 
 let currentMarkers = [];
 let CountriesCoordinates = {};
+let countriesData ;
+let tableData = [];
+let sortDirection = false;
  
 mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkdXJvbTEybm9jNiJ9.Ptr2DKynFUQVoaNYN-6uqA';
   var map = new mapboxgl.Map({
@@ -20,6 +21,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkd
     center: [0, 20],
     zoom: 2,
 });
+
+map.addControl(new mapboxgl.NavigationControl());
 
  
  
@@ -35,37 +38,21 @@ function ipLookUp (countryData) {
     });
 }
 
-let countriesData ;
+
 
 const getCountryData = () => {
     fetch("https://corona.lmao.ninja/v2/countries")
     .then( response => response.json())
     .then((data)=>{
+        countriesData = data;
         showDataInTable(data);
         Search(data);
         ipLookUp(data);
-        countriesData = data;
-       /* reflectTotalCasesBtn.addEventListener('click', () => {
-            removeCurrentMarkers();
-            console.log('reflectTotalCasesBtn');
-            addMarkers(data, "Active");
-            document.querySelector('#map').style.borderColor = '#1d3557';
-        });*/
-        /*reflectDeathsBtn.addEventListener('click', () => {
-            removeCurrentMarkers();
-            console.log('reflectDeathsBtn');
-            addMarkers(data, "Deaths");
-            document.querySelector('#map').style.borderColor = '#de2d26';
-        });*/
-       /* reflectRecoveredBtn.addEventListener('click', () => {
-            removeCurrentMarkers();
-            console.log('reflectRecoveredBtn');
-            addMarkers(data, "Recovered");
-            document.querySelector('#map').style.borderColor = '#31a354';
-        });*/
         addMarkers(data);
     })
 }
+
+
 
 const getHistoricalData = () => {
     fetch('https://corona.lmao.ninja/v2/historical/all?lastdays=120')
@@ -102,6 +89,7 @@ const getNews = () => {
     .catch(error => console.log('error', error));
 }
 
+
 const changeMapData = (metric) => {
     let MapDataColors = {
         'Active': '#1d3557',
@@ -115,22 +103,14 @@ const changeMapData = (metric) => {
 }
 
 const Search = (data) => {
-
-    /*document.querySelector("#autoComplete").addEventListener("autoComplete", event => {
-        console.log(event);
-    });*/
-
     new autoComplete({
        data: {
         src: async () => {
             document
 				.querySelector("#autoComplete")
                 .setAttribute("placeholder", "Loading...");
-                //const source = await fetch('https://corona.lmao.ninja/v2/countries');
                 const data = await countriesData;
-                document
-				.querySelector("#autoComplete")
-                .setAttribute("placeholder", "country");
+                document.querySelector("#autoComplete").setAttribute("placeholder", "country");
                 return data;   
             },
             key: ["country"],
@@ -189,16 +169,7 @@ const Search = (data) => {
 }
 
 const FlyToCountry = (selection ,data) => {
-    //let countryCoordinates = [];
     if(selection){
-        /*data.forEach( country => {
-            if(country.country === selection ) {
-                countryCoordinates =  [
-                    country.countryInfo.long,
-                    country.countryInfo.lat
-                ]
-            }
-        });*/
         map.flyTo({
             center: CountriesCoordinates[selection],
             zoom: 5,
@@ -257,8 +228,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
         data.forEach( country => {
             if(country.country === selection) {
                 
-
-                if (country.country === 'WorldWide') {
+               /* if (country.country === 'WorldWide') {
                     speak(
                         `This app is here to help you learn about Corona virus,
                         Total cases in  ${country.country} are ${country.cases},
@@ -273,10 +243,8 @@ const showDataInCountryStatsContainer = (selection , data) => {
                         Recovered cases in  ${country.country} are ${country.recovered},
                         Deaths in  ${country.country} are ${country.deaths}, may their souls rest in peace
                     `);
-                } 
+                } */
         
-                   
-
                 html = `
                 <div 
                     class="card"
@@ -284,8 +252,9 @@ const showDataInCountryStatsContainer = (selection , data) => {
                     data-aos-duration="2000"
                     >
                     <div class="card-body country-stats">
-                        <h5 class="card-title">Tests</h5>
+                        <h5 class="card-title mb-2">Tests</h5>
                         <p class="tests">${country.tests}</p>
+  
                     </div>
                 </div>
 
@@ -297,7 +266,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
                     <div class="card-body country-stats">
                         <h5 class="card-title">Total Cases</h5>
                         <p class="cases-number total">${country.cases}</p>
-                        <h5 class="card-title">Active</h5>
+                        <h5 class="card-title mb-2">Active</h5>
                         <p class="cases-number active">${country.active}</p>
                     </div>
                 </div>
@@ -308,7 +277,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
                     data-aos-duration="2000"
                     >
                     <div class="card-body country-stats">
-                        <h5 class="card-title">Recovered</h5>
+                        <h5 class="card-title mb-2">Recovered</h5>
                         <p class="cases-number recovered">${country.recovered}</p>
                     </div>
                 </div>
@@ -319,7 +288,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
                     data-aos-duration="2000"
                     >
                     <div class="card-body country-stats">
-                        <h5 class="card-title">Deaths</h5>
+                        <h5 class="card-title mb-2">Deaths</h5>
                         <p class="cases-number death">${country.deaths}</p>
                         <h5 class="card-title">Today Deaths</h5>
                         <p class="cases-number new-deaths">${country.todayDeaths}</p>
@@ -375,27 +344,6 @@ const setColors = (country, metric) => {
      
 }
 
-/*const addLegend = () => {
-    const layers = ['0-1000', '1000-10000', '10000-50000', '50000-200000', '200000-500000', '5000000-1000000', '1000000+'];
-    const colors = ['#fff5f0','#fee0d2','#fcbba1','#fc9272','#fb6a4a','#ef3b2c','#cb181d'];
-
-    for (let i = 0; i < layers.length; i++) {
-        let layer = layers[i];
-        let color = colors[i];
-        let item = document.createElement('div');
-        let key = document.createElement('span');
-        key.className = 'legend-key';
-        key.style.backgroundColor = color;
-      
-        let value = document.createElement('span');
-        value.innerHTML = layer;
-        item.appendChild(key);
-        item.appendChild(value);
-        document.querySelector('.legend').appendChild(item);
-    }
-}
-*/
-
 const addMarkers = (data, metric='Active') => {
     data.map((country) => {
         let countryCenter = {
@@ -432,53 +380,41 @@ const removeCurrentMarkers = () => {
     console.log(currentMarkers.length);
 }
 
-
-//const showDataOnMap = (data) => {
-  //  data.map((country) => {
-    //  let countryCenter = {
-      //    lng: country.countryInfo.long,
-    //  lat: country.countryInfo.lat,
-      //  }
-  
-      //addMarkers(data, countryCenter, country);     
-    //});    
-//}
-
 const addPopups = (data, countryCenter, selection) => {
     let html = '';
     let popUp = new mapboxgl.Popup({ closeOnClick: true });
     data.map(country => {
         if (country.country === selection ) {
-        html =  `
-        <div class="country-info-window">
-            <div class="country-info-info">
-                <div class="flag">
-                    <img src=" ${country.countryInfo.flag}" alt="country Flag">
+            html =  `
+                <div class="country-info-window">
+                    <div class="country-info-info">
+                        <div class="flag">
+                            <img src=" ${country.countryInfo.flag}" alt="country Flag">
+                        </div>
+                        <div class="country-name-tests">
+                            <div class="selected-country-name">
+                                <p> ${country.country} </p>
+                            </div>
+                            <div class="country-tests">
+                                <p>Tests: ${country.tests} </p>
+                            </div>
+                        </div>  
+                    </div>    
+                    <div class="country-info-stats-cases">
+                        <i class='fas fa-chevron-right'></i>
+                        <p>Cases: ${country.cases}</p>
+                    </div>
+                    <div class="country-info-stats-recovered">
+                        <i class='fas fa-chevron-right'></i>
+                        <p>Recovered: ${country.recovered}</p>
+                    </div>
+                    <div class="country-info-stats-deaths">
+                        <i class='fas fa-chevron-right'></i>
+                        <p>Deaths: ${country.deaths}</p>
+                    </div>
                 </div>
-                <div class="country-name-tests">
-                    <div class="selected-country-name">
-                        <p> ${country.country} </p>
-                    </div>
-                    <div class="country-tests">
-                        <p>Tests: ${country.tests} </p>
-                    </div>
-                </div>  
-            </div>    
-            <div class="country-info-stats-cases">
-                <i class='fas fa-chevron-right'></i>
-                <p>Cases: ${country.cases}</p>
-            </div>
-            <div class="country-info-stats-recovered">
-                <i class='fas fa-chevron-right'></i>
-                <p>Recovered: ${country.recovered}</p>
-            </div>
-            <div class="country-info-stats-deaths">
-                <i class='fas fa-chevron-right'></i>
-                <p>Deaths: ${country.deaths}</p>
-            </div>
-        </div>
-    `
-    }
+            `
+        }
     });
 
     
@@ -489,8 +425,7 @@ const addPopups = (data, countryCenter, selection) => {
     return popUp;
 }
 
-let tableData = [];
-let sortDirection = false;
+
 
 const showDataInTable = (data) => {
     let html = '';
@@ -506,10 +441,9 @@ const showDataInTable = (data) => {
         html += `
         <tr class="country-info">
             <td class="loc">${country.country}</td>
-            <td class="total" >${country.cases}</td>
+            <td class="today-cases">${country.todayCases}</td>
             <td class="recovered">${country.recovered}</td>
             <td class="death">${country.deaths}</td>
-            <td class="today-cases">${country.todayCases}</td>
         </tr>
         `
     })
@@ -544,12 +478,19 @@ const buildChartData = data => {
         Recovered: RecoveredCasesData,
         Deaths: DeathCasesData
     };
+    
+   let lastDataPoint;
+
     for (let date in data.cases) {
-        let newActiveDataPoint = {
-            x: date,
-            y: data.cases[date]
+        if(lastDataPoint) {
+            let newActiveDataPoint = {
+                x: date,
+                y: data.cases[date]  - lastDataPoint
+            }
+            ActiveCasesData.push(newActiveDataPoint);
         }
-        ActiveCasesData.push(newActiveDataPoint);
+        lastDataPoint = data.cases[date];
+        
     }
 
     for (let date in data.recovered) {
@@ -575,19 +516,17 @@ const buildChartData = data => {
 const buildPieChart = PieChartData => {
     let ctx_PChart = document.getElementById('myChart-pieChart').getContext('2d');
     let myPieChart = new Chart(ctx_PChart, {
-        type: 'pie',
+        type: 'doughnut',
         data: {
             datasets: [{
                 data: PieChartData,
                 backgroundColor: ["#6baed6", "#74c476", "#fb6a4a"],
             }],
-
             labels: [
                 'Active',
                 'Recovered',
                 'Deaths'
             ],
-
         },
         options: {
             maintainAspectRatio: false,
@@ -636,7 +575,7 @@ const buildChart = chartData => {
             responsive: true,
             title: {
                 display: true,
-                text: 'ActiveCases, Recovered, and Deaths worldWide in the last 120 days'
+                text: 'ActiveCases, Recovered, and Deaths globally in the last 120 days'
             },
             tooltips: {
                 mode: 'index',
@@ -649,12 +588,11 @@ const buildChart = chartData => {
                         format: timeFormat,
                         tooltipFormat: 'll'
                     },
-                    //scaleLabel: {
-                     //   display:     true,
-                   //     labelString: 'Date'
-                 //   }
                 }],
                 yAxes: [{
+                    gridLines: {
+                        display:false
+                    },
                     ticks: {
                         // Include a dollar sign in the ticks
                         callback: function(value, index, values) {
@@ -665,9 +603,6 @@ const buildChart = chartData => {
             }
         }
     });
-
-   /* chart.canvas.parentNode.style.height = '15em';
-    chart.canvas.parentNode.style.width = '45em';*/
 }
 
 

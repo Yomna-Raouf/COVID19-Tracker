@@ -37,10 +37,15 @@ h1 img {
     margin-right: .4em;
 }
 
+.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .map-info {
     display: flex;
     justify-content: center;
-    background-color: #fff;
+    background-color: #fdfdfd;
     flex-wrap: wrap;
     margin: auto;
     border-radius: 1em;
@@ -48,7 +53,8 @@ h1 img {
     /*box-shadow: 0px 0px 6px 0px #969798;*/
     /*height: 66vh;*/
     height: fit-content;
-    padding: 10px 15px;
+    padding: 5px 15px;
+    width: 96%;
 }
 
 .map-control {
@@ -56,7 +62,7 @@ h1 img {
     justify-content: space-between;
     align-items: flex-start;
     height: 80px;
-    padding: 21px 5px;
+    padding: 15px 5px;
 }
 
 .search-container {
@@ -155,12 +161,15 @@ h1 img {
  
 
 .Recovered {
-    border: 1.5px solid #31a354;
+    border: none;
     background-color: #E7F8F7;
+    color: #07BEB5;
 }
 
 .deaths {
-    border: 1.5px solid #de2d26;
+    border: none;
+    color: #F64759;
+    background-color: #FFE2E5;
 }
 
 
@@ -190,7 +199,7 @@ h1 img {
 
 .map-data-icon {
     width: 40px;
-    height: 40px;
+    height: 36px;
 }
 
 
@@ -216,8 +225,8 @@ h1 img {
 .mapboxgl-popup-content {
     width: fit-content;
     border-radius: 1em;
-    background-color: #f1faee;
-    height: fit-content;
+    background-color: #fdfdfd;
+    padding: 5px 5px;
 }
 
 
@@ -231,7 +240,7 @@ h1 img {
  
 
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
-    border-bottom-color: #f1faee;
+    border-bottom-color: #fdfdfd;
 }
 
 #autoComplete,
@@ -310,19 +319,26 @@ h1 img {
 }
  
 .country-info-info {
-    border-bottom: 1px solid #d3d3d3;
+    border-right: 1px solid #d3d3d3;
     display: flex;
     align-items: center;
-    padding: 5px;
+    padding: 10px;
     margin-bottom: 1em;
     flex-direction: column;
     font-family: sans-serif;
     justify-content: center;
 }
 
+.country-info-cases {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 .country-info-window {
-    width: 25em;
+    width: 25.5em;
     height: fit-content;
+    display: flex;
 }
 
 
@@ -400,10 +416,7 @@ h1 img {
     padding-top: 6em;
 }
 
-.recovered-card {
-    background-color: #C9F7F5;
-    color: #07BEB5;
-}
+
 
 .card {
     width: 15em;
@@ -432,6 +445,16 @@ h1 img {
 
 .card-body p {
     font-size: 1em;
+}
+
+.recovered-card {
+    background-color: #C9F7F5;
+    color: #07BEB5;
+}
+
+.deaths-card {
+    color: #F64759;
+    background-color: #FFE2E5;
 }
 
 .location-card {
@@ -518,7 +541,8 @@ h1 img {
 }
 
 .table-title {
-    padding: 21px 5px;
+    padding: 15px 0;
+    margin-bottom: 14px;
 }
 
 .table-title h3,
@@ -538,7 +562,9 @@ h1 img {
     border-radius: 1em;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    height: 446px;
+    height: 445px;
+    width: 396px;
+    border: 1px solid #EEE5FF;
 }
 
 .table-container::-webkit-scrollbar {
@@ -578,7 +604,7 @@ table {
 .table-head  {
     width: 100px;
     text-align: center;
-    border-bottom: 1.5px solid #a8dadc;
+    border-bottom: 1.5px solid #EEE5FF;
 }
 
 .table-head th {
@@ -586,14 +612,15 @@ table {
     font-size: 14px;
     padding: 10px 8px 12px 8px;
     color: #254065;
+    background-color: #EEE5FF;
 }
 
 
 td {
-    padding: 0 8px 12px 8px;
+    padding: 8px  8px;
     text-align: center;
     font-weight: 700;
-    background-color: rgba(168, 218, 220, 0.5);
+    background-color: #fdfdfd;
     font-size: 14px;
     vertical-align: bottom;
 }
@@ -602,14 +629,14 @@ td {
     text-align: left;
     min-width: 175px;
     padding-left: 0;
-    padding: 0 8px 12px 8px;
+    padding:  8px 8px;
     font-weight: 700;
     font-size: 14px;
     color: #457b9d ;
 }
 
 table tr {
-    height: 40px;
+    height: 38px;
 }
 
 .total, .today-cases, .active {
@@ -623,12 +650,12 @@ table tr {
 
 
 .death, .new-deaths {
-    color:  #de2d26;
+    color: #F64759;
 }
 
 .country-info,
 .WorldWide {
-    border-bottom: 1.5px solid #a8dadc;
+    border-bottom: 1.5px solid #EEE5FF;
 }
 
 .charts-container {
@@ -638,13 +665,18 @@ table tr {
     align-items: center;
     flex-wrap: wrap;
     margin-top: 1em;
+    padding: 0;
+    width: 96%;
+    margin: auto;
 }
+
 
 .chart-card {
     height: 29em;
-    width: 34em;
+    width: 33.5em;
     margin: 0;
     margin-top: 1.5em;
+    background-color: #fdfdfd;
 }
 
 .chartjs-render-monitor,
@@ -783,10 +815,11 @@ canvas {
 
 .stay-safe-container {
     margin-top: 1em;
-    background-color: #fff;
+    background-color: #fdfdfd;
     border-radius: 1em;
     padding: 15px;
     height: fit-content;
+    width: 23%;
 }
 
 .stay-safe-title,
@@ -1021,16 +1054,9 @@ h6 {
         height: 48px;
     }
 
-    .charts-container {
-        padding: 0;
-    }
+    
 
-    .chart-card {
-        height: 30em;
-        width: 45em;
-        margin: 0;
-        margin-bottom: inherit;
-    }
+    
 
     #autoComplete, 
     #autoComplete:focus, 

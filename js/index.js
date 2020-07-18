@@ -259,7 +259,7 @@ const showDataInCountryStatsContainer = (selection , data) => {
                 </div>
 
                 <div 
-                    class="card"
+                    class="card Totalcases-card"
                     data-aos="zoom-in-down"
                     data-aos-duration="2000"
                     >
@@ -272,18 +272,18 @@ const showDataInCountryStatsContainer = (selection , data) => {
                 </div>
 
                 <div 
-                    class="card"
+                    class="card recovered-card"
                     data-aos="zoom-in-down"
                     data-aos-duration="2000"
                     >
                     <div class="card-body country-stats">
                         <h5 class="card-title mb-2">Recovered</h5>
-                        <p class="cases-number recovered">${country.recovered}</p>
+                        <p class="cases-number ">${country.recovered}</p>
                     </div>
                 </div>
 
                 <div 
-                    class="card"
+                    class="card deaths-card"
                     data-aos="zoom-in-down"
                     data-aos-duration="2000"
                     >
@@ -399,18 +399,21 @@ const addPopups = (data, countryCenter, selection) => {
                                 <p>Tests: ${country.tests} </p>
                             </div>
                         </div>  
-                    </div>    
-                    <div class="country-info-stats-cases">
-                        <i class='fas fa-chevron-right'></i>
-                        <p>Cases: ${country.cases}</p>
                     </div>
-                    <div class="country-info-stats-recovered">
-                        <i class='fas fa-chevron-right'></i>
-                        <p>Recovered: ${country.recovered}</p>
-                    </div>
-                    <div class="country-info-stats-deaths">
-                        <i class='fas fa-chevron-right'></i>
-                        <p>Deaths: ${country.deaths}</p>
+                    <div class="country-info-cases"> 
+                        <div class="country-info-stats-cases">
+                            <i class='fas fa-chevron-right'></i>
+                            <p>Cases: ${country.cases}</p>
+                        </div>
+                        <div class="country-info-stats-recovered">
+                            <i class='fas fa-chevron-right'></i>
+                            <p>Recovered:</p>
+                            <p> ${country.recovered} </p>
+                        </div>
+                        <div class="country-info-stats-deaths">
+                            <i class='fas fa-chevron-right'></i>
+                            <p>Deaths: ${country.deaths}</p>
+                        </div>
                     </div>
                 </div>
             `

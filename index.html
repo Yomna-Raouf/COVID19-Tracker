@@ -60,18 +60,9 @@
                 </div>
               </div>
               <div class="map-view-btns-container">
-                <button onclick="changeMapData('Active');"  type="button" class="TotalCases">
-                  Total Cases
-                  <img class="map-data-icon" src="assets/infection-textured.svg" alt="infected cases">
-                </button>
-                <button onclick="changeMapData('Recovered');" type="button" class="Recovered">
-                  Recovered
-                  <img class="map-data-icon" src="assets/revovered-cases.svg" alt="recovered" width="32px" height="32px">
-                </button>
-                <button onclick="changeMapData('Deaths');"  type="button" class="deaths">
-                  Deaths
-                  <img class="map-data-icon" src="assets/deaths.svg" alt="deaths">
-                </button>
+                <button onclick="changeMapData('Active');"  type="button" class="TotalCases"> Total Cases </button>
+                <button onclick="changeMapData('Recovered');" type="button" class="Recovered"> Recovered </button>
+                <button onclick="changeMapData('Deaths');"  type="button" class="deaths"> Deaths </button>
               </div>
             </div>
             <div id="map"></div>
@@ -83,6 +74,7 @@
           <div class="stats-container">
             <div class="table-title">
               <h3>Overview</h3>
+              <span class="date text-muted"></span>
             </div>
             <div class="table-container">
               <table id="table-data">

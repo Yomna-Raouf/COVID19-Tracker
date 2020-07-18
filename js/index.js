@@ -45,6 +45,7 @@ const getCountryData = () => {
     .then( response => response.json())
     .then((data)=>{
         countriesData = data;
+        updateDate(data.updated);
         showDataInTable(data);
         Search(data);
         ipLookUp(data);
@@ -428,7 +429,10 @@ const addPopups = (data, countryCenter, selection) => {
     return popUp;
 }
 
-
+const  updateDate = (dateTimestamp) => {
+    let date = moment(dateTimestamp).format("[Last Updated] MMMM DD, YYYY");
+    document.querySelector('.date').textContent = date;
+}
 
 const showDataInTable = (data) => {
     let html = '';

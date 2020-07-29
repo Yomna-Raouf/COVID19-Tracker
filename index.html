@@ -81,9 +81,8 @@
                 <thead class="table-head-container">
                   <tr class="table-head">
                   <th class="country-location">Location</th>
-                  <th class="metric">today Cases <i class="fas fa-sort" onclick="sortColumn('todayCases')"></i></th>
-                  <th class="metric">Recovered <i class="fas fa-sort" onclick="sortColumn('recovered')"></i></th>
-                  <th class="metric">Deaths <i class="fas fa-sort" onclick="sortColumn('deaths')"></i></th>
+                  <th class="metric">Cases <i class="fas fa-sort" onclick="sortColumn('cases')"></i></th>
+                  <th class="metric">new cases <i class="fas fa-sort" onclick="sortColumn('todayCases')"></i></th>
                 </tr>
                 </thead>
                 <tbody class="country-info-container"></tbody>
@@ -93,13 +92,13 @@
         </section>
         <section class="charts-container">
   
-          <div class="card  chart-card ">
+          <div class="card  chart-card  line-chart">
             <div class="card-body ">
               <canvas id="myChart-linearChart" class="chartjs-render-monitor"></canvas>
             </div>
           </div>
       
-          <div class="card  chart-card ">
+          <div class="card  chart-card pie-chart">
             <div class="card-body ">
               <canvas id="myChart-pieChart" class="chartjs-render-monitor"></canvas>
             </div>

@@ -81,7 +81,7 @@ const getWorldWideData = () => {
 }
 
 const getNews = () => {
-    fetch("https://newsapi.org/v2/everything?q=COVID&from=2020-06-29&apiKey=c361ee82ad48460287bf148b5aee5809&sortBy=popularity")
+    fetch("https://newsapi.org/v2/everything?q=COVID&from=2020-07-28&apiKey=c361ee82ad48460287bf148b5aee5809&sortBy=popularity")
     .then(response =>  response.json())
     .then( data => {
         console.log(data["articles"]);
@@ -93,9 +93,9 @@ const getNews = () => {
 
 const changeMapData = (metric) => {
     let MapDataColors = {
-        'Active': '#1d3557',
-        'Deaths': '#de2d26',
-        "Recovered": '#31a354'
+        'Active': '#4BA1FD',
+        'Deaths': '#F64759',
+        "Recovered": '#07BEB5'
     }
     console.log(metric);
     removeCurrentMarkers();
@@ -248,14 +248,15 @@ const showDataInCountryStatsContainer = (selection , data) => {
         
                 html = `
                 <div 
-                    class="card"
+                    class="card country-tests-card"
                     data-aos="zoom-in-down"
                     data-aos-duration="2000"
                     >
                     <div class="card-body country-stats">
-                        <h5 class="card-title mb-2">Tests</h5>
-                        <p class="tests">${country.tests}</p>
-  
+                        <div class="mt-4 ml-2">
+                            <h6 class="card-title  mb-2">${country.country}</h6>
+                            <div class=" text-muted font-weight-bold tests">Tests: ${numeral(country.tests).format('0.0a')} Total</div>
+                        </div>
                     </div>
                 </div>
 
@@ -265,10 +266,11 @@ const showDataInCountryStatsContainer = (selection , data) => {
                     data-aos-duration="2000"
                     >
                     <div class="card-body country-stats">
-                        <h5 class="card-title">Total Cases</h5>
-                        <p class="cases-number total">${country.cases}</p>
-                        <h5 class="card-title mb-2">Active</h5>
-                        <p class="cases-number active">${country.active}</p>
+                        <div>
+                            <h6 class="card-title">Coronavirus Cases</h6>
+                            <h3 class="card-subtitle  cases-number  active">${numeral(country.todayCases).format('+0,0')}</h3>
+                            <div class=" text-muted font-weight-bold  total mt-3">${numeral(country.cases).format('0.0a')} Total</div>
+                        </div>
                     </div>
                 </div>
 
@@ -278,8 +280,11 @@ const showDataInCountryStatsContainer = (selection , data) => {
                     data-aos-duration="2000"
                     >
                     <div class="card-body country-stats">
-                        <h5 class="card-title mb-2">Recovered</h5>
-                        <p class="cases-number ">${country.recovered}</p>
+                        <div>
+                            <h6 class="card-title">Recovered</h6>
+                            <h3 class="card-subtitle   cases-number ">${numeral(country.todayRecovered).format('+0,0')}</h3>
+                            <div class=" text-muted font-weight-bold  recovered mt-3">${numeral(country.recovered).format('0.0a')} Total</div>
+                        </div>
                     </div>
                 </div>
 
@@ -289,15 +294,15 @@ const showDataInCountryStatsContainer = (selection , data) => {
                     data-aos-duration="2000"
                     >
                     <div class="card-body country-stats">
-                        <h5 class="card-title mb-2">Deaths</h5>
-                        <p class="cases-number death">${country.deaths}</p>
-                        <h5 class="card-title">Today Deaths</h5>
-                        <p class="cases-number new-deaths">${country.todayDeaths}</p>
+                        <div>
+                            <h6 class="card-title">Deaths</h6>
+                            <h3 class="card-subtitle  cases-number death">${numeral(country.todayDeaths).format('+0,0')}</h3>
+                            <div class=" text-muted font-weight-bold  death mt-3">${numeral(country.deaths).format('0.0a')} Total</div>
+                        </div>
                     </div>
                 </div>
                 
                 `    
-                console.log(country);
             }
         });
     }
@@ -397,22 +402,20 @@ const addPopups = (data, countryCenter, selection) => {
                                 <p> ${country.country} </p>
                             </div>
                             <div class="country-tests">
-                                <p>Tests: ${country.tests} </p>
+                                <p>Tests: </p>
+                                <p>${country.tests} </p>
                             </div>
                         </div>  
                     </div>
                     <div class="country-info-cases"> 
                         <div class="country-info-stats-cases">
-                            <i class='fas fa-chevron-right'></i>
                             <p>Cases: ${country.cases}</p>
                         </div>
                         <div class="country-info-stats-recovered">
-                            <i class='fas fa-chevron-right'></i>
                             <p>Recovered:</p>
                             <p> ${country.recovered} </p>
                         </div>
                         <div class="country-info-stats-deaths">
-                            <i class='fas fa-chevron-right'></i>
                             <p>Deaths: ${country.deaths}</p>
                         </div>
                     </div>
@@ -448,9 +451,8 @@ const showDataInTable = (data) => {
         html += `
         <tr class="country-info">
             <td class="loc">${country.country}</td>
-            <td class="today-cases">${country.todayCases}</td>
-            <td class="recovered">${country.recovered}</td>
-            <td class="death">${country.deaths}</td>
+            <td class="cases">${country.cases}</td>
+            <td class="today-cases">${numeral(country.todayCases).format('+0,0')}</td>
         </tr>
         `
     })
@@ -527,7 +529,7 @@ const buildPieChart = PieChartData => {
         data: {
             datasets: [{
                 data: PieChartData,
-                backgroundColor: ["#6baed6", "#74c476", "#fb6a4a"],
+                backgroundColor: ["#FFB21A", "#07BEB5", "#F64759"],
             }],
             labels: [
                 'Active',

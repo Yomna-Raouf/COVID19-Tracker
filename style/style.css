@@ -53,7 +53,7 @@ h1 img {
     /*box-shadow: 0px 0px 6px 0px #969798;*/
     /*height: 66vh;*/
     height: fit-content;
-    padding: 5px 15px;
+    padding: 5px 15px 13px 15px;
     width: 96%;
 }
 
@@ -61,8 +61,8 @@ h1 img {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    height: 80px;
-    padding: 15px 5px;
+    height: 68px;
+    padding: 15px 5px 0 5px;
 }
 
 .search-container {
@@ -134,7 +134,7 @@ h1 img {
 .map-view-btns-container {
     display: flex;
     justify-content: space-between;
-    padding: 7px 5px;
+    padding: 7px 5px 21px 5px;
 }
 
 
@@ -193,7 +193,7 @@ h1 img {
 }
 
 .map-container {
-    width: 60%;
+    width: 67%;
     /*height: 669px;*/
 }
 
@@ -205,14 +205,14 @@ h1 img {
     right: 50%;
     transform: translateX(-50%);*/
     /*margin: auto;*/
-    border: 1.5px solid #1d3557;
+    border: 1.5px solid #4BA1FD;
     border-radius: 1.5em;
    /* box-shadow: 0px 0px 6px 0px #969798;*/
 }
 
 #map,
 .mapboxgl-canvas {
-    height: 402px;
+    height: 400px;
 }
 
 .mapboxgl-canvas {
@@ -330,12 +330,14 @@ h1 img {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    margin-left: 10px;
 }
 
 .country-info-window {
     width: 25.5em;
     height: fit-content;
     display: flex;
+    width: fit-content;
 }
 
 
@@ -420,11 +422,11 @@ h1 img {
     height: 8em;
     border-radius: .8em;
    /* border: 1px solid #1d3557;*/
-    background:  url(../assets/coronavirus_PNG20.png) no-repeat center   ;
+   /* background:  url(../assets/coronavirus_PNG20.png) no-repeat center   ;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+    background-size: cover;*/
     margin: 1.3em;
     transition: .5s linear;
 }
@@ -435,28 +437,36 @@ h1 img {
 
 .card-body {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    justify-content: space-between;
+    padding: 0;
 }
 
 .card-body p {
     font-size: 1em;
 }
 
+.country-tests-card {
+    background-color: #fdfdfd;
+    border-right: 5px solid #8b53f9;
+    color: #8b53f9;
+}
+
 .Totalcases-card {
-    background-color: #FFF4DE;
-    color: #FFB21A;
+    color: #4BA1FD;
+    background-color: rgba(75, 161, 253, 0.1);
+    border-right: 5px solid;
 }
 
 .recovered-card {
     background-color: #C9F7F5;
     color: #07BEB5;
+    border-right: 5px solid;
 }
 
 .deaths-card {
     color: #F64759;
     background-color: #FFE2E5;
+    border-right: 5px solid;
 }
 
 .location-card {
@@ -485,7 +495,7 @@ h1 img {
     font-weight: 500;
     left: 50%;
 }
-
+ 
 .country-stats-container {
     
     display: flex;
@@ -512,6 +522,9 @@ h1 img {
     width: -webkit-fill-available;
 }*/
 
+.country-stats-img {
+    width: 80px;
+}
 
 .country-stats + p {
     margin-bottom: 15px;
@@ -544,7 +557,7 @@ h1 img {
 
 .table-title {
     padding: 15px 0;
-    margin-bottom: 14px;
+    margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
 }
@@ -566,8 +579,8 @@ h1 img {
     border-radius: 1em;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    height: 445px;
-    width: 396px;
+    height: 460px;
+    width: 316px;
     border: 1px solid #EEE5FF;
 }
 
@@ -586,7 +599,7 @@ table {
 
 .country-location {
     text-align: left;
-    min-width: 175px;
+    width: 140px;
     padding-left: 0;
     padding: 0 8px 12px 8px;
     font-weight: 400;
@@ -607,7 +620,6 @@ table {
 
 .table-head  {
     width: 100px;
-    text-align: center;
     border-bottom: 1.5px solid #EEE5FF;
 }
 
@@ -622,7 +634,7 @@ table {
 
 td {
     padding: 8px  8px;
-    text-align: center;
+    text-align: right;
     font-weight: 700;
     background-color: #fdfdfd;
     font-size: 14px;
@@ -631,7 +643,7 @@ td {
 
 .loc {
     text-align: left;
-    min-width: 175px;
+    width: 140px;
     padding-left: 0;
     padding:  8px 8px;
     font-weight: 700;
@@ -640,21 +652,25 @@ td {
 }
 
 table tr {
-    height: 38px;
+    height: 40px;
 }
 
-.total, .today-cases, .active {
-    color: #FFB21A ;
-    
+.total,  .active {
+    color: #4BA1FD;    
 }
 
+.today-cases{
+    color: #FFB21A;
+}
+
+.cases {
+    color: #74bafd ;
+}
 /*#3182bd*/
 
 .recovered {
     color: #07BEB5 ;
 }
-
-
 
 .death, .new-deaths {
     color: #F64759;
@@ -684,6 +700,14 @@ table tr {
     margin: 0;
     margin-top: 1.5em;
     background-color: #fdfdfd;
+}
+
+.line-chart {
+    width: 41em;
+}
+
+.pie-chart {
+    width: 26em;
 }
 
 .chartjs-render-monitor,
@@ -986,8 +1010,8 @@ h5 {
 }
 
 h6 {
-    text-align: center;
-    color: #589dff;
+    /*text-align: center;*/
+    /*color: #589dff;*/
     font-weight: 500;
     margin-bottom: 1em;
 }
@@ -1002,7 +1026,13 @@ h6 {
     text-decoration: none;
 }
 
- 
+.country-stats {
+    padding: 15px 15px 0 15px;
+}
+
+.cases-number {
+    font-size: 45px;
+}
 
 
 /*#legend {
@@ -1088,6 +1118,8 @@ h6 {
         width: 18em;
     }
 
+   
+
     .country-stats-container {
         padding: 0;
     }
@@ -1098,6 +1130,7 @@ h6 {
         font-size: 10px;
     }
 
+    
     .country-location, .loc {
         min-width: 158px;
         padding: 0 8px 9px 8px;

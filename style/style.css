@@ -15,9 +15,9 @@ body , html, main{
 
 .covid {
     /*text-align: center;*/
-    height: 4em;
+    height: 3.5em;
     padding: 0.5em;
-    font-family: 'SEGA LOGO FONT', sans-serif, Arial, Helvetica;
+    font-family: 'Roboto Mono', monospace, sans-serif, Arial, Helvetica;
     position: sticky;
     top: 0;
     z-index: 101;
@@ -33,7 +33,7 @@ h1  {
 }
 
 h1 img {
-    height: 52px;
+    height: 45px;
     margin-right: .4em;
 }
 
@@ -70,7 +70,6 @@ h1 img {
     margin-bottom: 1em;
 }
 
-
 .no_result:hover {
     cursor: default;
     background-color: #fff;
@@ -95,49 +94,11 @@ h1 img {
     color: #64ceaa;
 }
 
-
-/*.geocoder {
-    position: absolute;
-    z-index: 1;
-    width: 40%;
-    left: 50%;
-    top: 65%;
-    transform: translate(-50%, -65%);
-}
-
-.mapboxgl-ctrl-geocoder {
-    min-width: 100%;
-    height: 50px;
-    border-radius: 30px;
-}
-
-.mapboxgl-ctrl-geocoder--input {
-    font-size: 1.5em;
-    height: inherit;
-    padding: 6px 60px;
-}
-
-.mapboxgl-ctrl-geocoder--icon-close {
-    width: 34px;
-    height: 40px;
-    margin-right: 10px;
-}
-
-.mapboxgl-ctrl-geocoder--icon-search {
-    width: 34px;
-    height: 40px;
-    left: 10px;
-}*/
-
- 
-
 .map-view-btns-container {
     display: flex;
     justify-content: space-between;
     padding: 7px 5px 21px 5px;
 }
-
-
 
 .TotalCases,
 .Recovered,
@@ -151,27 +112,23 @@ h1 img {
     transition: .5s linear;
 }
 
- 
-
 .TotalCases {
     border: none;
-    color: #4BA1FD;
+    color:  #026ad9;
     background-color: rgba(75, 161, 253, 0.1);
 }
  
-
 .Recovered {
     border: none;
     background-color: #E7F8F7;
-    color: #07BEB5;
+    color: #0c7d78;
 }
 
 .deaths {
     border: none;
-    color: #F64759;
+    color: #d10a1e;
     background-color: #FFE2E5;
 }
-
 
 .TotalCases:hover,
 .Recovered:hover,
@@ -197,15 +154,11 @@ h1 img {
     /*height: 669px;*/
 }
 
- 
-
-
 #map {
     /*left: 50%;
     right: 50%;
     transform: translateX(-50%);*/
     /*margin: auto;*/
-    border: 1.5px solid #4BA1FD;
     border-radius: 1.5em;
    /* box-shadow: 0px 0px 6px 0px #969798;*/
 }
@@ -226,15 +179,10 @@ h1 img {
     padding: 5px 5px;
 }
 
-
 .mapboxgl-popup-close-button {
     font-size: 30px;
     color: #457b9d;
 }
-
-
-
- 
 
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
     border-bottom-color: #fdfdfd;
@@ -275,18 +223,16 @@ h1 img {
     color: #3182bd;
 }
 
+
 #autoComplete_list {
-    position: fixed;
-    z-index: 1000;
-    padding: 0;
-    left: -29em;
-    right: 0;
+    position: absolute;
+    z-index: 100;
     margin-top: 0;
-    margin-left: auto;
     margin-right: auto;
     width: 18rem;
     transition: all .1s ease-in-out;
     -webkit-transition: all -webkit-transform .1s ease;
+    margin-left: 29.5%!important;
 }
 
 #autoComplete ul {
@@ -298,7 +244,6 @@ h1 img {
     margin-inline-end: 0px;
     padding-inline-start: 40px;
 }
-
 
 .no_result {
     margin: 0.15rem auto;
@@ -383,30 +328,7 @@ h1 img {
     font-size: 20px;
     margin: 5px;
 }
-
-.legend {
-    position: absolute;
-    top: 20.7em;
-    left: 83em;
-    padding: 10px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    line-height: 20px;
-    height: 141px;
-    margin-bottom: 40px;
-    width: 150px;
-    background: rgba(255, 255, 255, 0.5);
-    font-family: Arial, sans-serif;
-    border-radius: 3px;
-}
-
-.legend-key {
-    display: inline-block;
-    border-radius: 20%;
-    width: 10px;
-    height: 10px;
-    margin-right: 5px;
-}
-
+ 
 .data-info {
     display: flex;
     flex-direction: column;
@@ -414,8 +336,6 @@ h1 img {
     align-items: center;
     padding-top: 6em;
 }
-
-
 
 .card {
     width: 15em;
@@ -427,8 +347,9 @@ h1 img {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;*/
-    margin: 1.3em;
+    margin: 1em 1.3em;
     transition: .5s linear;
+    border: none!important;
 }
 
 .card:hover { 
@@ -447,26 +368,30 @@ h1 img {
 
 .country-tests-card {
     background-color: #fdfdfd;
-    border-right: 5px solid #8b53f9;
+    border-right: 5px solid #8b53f9!important;
     color: #8b53f9;
 }
 
+.country {
+    font-size: 27px!important;
+} 
+
 .Totalcases-card {
-    color: #4BA1FD;
-    background-color: rgba(75, 161, 253, 0.1);
-    border-right: 5px solid;
+    color: #026ad9;
+    background-color: #4ba1fd1c;
+    border-right: 5px solid!important;
 }
 
 .recovered-card {
     background-color: #C9F7F5;
-    color: #07BEB5;
-    border-right: 5px solid;
+    color: #0c7d78;
+    border-right: 5px solid!important;
 }
 
 .deaths-card {
-    color: #F64759;
+    color: #f63c4f;
     background-color: #FFE2E5;
-    border-right: 5px solid;
+    border-right: 5px solid!important;
 }
 
 .location-card {
@@ -477,8 +402,6 @@ h1 img {
     margin-left: auto;
     margin-right: auto;
 }
-
- 
 
 .card-title {
     font-size: 1rem;
@@ -497,55 +420,18 @@ h1 img {
 }
  
 .country-stats-container {
-    
     display: flex;
     justify-content: space-around;
-   
-    
-    border-radius: 20px;
     align-items: center;
     flex-wrap: wrap;
 }
-
-
-/*.country-stats {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-family: sans-serif;
-    letter-spacing: 1px;
-    font-size: 30px;
-    border-right: 1px solid #fff;
-    height: 200px;
-    line-height: 5px;
-    width: -webkit-fill-available;
-}*/
-
+ 
 .country-stats-img {
     width: 80px;
 }
 
 .country-stats + p {
     margin-bottom: 15px;
-}
-
-/*.cases-number {
-    font-size: 20px;
-    margin-top: 8px;
-}*/
-
-.stats-news-container {
-    
-    display: flex;
-    justify-content: center;
-    
-    background: url(../assets/coronavirus_PNG20.png) no-repeat center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    
 }
 
 .stats-container {
@@ -581,12 +467,11 @@ h1 img {
     scrollbar-width: none;
     height: 460px;
     width: 316px;
-    border: 1px solid #EEE5FF;
 }
 
 .table-container::-webkit-scrollbar {
     display: none;
-  }
+}
 
 table {
     width: 100%;
@@ -631,7 +516,6 @@ table {
     background-color: #f3effc;
 }
 
-
 td {
     padding: 8px  8px;
     text-align: right;
@@ -656,24 +540,24 @@ table tr {
 }
 
 .total,  .active {
-    color: #4BA1FD;    
+    color: #026ad9;    
 }
 
 .today-cases{
-    color: #FFB21A;
+    color: #ffba1a;
 }
 
 .cases {
-    color: #74bafd ;
+    color: #026ad9 ;
 }
 /*#3182bd*/
 
 .recovered {
-    color: #07BEB5 ;
+    color: #0c7d78 ;
 }
 
 .death, .new-deaths {
-    color: #F64759;
+    color: #f63c4f;
 }
 
 .country-info,
@@ -692,7 +576,6 @@ table tr {
     width: 96%;
     margin: auto;
 }
-
 
 .chart-card {
     height: 29em;
@@ -861,11 +744,10 @@ canvas {
     letter-spacing: 1px;
     font-size: 50px;
     font-weight: 500;
-    font-family: 'SEGA LOGO FONT', sans-serif, Arial, Helvetica;
+    font-family: 'Roboto Mono', monospace, sans-serif, Arial, Helvetica;
     letter-spacing: 1px;
     color: #193864;
     margin-bottom: 1em;
-    text-shadow: -1px 4px 6px #183458;
 }
 
 .stay-safe-instructions {
@@ -1097,16 +979,9 @@ h6 {
 
     #autoComplete, 
     #autoComplete:focus, 
-    #autoComplete:hover, 
-    #autoComplete_list {
+    #autoComplete:hover {
         width: 12rem;
     }
-
-    #autoComplete_list {
-        margin-left: 5%;
-    }
-
-    
 
     #map,
     .mapboxgl-canvas-container {

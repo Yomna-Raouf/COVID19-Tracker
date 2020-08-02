@@ -31,10 +31,13 @@ function ipLookUp (countryData) {
     .then( response => response.json() )
     .then(data => {
         let country = data.country;
-        FlyToCountry(country, countryData);
+        if (country === 'United States') {
+            FlyToCountry('USA', countryData);
+        } else {
+            FlyToCountry(country, countryData);
+        }
         console.log('User\'s Location Data is ', data);
         console.log('User\'s Country', data.country);
-
     });
 }
 
@@ -100,7 +103,6 @@ const changeMapData = (metric) => {
     console.log(metric);
     removeCurrentMarkers();
     addMarkers(countriesData,metric);
-    document.querySelector('#map').style.borderColor = MapDataColors[metric];
 }
 
 const Search = (data) => {
@@ -247,24 +249,16 @@ const showDataInCountryStatsContainer = (selection , data) => {
                 } */
         
                 html = `
-                <div 
-                    class="card country-tests-card"
-                    data-aos="zoom-in-down"
-                    data-aos-duration="2000"
-                    >
+                <div class="card country-tests-card">
                     <div class="card-body country-stats">
-                        <div class="mt-4 ml-2">
-                            <h6 class="card-title  mb-2">${country.country}</h6>
+                        <div class="ml-2">
+                            <h6 class="card-title country mb-2">${country.country}</h6>
                             <div class=" text-muted font-weight-bold tests">Tests: ${numeral(country.tests).format('0.0a')} Total</div>
                         </div>
                     </div>
                 </div>
 
-                <div 
-                    class="card Totalcases-card"
-                    data-aos="zoom-in-down"
-                    data-aos-duration="2000"
-                    >
+                <div class="card Totalcases-card">
                     <div class="card-body country-stats">
                         <div>
                             <h6 class="card-title">Coronavirus Cases</h6>
@@ -274,25 +268,17 @@ const showDataInCountryStatsContainer = (selection , data) => {
                     </div>
                 </div>
 
-                <div 
-                    class="card recovered-card"
-                    data-aos="zoom-in-down"
-                    data-aos-duration="2000"
-                    >
+                <div class="card recovered-card">
                     <div class="card-body country-stats">
                         <div>
                             <h6 class="card-title">Recovered</h6>
-                            <h3 class="card-subtitle   cases-number ">${numeral(country.todayRecovered).format('+0,0')}</h3>
+                            <h3 class="card-subtitle   cases-number  recovered ">${numeral(country.todayRecovered).format('+0,0')}</h3>
                             <div class=" text-muted font-weight-bold  recovered mt-3">${numeral(country.recovered).format('0.0a')} Total</div>
                         </div>
                     </div>
                 </div>
 
-                <div 
-                    class="card deaths-card"
-                    data-aos="zoom-in-down"
-                    data-aos-duration="2000"
-                    >
+                <div class="card deaths-card">
                     <div class="card-body country-stats">
                         <div>
                             <h6 class="card-title">Deaths</h6>
@@ -409,14 +395,16 @@ const addPopups = (data, countryCenter, selection) => {
                     </div>
                     <div class="country-info-cases"> 
                         <div class="country-info-stats-cases">
-                            <p>Cases: ${country.cases}</p>
+                            <p>Cases:</p>
+                            <p class="active">${country.cases}</p>
                         </div>
                         <div class="country-info-stats-recovered">
                             <p>Recovered:</p>
-                            <p> ${country.recovered} </p>
+                            <p class="recovered"> ${country.recovered} </p>
                         </div>
                         <div class="country-info-stats-deaths">
-                            <p>Deaths: ${country.deaths}</p>
+                            <p>Deaths:</p>
+                            <p class="death">${country.deaths}</p>
                         </div>
                     </div>
                 </div>

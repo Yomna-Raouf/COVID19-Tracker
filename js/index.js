@@ -3,6 +3,7 @@ window.onload = () => {
     getWorldWideData();
     getCountryData();
     getHistoricalData();
+    loadMap();
     getNews();
     AOS.init();
 }
@@ -13,18 +14,19 @@ let CountriesCoordinates = {};
 let countriesData ;
 let tableData = [];
 let sortDirection = false;
- 
-mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkdXJvbTEybm9jNiJ9.Ptr2DKynFUQVoaNYN-6uqA';
-  var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/light-v10',
-    center: [0, 20],
-    zoom: 2,
-});
+var map;
 
-map.addControl(new mapboxgl.NavigationControl());
-
- 
+const loadMap = () => {
+    mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkdXJvbTEybm9jNiJ9.Ptr2DKynFUQVoaNYN-6uqA';
+    map = new mapboxgl.Map({
+       container: 'map',
+       style: 'mapbox://styles/mapbox/light-v10',
+       center: [0, 20],
+       zoom: 2,
+   });
+   
+   map.addControl(new mapboxgl.NavigationControl());   
+}
  
 function ipLookUp (countryData) {
     fetch('https://www.iplocate.io/api/lookup/')
@@ -231,22 +233,22 @@ const showDataInCountryStatsContainer = (selection , data) => {
         data.forEach( country => {
             if(country.country === selection) {
                 
-               /* if (country.country === 'WorldWide') {
+                if (country.country === 'WorldWide') {
                     speak(
                         `This app is here to help you learn about Corona virus,
                         Total cases in  ${country.country} are ${country.cases},
-                        Today cases in  ${country.country} are ${(country.todayCases !== null) || (country.todayCases !== undefined)  ? (country.todayCases) : 'not specified' },
+                        new cases in  ${country.country} are ${(country.todayCases !== null) || (country.todayCases !== undefined)  ? (country.todayCases) : 'not specified' },
                         Recovered cases in  ${country.country} are ${country.recovered},
                         Deaths in  ${country.country} are ${country.deaths}, may their souls rest in peace
                         `);
                 } else {
                     speak(
                         `Total cases in  ${country.country} are ${country.cases},
-                        Today cases in  ${country.country} are ${(country.todayCases !== null) || (country.todayCases !== undefined)  ? (country.todayCases) : 'not specified' },
+                        new cases in  ${country.country} are ${(country.todayCases !== null) || (country.todayCases !== undefined)  ? (country.todayCases) : 'not specified' },
                         Recovered cases in  ${country.country} are ${country.recovered},
                         Deaths in  ${country.country} are ${country.deaths}, may their souls rest in peace
                     `);
-                } */
+                } 
         
                 html = `
                 <div class="card country-tests-card">
@@ -295,6 +297,8 @@ const showDataInCountryStatsContainer = (selection , data) => {
 
     document.querySelector(".location").innerHTML = selection;
     document.querySelector('.country-stats-container').innerHTML = html;
+    document.querySelector(".loader").style.display = 'none';
+    document.getElementsByTagName("main")[0].style.visibility = 'visible';
 }
 
 const setColors = (country, metric) => {
@@ -610,16 +614,25 @@ const showNewsInNewsContainer = data => {
 
     let glide = new Glide('.news', {
         type: 'carousel',
-        autoplay: 2000,
-        perView: 4.5,
+        //autoplay: 2000,
+        perView: 7,
         draggable: true,
         focusAt: 'center',
         gap: 40,
         breakpoints: {
-            1200: {
-                perView: 3
+            1440: {
+                perView: 4.5
             },
-            800: {
+            1024: {
+                perView: 3.5
+            },
+            768: {
+                perView: 2.5
+            },
+            426: {
+                perView: 1.7
+            },
+            376: {
                 perView: 1.5
             }
         }

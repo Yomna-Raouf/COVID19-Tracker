@@ -1,7 +1,7 @@
 body , html, main{
     margin: 0 auto;
     padding: 0;
-    width: 100vw;
+    width: auto;
     background-color: #F5F5F5;
    /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='32' viewBox='0 0 16 32'%3E%3Cg fill='%239C92AC' fill-opacity='0.14'%3E%3Cpath fill-rule='evenodd' d='M0 24h4v2H0v-2zm0 4h6v2H0v-2zm0-8h2v2H0v-2zM0 0h4v2H0V0zm0 4h2v2H0V4zm16 20h-6v2h6v-2zm0 4H8v2h8v-2zm0-8h-4v2h4v-2zm0-20h-6v2h6V0zm0 4h-4v2h4V4zm-2 12h2v2h-2v-2zm0-8h2v2h-2V8zM2 8h10v2H2V8zm0 8h10v2H2v-2zm-2-4h14v2H0v-2zm4-8h6v2H4V4zm0 16h6v2H4v-2zM6 0h2v2H6V0zm0 24h2v2H6v-2z'/%3E%3C/g%3E%3C/svg%3E");*/
 }
@@ -11,6 +11,49 @@ body , html, main{
     font-style: normal;
     font-weight: normal;
     src: local('SEGA LOGO FONT'), url('SEGA.woff') format('woff');
+}
+
+main {
+    visibility: hidden;
+}
+
+
+.loader,
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+  animation: load7 1.8s infinite ease-in-out;
+}
+.loader {
+  color: #5fa6f2;
+  font-size: 10px;
+  margin: 80px auto;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+.loader:before {
+  left: -3.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 3.5em;
 }
 
 .covid {
@@ -114,14 +157,14 @@ h1 img {
 
 .TotalCases {
     border: none;
-    color:  #026ad9;
-    background-color: rgba(75, 161, 253, 0.1);
+    color:  #0265cf;
+    background-color: #e2ecf6;
 }
  
 .Recovered {
     border: none;
-    background-color: #E7F8F7;
-    color: #0c7d78;
+    background-color: #c9f7f5;
+    color: #0c7973;
 }
 
 .deaths {
@@ -196,7 +239,7 @@ h1 img {
     caret-color: #457b9d; 
     color: #457b9d;
     background-image: url(./magnifier.svg);
-    box-shadow: 0px 0px 6px 0px #969798;
+    box-shadow: 0px 0px 3px 0px #969798;
 }
 
 
@@ -265,7 +308,6 @@ h1 img {
     display: flex;
     align-items: center;
     padding: 10px;
-    margin-bottom: 1em;
     flex-direction: column;
     font-family: sans-serif;
     justify-content: center;
@@ -289,6 +331,7 @@ h1 img {
 .selected-country-name {
     font-size: 1.5em;
     letter-spacing: 1px;
+    margin-bottom: 15px;
 }
 
 .flag {
@@ -377,14 +420,14 @@ h1 img {
 } 
 
 .Totalcases-card {
-    color: #026ad9;
+    color: #0265cf;
     background-color: #4ba1fd1c;
     border-right: 5px solid!important;
 }
 
 .recovered-card {
-    background-color: #C9F7F5;
-    color: #0c7d78;
+    background-color: #c9f7f5;
+    color: #0c7973;
     border-right: 5px solid!important;
 }
 
@@ -439,6 +482,7 @@ h1 img {
     flex-direction: column;
     justify-content: space-evenly;
     margin-left: auto;
+    width: 31%;
 }
 
 .table-title {
@@ -466,7 +510,8 @@ h1 img {
     -ms-overflow-style: none;
     scrollbar-width: none;
     height: 460px;
-    width: 316px;
+    /*width: 316px;*/
+    width: auto;
 }
 
 .table-container::-webkit-scrollbar {
@@ -513,7 +558,7 @@ table {
     font-size: 14px;
     padding: 10px 8px 12px 8px;
     color: #8b53f9;
-    background-color: #f3effc;
+    background-color: #f5f5f5;
 }
 
 td {
@@ -540,7 +585,7 @@ table tr {
 }
 
 .total,  .active {
-    color: #026ad9;    
+    color: #0265cf;    
 }
 
 .today-cases{
@@ -553,7 +598,7 @@ table tr {
 /*#3182bd*/
 
 .recovered {
-    color: #0c7d78 ;
+    color: #0c7973 ;
 }
 
 .death, .new-deaths {
@@ -601,9 +646,9 @@ canvas {
     margin: auto;
 }
 
-.news-container {
+/*.news-container {
    padding: 30px;
-}
+}*/
 
 .glide__arrow--left {
     left: -1em;
@@ -627,6 +672,7 @@ canvas {
 
 .glide__slides {
     overflow: visible;
+    width: 100%!important;
 }
 
 .glide__slide--active {
@@ -742,12 +788,16 @@ canvas {
     justify-content: center;
     align-items: center;
     letter-spacing: 1px;
-    font-size: 50px;
     font-weight: 500;
-    font-family: 'Roboto Mono', monospace, sans-serif, Arial, Helvetica;
+    font-family:   sans-serif, monospace, Arial, Helvetica;
     letter-spacing: 1px;
-    color: #193864;
+    color: #24487b;
     margin-bottom: 1em;
+}
+
+.stay-safe-title h3,
+.news-container-title h3 {
+    font-size: 2.2rem;
 }
 
 .stay-safe-instructions {
@@ -916,134 +966,171 @@ h6 {
     font-size: 45px;
 }
 
-
-/*#legend {
-    position: absolute;
-    top: 1em;
-    left: 1em;
-} */
- 
-
-@media (min-width: 1800px) {
-
-    #map,
-    .mapboxgl-canvas-container {
-        height: 800px;
+@-webkit-keyframes load7 {
+    0%,
+    80%,
+    100% {
+      box-shadow: 0 2.5em 0 -1.3em;
     }
-
-    .TotalCases,
-    .Recovered,
-    .deaths {
-    width: 85px;
-    height: 85px;  
-    }
-
-    .map-view-btns-container {
-        height: 300px;
-    }
-
-    .map-data-icon {
-        width: 65px;
-        height: 65px;
-    }
-
-}
-
-@media (max-width: 768px) {
-    table tr {
-        height: 46px;
-    }
-
-    .news-container {
-        padding: 0;
+    40% {
+      box-shadow: 0 2.5em 0 0;
     }
 }
 
-@media (max-width:430px) {
-    .stats-container {
-        width: 380px;
+@keyframes load7 {
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 2.5em 0 -1.3em;
+    }
+    40% {
+        box-shadow: 0 2.5em 0 0;
+    }
+}
+
+@media (min-width:2560px) {
+
+    .covid {
+        height: 6.5em;
+        margin-bottom: 15px;
     }
 
-    table {
-        width: min-content;
-        overflow-y: scroll;
+    h1, .country {
+        font-size: 3rem;
     }
 
-    table tr {
-        height: 48px;
+    h1 img {
+        height: 85px;
     }
 
-    
-
-    
-
-    #autoComplete, 
-    #autoComplete:focus, 
-    #autoComplete:hover {
-        width: 12rem;
+    .card {
+        width: 26.5em;
+        height: 15em;
     }
 
-    #map,
-    .mapboxgl-canvas-container {
-        width: 92vw;
-        height: 600px;
+    .card-title {
+        font-size: 2.5rem;
     }
 
-    .country-info-window {
-        width: 18em;
+    .cases-number {
+        font-size: 100px;
     }
-
-   
 
     .country-stats-container {
-        padding: 0;
+        margin-bottom: 1rem;
     }
 
-    .country-stats-container .card {
-        width: 16em;
-        height: 16em;
-        font-size: 10px;
+    #autoComplete, #autoComplete:focus, #autoComplete:hover {
+        width: 25rem;
+        height: 44px;
     }
 
-    
-    .country-location, .loc {
-        min-width: 158px;
-        padding: 0 8px 9px 8px;
-    }   
-    
-    .safty img {
-        width: 300px;
+    #map, .mapboxgl-canvas {
+        height: 650px;
     }
 
-    .about-covid-definition figure img {
-        width: 350px;
-        height: 350px;
+    .TotalCases, .Recovered, .deaths {
+        width: 280px;
+        height: 55px;
+        font-size: 1.7rem;
     }
 
-    .safty ul {
-        width: 100%;
+    .table-title h3, .map-title h3 {
+        font-size: 35px;
     }
 
-    .TotalCases,
-    .Recovered,
-    .deaths{
-        height: 40px;
+    .table-container {
+        height: 700px;
     }
 
-    .map-data-icon {
+    table tr {
+        height: 60px;
+    }
+
+    td, .loc, .text-muted, figcaption, .selected-country-name, .table-head th {
+        font-size: 25px;
+    }
+
+    .stay-safe-title h3, .news-container-title h3 {
+        font-size: 3.2rem;
+    }
+
+    .flag img {
+        width: 13em;
+        height: 8em;
+    }
+
+    .line-chart {
+        width: 75em;
+        height: 35em;
+    }
+
+    .pie-chart {
+        height: 35em;
+        width: 36em;
+    }
+
+    figure img {
+        height: 219px;
+    }
+
+    .country-info-stats-cases, .country-info-stats-recovered, .country-info-stats-deaths, .country-tests {
+        font-size: 30px;
+    }
+}
+
+@media (min-width: 1440px) {
+
+    .covid {
+        height: 2.7em;
+    }
+
+    h1, .country {
+        font-size: 1.5rem;
+    }
+
+    h1 img {
+        height: 32px;
+    }
+
+
+    .card {
+        width: 14em;
+    }
+
+    td, .loc, .text-muted, .text-muted, .selected-country-name, .table-head th {
+        font-size: 14px;
+    }
+
+    figcaption {
+        font-size: 20px;
+    }
+
+    .TotalCases, .Recovered, .deaths {
         height: 35px;
     }
 
-}
-
-@media (max-width:375px) {
-    .stats-container {
-        width: 350px;
+    #map, .mapboxgl-canvas {
+        height: 350px;
     }
 
-    .country-location, .loc {
-        min-width: 210px;
-    }    
+    .table-container {
+        height: 410px;
+    }
 
-   
+    table tr {
+        height: 45px;
+    }
+
+    .line-chart {
+        width: 41em;
+    }
+
+    .pie-chart {
+        width: 21.5em;
+    }
 }
+ 
+
+ 
+ 

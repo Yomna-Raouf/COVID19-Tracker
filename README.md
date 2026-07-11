@@ -7,6 +7,9 @@ Interactive global COVID-19 dashboard with MapLibre maps, KPI cards, charts, sea
 ## Quick start (local)
 
 ```bash
+cp .env.example .env
+# add your NEWS_API_KEY in .env
+
 cd COVID-Tracker-Api
 npm install
 cd ..
@@ -14,6 +17,13 @@ npm start
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+Environment variables (see `.env.example`):
+
+| Variable | Purpose |
+| --- | --- |
+| `PORT` | Local server port (default `3000`) |
+| `NEWS_API_KEY` | NewsAPI key for `/api/news` (falls back to mock data if missing) |
 
 ## GitHub Pages
 

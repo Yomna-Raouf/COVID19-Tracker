@@ -1,3 +1,5 @@
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
+
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
@@ -6,7 +8,7 @@ const axios = require('axios');
 const app = express();
 const port = process.env.PORT || 3000;
 const DISEASE_API = 'https://disease.sh/v3/covid-19';
-const NEWS_API_KEY = process.env.NEWS_API_KEY || 'c361ee82ad48460287bf148b5aee5809';
+const NEWS_API_KEY = process.env.NEWS_API_KEY;
 const mockDir = path.join(__dirname, 'mock');
 const frontendDir = path.join(__dirname, '..');
 
@@ -51,6 +53,11 @@ app.get('/api/historical', async (req, res) => {
 });
 
 app.get('/api/news', async (req, res) => {
+  if (!NEWS_API_KEY) {
+    console.warn('NEWS_API_KEY missing. Using mock news.');
+    return res.json(readMock('news.json'));
+  }
+
   const fromDate = new Date();
   fromDate.setDate(fromDate.getDate() - 7);
   const from = fromDate.toISOString().slice(0, 10);

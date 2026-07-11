@@ -1,665 +1,762 @@
+const DISEASE_API = 'https://disease.sh/v3/covid-19';
+const DATA_BASE = new URL('data/', window.location.href).href;
 
 window.onload = () => {
-    getWorldWideData();
-    getCountryData();
-    getHistoricalData();
-    loadMap();
-    getNews();
-    AOS.init();
-}
+  bootstrapApp();
+};
 
- 
 let currentMarkers = [];
 let CountriesCoordinates = {};
-let countriesData ;
+let countriesData = [];
 let tableData = [];
 let sortDirection = false;
-var map;
-
-const loadMap = () => {
-    mapboxgl.accessToken = 'pk.eyJ1IjoieW9tbmEtcmFvdWYiLCJhIjoiY2s5MnY1MTJqMDNqMTNkdXJvbTEybm9jNiJ9.Ptr2DKynFUQVoaNYN-6uqA';
-    map = new mapboxgl.Map({
-       container: 'map',
-       style: 'mapbox://styles/mapbox/light-v10',
-       center: [0, 20],
-       zoom: 2,
-   });
-   
-   map.addControl(new mapboxgl.NavigationControl());   
-}
- 
-function ipLookUp (countryData) {
-    fetch('https://www.iplocate.io/api/lookup/')
-    .then( response => response.json() )
-    .then(data => {
-        let country = data.country;
-        if (country === 'United States') {
-            FlyToCountry('USA', countryData);
-        } else {
-            FlyToCountry(country, countryData);
-        }
-        console.log('User\'s Location Data is ', data);
-        console.log('User\'s Country', data.country);
-    });
-}
-
-
-
-const getCountryData = () => {
-    fetch("https://corona.lmao.ninja/v2/countries")
-    .then( response => response.json())
-    .then((data)=>{
-        countriesData = data;
-        updateDate(data.updated);
-        showDataInTable(data);
-        Search(data);
-        ipLookUp(data);
-        addMarkers(data);
-    })
-}
-
-
-
-const getHistoricalData = () => {
-    fetch('https://corona.lmao.ninja/v2/historical/all?lastdays=120')
-    .then( response => response.json())
-    .then (data => {
-        let chartData = buildChartData(data);
-        buildChart(chartData);
-    })
-}
-
 let worldwideData = [];
+let map;
+let appReady = false;
 
-const getWorldWideData = () => {
-    fetch('https://corona.lmao.ninja/v2/all')
-    .then(response => response.json())
-    .then( data =>{
-        let worldData = {...data};
-        worldData.country = 'WorldWide';
-        let modifiedWorldData = [worldData];
-        worldwideData = modifiedWorldData;
-        let PieChartData = [worldData.active, worldData.recovered, worldData.deaths];
-        buildPieChart(PieChartData);
-       // showDataInCountryStatsContainer(worldData.country , modifiedWorldData);
+const setLoaderProgress = (label, percent) => {
+  const status = document.getElementById('loader-status');
+  const bar = document.getElementById('loader-bar');
+  if (status) status.textContent = label;
+  if (bar) bar.style.width = `${percent}%`;
+};
+
+const hideLoader = () => {
+  const loader = document.getElementById('app-loader');
+  const main = document.getElementsByTagName('main')[0];
+  setLoaderProgress('Ready', 100);
+  if (loader) {
+    loader.classList.add('is-done');
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 320);
+  }
+  if (main) {
+    main.classList.add('is-ready');
+  }
+};
+
+const bootstrapApp = async () => {
+  try {
+    setLoaderProgress('Fetching worldwide totals…', 20);
+    const worldwidePromise = getWorldWideData();
+    setLoaderProgress('Loading country statistics…', 40);
+    const countriesPromise = getCountryData();
+    setLoaderProgress('Building historical charts…', 60);
+    const historicalPromise = getHistoricalData();
+
+    await Promise.all([worldwidePromise, countriesPromise, historicalPromise]);
+
+    setLoaderProgress('Rendering dashboard…', 85);
+    showDataInTable(countriesData);
+    showDataInCountryStatsContainer('WorldWide', worldwideData);
+    hideLoader();
+    appReady = true;
+    setLoaderProgress('Loading map…', 92);
+    await loadMap();
+    addMarkers(countriesData);
+    ipLookUp(countriesData);
+    getNews();
+  } catch (error) {
+    console.error('Failed to bootstrap app', error);
+    setLoaderProgress('Something went wrong. Showing available data…', 100);
+    hideLoader();
+    getNews();
+  }
+};
+
+const loadMap = () =>
+  new Promise((resolve, reject) => {
+    try {
+      map = new maplibregl.Map({
+        container: 'map',
+        style: 'https://tiles.openfreemap.org/styles/positron',
+        center: [0, 20],
+        zoom: 2,
+      });
+
+      map.addControl(new maplibregl.NavigationControl());
+
+      map.on('load', () => {
+        map.resize();
+        resolve(map);
+      });
+
+      map.on('error', (event) => {
+        console.warn('Map error', event && event.error);
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+function ipLookUp(countryData) {
+  fetch('https://www.iplocate.io/api/lookup/')
+    .then((response) => response.json())
+    .then((data) => {
+      let country = data.country;
+      if (country === 'United States') {
+        FlyToCountry('USA', countryData);
+      } else {
+        FlyToCountry(country, countryData);
+      }
+    })
+    .catch((error) => {
+      console.warn('IP lookup unavailable', error);
     });
 }
+
+const fetchJson = async (urls) => {
+  let lastError;
+  for (let i = 0; i < urls.length; i += 1) {
+    try {
+      const response = await fetch(urls[i]);
+      if (!response.ok) {
+        throw new Error(`Request failed (${response.status}) for ${urls[i]}`);
+      }
+      return await response.json();
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  throw lastError || new Error('Failed to load data');
+};
+
+const getCountryData = () =>
+  fetchJson([
+    `${DISEASE_API}/countries`,
+    `${DATA_BASE}countries.json`,
+  ]).then((data) => {
+    countriesData = data;
+    const updated = data[0] && data[0].updated;
+    if (updated) updateDate(updated);
+    Search(data);
+    return data;
+  });
+
+const getHistoricalData = () =>
+  fetchJson([
+    `${DISEASE_API}/historical/all?lastdays=120`,
+    `${DATA_BASE}historical.json`,
+  ]).then((data) => {
+    const chartData = buildChartData(data);
+    buildChart(chartData);
+    return data;
+  });
+
+const getWorldWideData = () =>
+  fetchJson([`${DISEASE_API}/all`, `${DATA_BASE}all.json`]).then((data) => {
+    const worldData = { ...data, country: 'WorldWide' };
+    worldwideData = [worldData];
+    const PieChartData = [
+      worldData.active,
+      worldData.recovered,
+      worldData.deaths,
+    ];
+    buildPieChart(PieChartData);
+    if (worldData.updated) updateDate(worldData.updated);
+    return worldData;
+  });
 
 const getNews = () => {
-    fetch("https://newsapi.org/v2/everything?q=COVID&from=2020-07-28&apiKey=c361ee82ad48460287bf148b5aee5809&sortBy=popularity")
-    .then(response =>  response.json())
-    .then( data => {
-        console.log(data["articles"]);
+  fetchJson([`${DATA_BASE}news.json`])
+    .then((data) => {
+      if (data && data.articles && data.articles.length) {
         showNewsInNewsContainer(data);
+      }
     })
-    .catch(error => console.log('error', error));
-}
-
+    .catch((error) => console.warn('News unavailable', error));
+};
 
 const changeMapData = (metric) => {
-    let MapDataColors = {
-        'Active': '#4BA1FD',
-        'Deaths': '#F64759',
-        "Recovered": '#07BEB5'
-    }
-    console.log(metric);
-    removeCurrentMarkers();
-    addMarkers(countriesData,metric);
-}
+  if (!countriesData || !countriesData.length) return;
+  document.querySelectorAll('.metric-btn').forEach((button) => {
+    const onclick = button.getAttribute('onclick') || '';
+    button.classList.toggle('is-active', onclick.indexOf(`'${metric}'`) !== -1);
+  });
+  removeCurrentMarkers();
+  addMarkers(countriesData, metric);
+};
 
 const Search = (data) => {
-    new autoComplete({
-       data: {
-        src: async () => {
-            document
-				.querySelector("#autoComplete")
-                .setAttribute("placeholder", "Loading...");
-                const data = await countriesData;
-                document.querySelector("#autoComplete").setAttribute("placeholder", "country");
-                return data;   
-            },
-            key: ["country"],
-            cache:false
-       },
-       sort: (a, b) => {
-            if (a.match < b.match) return -1;
-            if (a.match > b.match) return 1;
-            return 0;
-	    },
-       placeHolder: 'country',
-       selector: "#autoComplete",   
-       threshold:0,
-       debounce: 0,
-       searchEngine: 'loose',
-       highlight: true,
-       maxResults: 5,
-       resultsList: {                       // Rendered results list object      | (Optional)
-        render: true,
-        container: source => {
-            source.setAttribute("id", "autoComplete_list");
-        },
-        destination: document.querySelector("#autoComplete"),
-        position: "afterend",
-        element: "ul"
-        },
-       resultItem: {                          // Rendered result item            | (Optional)
-        content: (data, source) => {
-            source.innerHTML = data.match;
-        },
-        element: "li"
+  const hideEmptyResults = () => {
+    const list = document.querySelector('#autoComplete_list');
+    if (!list) return;
+    const hasItems = list.querySelectorAll('li').length > 0;
+    list.hidden = !hasItems;
+    list.style.display = hasItems ? '' : 'none';
+  };
+
+  new autoComplete({
+    data: {
+      src: async () => {
+        document
+          .querySelector('#autoComplete')
+          .setAttribute('placeholder', 'Loading...');
+        const source = await countriesData;
+        document
+          .querySelector('#autoComplete')
+          .setAttribute('placeholder', 'Search country');
+        return source;
+      },
+      key: ['country'],
+      cache: false,
     },
-    noResults: () => {                     // Action script on noResults      | (Optional)
-        const result = document.createElement("li");
-        result.setAttribute("class", "no_result");
-        result.setAttribute("tabindex", "1");
-        result.innerHTML = "No Results";
-        document.querySelector("#autoComplete_list").appendChild(result);
+    sort: (a, b) => {
+      if (a.match < b.match) return -1;
+      if (a.match > b.match) return 1;
+      return 0;
     },
-    onSelection: (feedback) => {             // Action script onSelection event | (Optional)
-        const selection = feedback.selection.value.country;
-		// Render selected choice to selection div
-		//document.querySelector(".location").innerHTML = selection;
-		// Clear Input
-		document.querySelector("#autoComplete").value = "";
-		// Change placeholder with the selected value
-		document
-			.querySelector("#autoComplete")
-            .setAttribute("placeholder", selection);
-        
-        // Console log autoComplete data feedback
-        //console.log(feedback); 
-        FlyToCountry(selection, data);
+    placeHolder: 'Search country',
+    selector: '#autoComplete',
+    threshold: 1,
+    debounce: 100,
+    searchEngine: 'loose',
+    highlight: true,
+    maxResults: 5,
+    resultsList: {
+      render: true,
+      container: (source) => {
+        source.setAttribute('id', 'autoComplete_list');
+        source.hidden = true;
+        source.style.display = 'none';
+      },
+      destination: document.querySelector('#autoComplete'),
+      position: 'afterend',
+      element: 'ul',
     },
+    resultItem: {
+      content: (item, source) => {
+        source.innerHTML = item.match;
+      },
+      element: 'li',
+    },
+    noResults: () => {
+      const list = document.querySelector('#autoComplete_list');
+      if (!list) return;
+      list.innerHTML = '';
+      const result = document.createElement('li');
+      result.setAttribute('class', 'no_result');
+      result.setAttribute('tabindex', '1');
+      result.innerHTML = 'No Results';
+      list.appendChild(result);
+      hideEmptyResults();
+    },
+    onSelection: (feedback) => {
+      const selection = feedback.selection.value.country;
+      document.querySelector('#autoComplete').value = '';
+      document
+        .querySelector('#autoComplete')
+        .setAttribute('placeholder', selection);
+      const list = document.querySelector('#autoComplete_list');
+      if (list) {
+        list.innerHTML = '';
+        list.hidden = true;
+        list.style.display = 'none';
+      }
+      FlyToCountry(selection, data);
+    },
+  });
+
+  const input = document.querySelector('#autoComplete');
+  if (input) {
+    input.addEventListener('input', () => {
+      requestAnimationFrame(hideEmptyResults);
     });
-}
+    input.addEventListener('blur', () => {
+      setTimeout(() => {
+        const list = document.querySelector('#autoComplete_list');
+        if (list && !list.querySelectorAll('li').length) {
+          list.hidden = true;
+          list.style.display = 'none';
+        }
+      }, 150);
+    });
+  }
 
-const FlyToCountry = (selection ,data) => {
-    if(selection){
-        map.flyTo({
-            center: CountriesCoordinates[selection],
-            zoom: 5,
-            bearing: 0,
-            speed: 1,  
-            curve: 1,  
-            easing: function(t) {
-            return t;
-            },
-            essential: true
-        });
-        showDataInCountryStatsContainer(selection, data);
-        addPopups(data, CountriesCoordinates[selection], selection);
-    }   
-}
+  const listObserverTarget = document.querySelector('.search-container');
+  if (listObserverTarget) {
+    const observer = new MutationObserver(hideEmptyResults);
+    observer.observe(listObserverTarget, {
+      childList: true,
+      subtree: true,
+    });
+  }
+};
 
-const lang = 'en-US'
-const voiceIndex = 1
-  
-const speak = async (text) => {
-if (!speechSynthesis) { return }
-const message = new SpeechSynthesisUtterance(text)
-message.voice = await chooseVoice()
-speechSynthesis.speak(message)
-}
-  
-const getVoices = () => {
-return new Promise((resolve) => {
-    let voices = speechSynthesis.getVoices()
-    if (voices.length) {
-    resolve(voices)
-    return
-    }
-    speechSynthesis.onvoiceschanged = () => {
-    voices = speechSynthesis.getVoices();
-    resolve(voices)
-    }
-})
-}
+const FlyToCountry = (selection, data) => {
+  if (!selection || !map) return;
 
-const chooseVoice = async () => {
-const voices = (await getVoices()).filter((voice) => voice.lang == lang)
+  const coordinates = CountriesCoordinates[selection];
+  if (coordinates) {
+    map.flyTo({
+      center: coordinates,
+      zoom: 5,
+      bearing: 0,
+      speed: 1,
+      curve: 1,
+      easing: function (t) {
+        return t;
+      },
+      essential: true,
+    });
+  }
 
-return new Promise((resolve) => {
-    resolve(voices[voiceIndex])
-})
-}
+  const source =
+    selection === 'WorldWide' ? worldwideData : data || countriesData;
+  showDataInCountryStatsContainer(selection, source);
 
-   
+  if (coordinates) {
+    addPopups(source, coordinates, selection);
+  }
+};
 
+const showDataInCountryStatsContainer = (selection, data) => {
+  let html = '';
+  if (selection && Array.isArray(data)) {
+    data.forEach((country) => {
+      if (country.country === selection) {
+        html = `
+                <article class="kpi-card tests">
+                    <p class="kpi-label">${country.country}</p>
+                    <p class="kpi-value">${numeral(country.tests).format('0.0a')}</p>
+                    <p class="kpi-sub">Tests reported</p>
+                </article>
 
-const showDataInCountryStatsContainer = (selection , data) => {
-   
-    let html = '';
-    if(selection){
-        data.forEach( country => {
-            if(country.country === selection) {
-                
-                if (country.country === 'WorldWide') {
-                    speak(
-                        `This app is here to help you learn about Corona virus,
-                        Total cases in  ${country.country} are ${country.cases},
-                        new cases in  ${country.country} are ${(country.todayCases !== null) || (country.todayCases !== undefined)  ? (country.todayCases) : 'not specified' },
-                        Recovered cases in  ${country.country} are ${country.recovered},
-                        Deaths in  ${country.country} are ${country.deaths}, may their souls rest in peace
-                        `);
-                } else {
-                    speak(
-                        `Total cases in  ${country.country} are ${country.cases},
-                        new cases in  ${country.country} are ${(country.todayCases !== null) || (country.todayCases !== undefined)  ? (country.todayCases) : 'not specified' },
-                        Recovered cases in  ${country.country} are ${country.recovered},
-                        Deaths in  ${country.country} are ${country.deaths}, may their souls rest in peace
-                    `);
-                } 
-        
-                html = `
-                <div class="card country-tests-card">
-                    <div class="card-body country-stats">
-                        <div class="ml-2">
-                            <h6 class="card-title country mb-2">${country.country}</h6>
-                            <div class=" text-muted font-weight-bold tests">Tests: ${numeral(country.tests).format('0.0a')} Total</div>
-                        </div>
-                    </div>
-                </div>
+                <article class="kpi-card cases">
+                    <p class="kpi-label">Cases</p>
+                    <p class="kpi-value">${numeral(country.todayCases).format('+0,0')}</p>
+                    <p class="kpi-sub">${numeral(country.cases).format('0.0a')} total</p>
+                </article>
 
-                <div class="card Totalcases-card">
-                    <div class="card-body country-stats">
-                        <div>
-                            <h6 class="card-title">Coronavirus Cases</h6>
-                            <h3 class="card-subtitle  cases-number  active">${numeral(country.todayCases).format('+0,0')}</h3>
-                            <div class=" text-muted font-weight-bold  total mt-3">${numeral(country.cases).format('0.0a')} Total</div>
-                        </div>
-                    </div>
-                </div>
+                <article class="kpi-card recovered">
+                    <p class="kpi-label">Recovered</p>
+                    <p class="kpi-value">${numeral(country.todayRecovered).format('+0,0')}</p>
+                    <p class="kpi-sub">${numeral(country.recovered).format('0.0a')} total</p>
+                </article>
 
-                <div class="card recovered-card">
-                    <div class="card-body country-stats">
-                        <div>
-                            <h6 class="card-title">Recovered</h6>
-                            <h3 class="card-subtitle   cases-number  recovered ">${numeral(country.todayRecovered).format('+0,0')}</h3>
-                            <div class=" text-muted font-weight-bold  recovered mt-3">${numeral(country.recovered).format('0.0a')} Total</div>
-                        </div>
-                    </div>
-                </div>
+                <article class="kpi-card deaths">
+                    <p class="kpi-label">Deaths</p>
+                    <p class="kpi-value">${numeral(country.todayDeaths).format('+0,0')}</p>
+                    <p class="kpi-sub">${numeral(country.deaths).format('0.0a')} total</p>
+                </article>
+                `;
+      }
+    });
+  }
 
-                <div class="card deaths-card">
-                    <div class="card-body country-stats">
-                        <div>
-                            <h6 class="card-title">Deaths</h6>
-                            <h3 class="card-subtitle  cases-number death">${numeral(country.todayDeaths).format('+0,0')}</h3>
-                            <div class=" text-muted font-weight-bold  death mt-3">${numeral(country.deaths).format('0.0a')} Total</div>
-                        </div>
-                    </div>
-                </div>
-                
-                `    
-            }
-        });
-    }
-
-    document.querySelector(".location").innerHTML = selection;
-    document.querySelector('.country-stats-container').innerHTML = html;
-    document.querySelector(".loader").style.display = 'none';
-    document.getElementsByTagName("main")[0].style.visibility = 'visible';
-}
+  const locationEl = document.querySelector('.location');
+  const statsEl = document.querySelector('.country-stats-container');
+  if (locationEl) locationEl.innerHTML = selection;
+  if (statsEl) statsEl.innerHTML = html;
+  if (!appReady) hideLoader();
+};
 
 const setColors = (country, metric) => {
-    let colorsRecovered = ["#edf8e9","#bae4b3","#74c476","#31a354","#006d2c"];
-    let colorsActive =  ["#eff3ff","#bdd7e7","#6baed6","#3182bd","#08519c"];
-    let colorsDeaths = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
-    let casesType = {
-        "Active": {
-            color: colorsActive,
-            metricValue : country.active
-        },
-        "Recovered": {
-            color: colorsRecovered,
-            metricValue : country.recovered
-        },
-        "Deaths": {
-            color: colorsDeaths,
-            metricValue : country.deaths
-        }
-    }
-    console.log(metric);
-    console.log(casesType[metric].color);
-    console.log(casesType[metric].metricValue);
-   if ( casesType[metric].metricValue < 1000 ) {
-        return casesType[metric].color[0] ;
-    }
-    if ( casesType[metric].metricValue >= 1000 && casesType[metric].metricValue < 10000) {
-        return casesType[metric].color[1] ;
-    }
-    if ( casesType[metric].metricValue >= 10000 && casesType[metric].metricValue < 50000) {
-        return casesType[metric].color[2] ;
-    }
-    if (casesType[metric].metricValue >= 50000 && casesType[metric].metricValue < 100000) {
-        return casesType[metric].color[3] ;
-    }
-    if (casesType[metric].metricValue >= 100000 ) {
-        return casesType[metric].color[4] ;
-    }
-     
-}
+  let colorsRecovered = ['#edf8e9', '#bae4b3', '#74c476', '#31a354', '#006d2c'];
+  let colorsActive = ['#eff3ff', '#bdd7e7', '#6baed6', '#3182bd', '#08519c'];
+  let colorsDeaths = ['#fee5d9', '#fcae91', '#fb6a4a', '#de2d26', '#a50f15'];
+  let casesType = {
+    Active: {
+      color: colorsActive,
+      metricValue: country.active,
+    },
+    Recovered: {
+      color: colorsRecovered,
+      metricValue: country.recovered,
+    },
+    Deaths: {
+      color: colorsDeaths,
+      metricValue: country.deaths,
+    },
+  };
 
-const addMarkers = (data, metric='Active') => {
-    data.map((country) => {
-        let countryCenter = {
-            lng: country.countryInfo.long,
-            lat: country.countryInfo.lat,
-        }   
-       let marker =  new mapboxgl.Marker({
-            color: setColors(country, metric),
-        })
-        .setLngLat(countryCenter)
+  const selected = casesType[metric] || casesType.Active;
+
+  if (selected.metricValue < 1000) {
+    return selected.color[0];
+  }
+  if (selected.metricValue >= 1000 && selected.metricValue < 10000) {
+    return selected.color[1];
+  }
+  if (selected.metricValue >= 10000 && selected.metricValue < 50000) {
+    return selected.color[2];
+  }
+  if (selected.metricValue >= 50000 && selected.metricValue < 100000) {
+    return selected.color[3];
+  }
+  return selected.color[4];
+};
+
+const addMarkers = (data, metric = 'Active') => {
+  if (!map || !Array.isArray(data)) return;
+
+  data.forEach((country) => {
+    if (!country.countryInfo) return;
+
+    let countryCenter = {
+      lng: country.countryInfo.long,
+      lat: country.countryInfo.lat,
+    };
+
+    let marker = new maplibregl.Marker({
+      color: setColors(country, metric),
+    })
+      .setLngLat(countryCenter)
+      .addTo(map);
+
+    currentMarkers.push(marker);
+
+    marker.getElement().addEventListener('click', function () {
+      marker
+        .setPopup(addPopups(data, countryCenter, country.country))
         .addTo(map);
+    });
 
-        currentMarkers.push(marker);
-
-        marker.getElement().addEventListener('click', function (e) {
-            marker.setPopup(addPopups(data, countryCenter, country.country)).addTo(map);
-        });
-
-        if (!Object.entries(CountriesCoordinates).includes(countryCenter)){
-            CountriesCoordinates[country.country] = countryCenter;
-        }
-    }); 
-
-    console.log(CountriesCoordinates);
-} 
+    CountriesCoordinates[country.country] = countryCenter;
+  });
+};
 
 const removeCurrentMarkers = () => {
-    if (currentMarkers!==null) {
-        for (let i = currentMarkers.length - 1; i >= 0; i--) {
-          currentMarkers[i].remove();
-        }
+  if (currentMarkers !== null) {
+    for (let i = currentMarkers.length - 1; i >= 0; i--) {
+      currentMarkers[i].remove();
     }
-    currentMarkers = [];
-    console.log(currentMarkers.length);
-}
+  }
+  currentMarkers = [];
+};
 
 const addPopups = (data, countryCenter, selection) => {
-    let html = '';
-    let popUp = new mapboxgl.Popup({ closeOnClick: true });
-    data.map(country => {
-        if (country.country === selection ) {
-            html =  `
+  let html = '';
+  let popUp = new maplibregl.Popup({
+    closeOnClick: true,
+    maxWidth: '420px',
+    offset: 18,
+  });
+  data.forEach((country) => {
+    if (country.country === selection) {
+      html = `
                 <div class="country-info-window">
-                    <div class="country-info-info">
-                        <div class="flag">
-                            <img src=" ${country.countryInfo.flag}" alt="country Flag">
-                        </div>
-                        <div class="country-name-tests">
-                            <div class="selected-country-name">
-                                <p> ${country.country} </p>
-                            </div>
-                            <div class="country-tests">
-                                <p>Tests: </p>
-                                <p>${country.tests} </p>
-                            </div>
-                        </div>  
+                    <div class="popup-identity">
+                        <img class="popup-flag" src="${country.countryInfo.flag}" alt="">
+                        <p class="selected-country-name">${country.country}</p>
                     </div>
-                    <div class="country-info-cases"> 
-                        <div class="country-info-stats-cases">
-                            <p>Cases:</p>
-                            <p class="active">${country.cases}</p>
+                    <div class="popup-metrics">
+                        <div class="popup-metric">
+                            <span class="popup-metric-label">Tests</span>
+                            <span class="popup-metric-value">${numeral(country.tests).format('0.0a')}</span>
                         </div>
-                        <div class="country-info-stats-recovered">
-                            <p>Recovered:</p>
-                            <p class="recovered"> ${country.recovered} </p>
+                        <div class="popup-metric">
+                            <span class="popup-metric-label">Cases</span>
+                            <span class="popup-metric-value active">${numeral(country.cases).format('0.0a')}</span>
                         </div>
-                        <div class="country-info-stats-deaths">
-                            <p>Deaths:</p>
-                            <p class="death">${country.deaths}</p>
+                        <div class="popup-metric">
+                            <span class="popup-metric-label">Recovered</span>
+                            <span class="popup-metric-value recovered">${numeral(country.recovered).format('0.0a')}</span>
+                        </div>
+                        <div class="popup-metric">
+                            <span class="popup-metric-label">Deaths</span>
+                            <span class="popup-metric-value death">${numeral(country.deaths).format('0.0a')}</span>
                         </div>
                     </div>
                 </div>
-            `
-        }
-    });
+            `;
+    }
+  });
 
-    
-    popUp.setLngLat(countryCenter)
-    .setHTML(html)
-    .addTo(map);
+  popUp.setLngLat(countryCenter).setHTML(html).addTo(map);
 
-    return popUp;
-}
+  return popUp;
+};
 
-const  updateDate = (dateTimestamp) => {
-    let date = moment(dateTimestamp).format("[Last Updated] MMMM DD, YYYY");
-    document.querySelector('.date').textContent = date;
-}
+const updateDate = (dateTimestamp) => {
+  const dateEl = document.querySelector('.date');
+  if (!dateEl || !dateTimestamp) return;
+  dateEl.textContent = moment(dateTimestamp).format('[Updated] MMM D, YYYY');
+};
 
 const showDataInTable = (data) => {
-    let html = '';
-    let worldCountriesData = [];
-    if (data[0]['country'] !== "WorldWide" && data[data.length - 1]['country'] !== "WorldWide") {
-        worldCountriesData = worldwideData.concat(data);
-    } else {
-        worldCountriesData = data;
-    }
-    tableData = worldCountriesData;
-    console.log(tableData);
-    worldCountriesData.forEach((country)=>{
-        html += `
+  let html = '';
+  let worldCountriesData = [];
+  if (
+    !data.length ||
+    (data[0]['country'] !== 'WorldWide' &&
+      data[data.length - 1]['country'] !== 'WorldWide')
+  ) {
+    worldCountriesData = worldwideData.concat(data);
+  } else {
+    worldCountriesData = data;
+  }
+  tableData = worldCountriesData;
+  worldCountriesData.forEach((country) => {
+    html += `
         <tr class="country-info">
             <td class="loc">${country.country}</td>
             <td class="cases">${country.cases}</td>
             <td class="today-cases">${numeral(country.todayCases).format('+0,0')}</td>
         </tr>
-        `
-    })
-    document.querySelector('.country-info-container').innerHTML = html;
-}
-
+        `;
+  });
+  const tableBody = document.querySelector('.country-info-container');
+  if (tableBody) tableBody.innerHTML = html;
+};
 
 const sortColumn = (columnCasesType) => {
-    const dataType = typeof tableData[0][columnCasesType];
-    sortDirection = !sortDirection;
+  if (!tableData.length) return;
+  const dataType = typeof tableData[0][columnCasesType];
+  sortDirection = !sortDirection;
 
-    switch(dataType) {
-        case 'number':
-            sortColumnData(sortDirection, columnCasesType);
-            break;
-    }
+  switch (dataType) {
+    case 'number':
+      sortColumnData(sortDirection, columnCasesType);
+      break;
+  }
 
-    showDataInTable(tableData);
-} 
-
+  showDataInTable(tableData);
+};
 
 const sortColumnData = (sort, columnCasesType) => {
-    tableData = tableData.sort((a, b) => sort ? a[columnCasesType] - b[columnCasesType] : b[columnCasesType] - a[columnCasesType]);
-}
+  tableData = tableData.sort((a, b) =>
+    sort
+      ? a[columnCasesType] - b[columnCasesType]
+      : b[columnCasesType] - a[columnCasesType],
+  );
+};
 
-const buildChartData = data => {
-    let ActiveCasesData = [];
-    let RecoveredCasesData = [];
-    let DeathCasesData = [];
-    let chartData = {
-        Active: ActiveCasesData,
-        Recovered: RecoveredCasesData,
-        Deaths: DeathCasesData
+const buildChartData = (data) => {
+  let ActiveCasesData = [];
+  let RecoveredCasesData = [];
+  let DeathCasesData = [];
+  let chartData = {
+    Active: ActiveCasesData,
+    Recovered: RecoveredCasesData,
+    Deaths: DeathCasesData,
+  };
+
+  let lastDataPoint;
+
+  for (let date in data.cases) {
+    if (lastDataPoint) {
+      let newActiveDataPoint = {
+        x: date,
+        y: data.cases[date] - lastDataPoint,
+      };
+      ActiveCasesData.push(newActiveDataPoint);
+    }
+    lastDataPoint = data.cases[date];
+  }
+
+  for (let date in data.recovered) {
+    let newRecoveredDataPoint = {
+      x: date,
+      y: data.recovered[date],
     };
-    
-   let lastDataPoint;
+    RecoveredCasesData.push(newRecoveredDataPoint);
+  }
 
-    for (let date in data.cases) {
-        if(lastDataPoint) {
-            let newActiveDataPoint = {
-                x: date,
-                y: data.cases[date]  - lastDataPoint
-            }
-            ActiveCasesData.push(newActiveDataPoint);
-        }
-        lastDataPoint = data.cases[date];
-        
-    }
+  for (let date in data.deaths) {
+    let newDeathDataPoint = {
+      x: date,
+      y: data.deaths[date],
+    };
+    DeathCasesData.push(newDeathDataPoint);
+  }
 
-    for (let date in data.recovered) {
-        let newRecoveredDataPoint = {
-            x: date,
-            y: data.recovered[date]
-        }
-        RecoveredCasesData.push(newRecoveredDataPoint);
-    }
-   
-    for (let date in data.deaths) {
-        let newDeathDataPoint = {
-            x: date,
-            y: data.deaths[date]
-        }
-        DeathCasesData.push(newDeathDataPoint);
-    }
+  return chartData;
+};
 
-    return chartData;
-}
-
-
-const buildPieChart = PieChartData => {
-    let ctx_PChart = document.getElementById('myChart-pieChart').getContext('2d');
-    let myPieChart = new Chart(ctx_PChart, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: PieChartData,
-                backgroundColor: ["#FFB21A", "#07BEB5", "#F64759"],
-            }],
-            labels: [
-                'Active',
-                'Recovered',
-                'Deaths'
-            ],
+const buildPieChart = (PieChartData) => {
+  let ctx_PChart = document.getElementById('myChart-pieChart').getContext('2d');
+  new Chart(ctx_PChart, {
+    type: 'doughnut',
+    data: {
+      datasets: [
+        {
+          data: PieChartData,
+          backgroundColor: ['#2F6FED', '#0F8A7A', '#C23B4A'],
+          borderWidth: 0,
         },
-        options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            title: {
-                display: true,
-                text: 'ActiveCases, Recovered, and Deaths worldWide'
-            }
-        } 
-    });
-}
-
-const buildChart = chartData => {
-    let timeFormat = 'MM/DD/YY';
-    let ctx_LChart = document.getElementById('myChart-linearChart').getContext('2d');
-    let chart = new Chart(ctx_LChart, {
-        type: 'line',
-        data: {
-            datasets: [{
-                label: 'Total Cases',
-                data: chartData.Active,
-                lineTension: .7,
-                borderColor: '#6baed6',
-                backgroundColor: '#6baed6',
-                fill: false,
-            },
-            {
-                label: 'Recovered',
-                data: chartData.Recovered,
-                lineTension: .7,
-                borderColor: '#74c476',
-                backgroundColor: '#74c476',
-                fill: false,
-            },
-            {
-                label: 'Deaths',
-                data: chartData.Deaths,
-                lineTension: .7,
-                borderColor: '#fb6a4a',
-                backgroundColor: '#fb6a4a',
-                fill: false,
-            }]
+      ],
+      labels: ['Active', 'Recovered', 'Deaths'],
+    },
+    options: {
+      maintainAspectRatio: false,
+      responsive: true,
+      cutoutPercentage: 62,
+      legend: {
+        position: 'bottom',
+        labels: {
+          boxWidth: 12,
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+          fontColor: '#5B6B7C',
+          padding: 16,
         },
-        options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            title: {
-                display: true,
-                text: 'ActiveCases, Recovered, and Deaths globally in the last 120 days'
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false
-            },
-            scales: {
-                xAxes: [{
-                    type: "time",
-                    time: {
-                        format: timeFormat,
-                        tooltipFormat: 'll'
-                    },
-                }],
-                yAxes: [{
-                    gridLines: {
-                        display:false
-                    },
-                    ticks: {
-                        // Include a dollar sign in the ticks
-                        callback: function(value, index, values) {
-                            return numeral(value).format('0,0');
-                        }
-                    }
-                }]
-            }
-        }
-    });
-}
+      },
+      title: {
+        display: false,
+      },
+    },
+  });
+};
 
-
-  
-
-
-const showNewsInNewsContainer = data => {
-
-    let glide = new Glide('.news', {
-        type: 'carousel',
-        //autoplay: 2000,
-        perView: 7,
-        draggable: true,
-        focusAt: 'center',
-        gap: 40,
-        breakpoints: {
-            1440: {
-                perView: 4.5
+const buildChart = (chartData) => {
+  let timeFormat = 'MM/DD/YY';
+  let ctx_LChart = document
+    .getElementById('myChart-linearChart')
+    .getContext('2d');
+  new Chart(ctx_LChart, {
+    type: 'line',
+    data: {
+      datasets: [
+        {
+          label: 'New cases',
+          data: chartData.Active,
+          lineTension: 0.35,
+          borderColor: '#2F6FED',
+          backgroundColor: '#2F6FED',
+          pointRadius: 0,
+          borderWidth: 2,
+          fill: false,
+        },
+        {
+          label: 'Recovered',
+          data: chartData.Recovered,
+          lineTension: 0.35,
+          borderColor: '#0F8A7A',
+          backgroundColor: '#0F8A7A',
+          pointRadius: 0,
+          borderWidth: 2,
+          fill: false,
+        },
+        {
+          label: 'Deaths',
+          data: chartData.Deaths,
+          lineTension: 0.35,
+          borderColor: '#C23B4A',
+          backgroundColor: '#C23B4A',
+          pointRadius: 0,
+          borderWidth: 2,
+          fill: false,
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      responsive: true,
+      legend: {
+        labels: {
+          boxWidth: 12,
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+          fontColor: '#5B6B7C',
+          padding: 16,
+        },
+      },
+      title: {
+        display: false,
+      },
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      scales: {
+        xAxes: [
+          {
+            type: 'time',
+            time: {
+              format: timeFormat,
+              tooltipFormat: 'll',
             },
-            1024: {
-                perView: 3.5
+            gridLines: {
+              display: false,
             },
-            768: {
-                perView: 2.5
+            ticks: {
+              fontColor: '#5B6B7C',
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
             },
-            426: {
-                perView: 1.7
+          },
+        ],
+        yAxes: [
+          {
+            gridLines: {
+              color: '#E8EEF4',
+              zeroLineColor: '#E8EEF4',
+              drawBorder: false,
             },
-            376: {
-                perView: 1.5
-            }
-        }
-    });
+            ticks: {
+              fontColor: '#5B6B7C',
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+              callback: function (value) {
+                return numeral(value).format('0.0a');
+              },
+            },
+          },
+        ],
+      },
+    },
+  });
+};
 
-    let html = '';
-    let articles = data["articles"]
-    articles.map( (article) => {
-        console.log(article)
-        html += `
+const showNewsInNewsContainer = (data) => {
+  let html = '';
+  let articles = data['articles'] || [];
+  articles.forEach((article) => {
+    const image =
+      article.urlToImage ||
+      'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=800';
+    const title = article.title || 'COVID-19 update';
+    const source = (article.source && article.source.name) || 'News';
+    const url = article.url || '#';
+    const published = (article.publishedAt || '').substring(0, 10);
+
+    html += `
         <li class="glide__slide">
             <div class="news-card">
-                <div class="news-cover"> <img src="${article.urlToImage}" alt="news-cover-image"> </div>
+                <div class="news-cover"> <img src="${image}" alt="news-cover-image" onerror="this.src='https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=800'"> </div>
                 <div class="news-info">
-                <p class="news-source">${article.source.name}</p>
-                <p class="news-card-title">${(article.title)}</p>         
-                <div  class="news-link">  <a href="${article.url}"> Read more <i class="fa fa-chevron-right"></i> </a>  </div>
-                <p class="posting-time">${(article.publishedAt).substring(0, 10)}</p>
+                <p class="news-source">${source}</p>
+                <p class="news-card-title">${title}</p>
+                <div  class="news-link">  <a href="${url}" target="_blank" rel="noopener noreferrer"> Read more <i class="fa fa-chevron-right"></i> </a>  </div>
+                <p class="posting-time">${published}</p>
                 </div>
-            </div> 
+            </div>
         </li>
-        `
-    })
+        `;
+  });
 
-    document.querySelector('.glide__slides').innerHTML = html;
-    glide.mount();
+  document.querySelector('.glide__slides').innerHTML = html;
 
-}
+  const glide = new Glide('.news', {
+    type: 'carousel',
+    perView: 4,
+    draggable: true,
+    focusAt: 0,
+    gap: 18,
+    peek: {
+      before: 0,
+      after: 24,
+    },
+    breakpoints: {
+      1200: {
+        perView: 2.4,
+        gap: 16,
+      },
+      900: {
+        perView: 1.6,
+        gap: 14,
+      },
+      640: {
+        perView: 1.15,
+        gap: 12,
+        peek: {
+          before: 0,
+          after: 36,
+        },
+      },
+    },
+  });
 
+  glide.mount();
+};
 
+window.changeMapData = changeMapData;
+window.sortColumn = sortColumn;

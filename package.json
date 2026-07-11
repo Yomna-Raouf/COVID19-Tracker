@@ -1,10 +1,12 @@
 {
   "name": "covid19-tracker",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "COVID-19 Tracker dashboard with map, charts, and news",
+  "main": "COVID-Tracker-Api/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node COVID-Tracker-Api/index.js",
+    "dev": "node COVID-Tracker-Api/index.js",
+    "install:all": "npm install --prefix COVID-Tracker-Api"
   },
   "repository": {
     "type": "git",
@@ -15,7 +17,5 @@
   "bugs": {
     "url": "https://github.com/Yomna-Raouf/COVID19-Tracker/issues"
   },
-  "homepage": "https://github.com/Yomna-Raouf/COVID19-Tracker#readme",
-  "dependencies": {},
-  "devDependencies": {}
+  "homepage": "https://yomna-raouf.github.io/COVID19-Tracker/"
 }

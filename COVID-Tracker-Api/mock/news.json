@@ -1,0 +1,110 @@
+{
+  "status": "ok",
+  "totalResults": 8,
+  "articles": [
+    {
+      "source": {
+        "id": null,
+        "name": "WHO"
+      },
+      "author": "World Health Organization",
+      "title": "COVID-19 remains a global health priority as surveillance continues",
+      "description": "Health agencies continue monitoring variants and vaccination coverage worldwide.",
+      "url": "https://www.who.int/health-topics/coronavirus",
+      "urlToImage": "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=800",
+      "publishedAt": "2026-07-10T23:51:18.312250Z",
+      "content": "Ongoing global monitoring of COVID-19."
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "CDC"
+      },
+      "author": "CDC",
+      "title": "Updated guidance on vaccines, testing, and respiratory illness seasons",
+      "description": "Public health officials share practical steps for reducing severe outcomes.",
+      "url": "https://www.cdc.gov/coronavirus/2019-ncov/index.html",
+      "urlToImage": "https://images.unsplash.com/photo-1584118624012-df056829fbd0?w=800",
+      "publishedAt": "2026-07-09T23:51:18.312342Z",
+      "content": "Guidance for communities and clinicians."
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "Nature"
+      },
+      "author": "Nature News",
+      "title": "What long-term COVID data is teaching researchers about recovery",
+      "description": "Studies highlight lasting symptoms and the need for continued research funding.",
+      "url": "https://www.nature.com/",
+      "urlToImage": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800",
+      "publishedAt": "2026-07-08T23:51:18.312355Z",
+      "content": "Research summary."
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "Reuters"
+      },
+      "author": "Reuters Health",
+      "title": "Countries strengthen wastewater monitoring for early outbreak signals",
+      "description": "Environmental surveillance is becoming a standard tool for respiratory viruses.",
+      "url": "https://www.reuters.com/",
+      "urlToImage": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800",
+      "publishedAt": "2026-07-07T23:51:18.312363Z",
+      "content": "Monitoring systems expand."
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "BBC"
+      },
+      "author": "BBC Health",
+      "title": "How hospitals prepare for overlapping flu and COVID seasons",
+      "description": "Clinicians discuss capacity planning, antivirals, and public messaging.",
+      "url": "https://www.bbc.com/news/health",
+      "urlToImage": "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800",
+      "publishedAt": "2026-07-06T23:51:18.312370Z",
+      "content": "Seasonal preparedness."
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "The Lancet"
+      },
+      "author": "The Lancet",
+      "title": "Equity gaps in vaccine access still shape global outcomes",
+      "description": "Experts call for sustained investment in immunization infrastructure.",
+      "url": "https://www.thelancet.com/",
+      "urlToImage": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800",
+      "publishedAt": "2026-07-05T23:51:18.312377Z",
+      "content": "Policy analysis."
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "NPR"
+      },
+      "author": "NPR",
+      "title": "Community clinics expand access to updated boosters and rapid tests",
+      "description": "Local programs aim to reach older adults and immunocompromised patients.",
+      "url": "https://www.npr.org/sections/health/",
+      "urlToImage": "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800",
+      "publishedAt": "2026-07-04T23:51:18.312383Z",
+      "content": "Local health response."
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "Science"
+      },
+      "author": "Science Magazine",
+      "title": "Variant tracking tools help public health teams stay ahead",
+      "description": "Genomic sequencing networks remain critical for early detection.",
+      "url": "https://www.science.org/",
+      "urlToImage": "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=800",
+      "publishedAt": "2026-07-03T23:51:18.312390Z",
+      "content": "Genomics and surveillance."
+    }
+  ]
+}
